@@ -181,7 +181,9 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        Darryldecode\Cart\CartServiceProvider::class,
+        Srmklive\PayPal\Providers\PayPalServiceProvider::class,
+        Unicodeveloper\Paystack\PaystackServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -210,6 +212,10 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
+        'Helpers' => App\Helpers\Helper::class,
+        'PayPal' => Srmklive\PayPal\Facades\PayPal::class,
+        'Paystack' => Unicodeveloper\Paystack\Facades\Paystack::class,
     ])->toArray(),
 
 ];

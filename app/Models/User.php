@@ -18,7 +18,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'fname',
+        'lname',
         'email',
         'password',
     ];
@@ -41,4 +42,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
+
+    public function getDefaultAddress(){
+        $address = Address::where('user_id',$this->id)->where('default',true)->first();
+        if($address){
+            return $address;
+        }else{
+            return null;
+        }
+    }
+
+    public function addresses(){
+        return $this->hasMany(Address::class);
+    }
+
+    public function getOrders(){
+        return Order::where('user_id', $this->id)->get();
+    }
 }
