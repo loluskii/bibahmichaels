@@ -68,7 +68,7 @@
                 <div class="col-md-11 col-12">
                     <div class="main ps-0 ms-0 ps-md-5 ms-md-5 ps-lg-5">
                         <div class="header text-center">
-                            <img src="{{ asset('logo.svg') }}" class="img-fluid" style="height: 4em;" alt="">
+                            <img src="{{ secure_asset('logo.svg') }}" class="img-fluid" style="height: 4em;" alt="">
                             <nav aria-label="breadcrumb" class="pb-4 text-center">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item " aria-current="page"><a
@@ -125,18 +125,22 @@
                                             <div class="accordion-button">
                                                 <div class="custom-control custom-radio">
                                                     <input data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                                                        type="radio" id="customRadio1" value="paystack" name="payment_method"
+                                                        type="radio" id="customRadio1" value="paystack"
+                                                        name="payment_method"
                                                         class="form-check-input custom-control-input" />
                                                     <label class="custom-control-label" for="customRadio1">
-                                                        <img src="{{ asset('images/payment/paystack.svg')}}" style=" height: 27px; " class="img-fluid" alt="">
+                                                        <img src="{{ secure_asset('images/payment/paystack.svg')}}"
+                                                            style=" height: 27px; " class="img-fluid" alt="">
                                                     </label>
                                                 </div>
                                             </div>
                                             <div id="collapseOne" class="accordion-collapse collapse"
                                                 data-bs-parent="#accordionWithRadioExample">
                                                 <div class="card-body text-center px-5">
-                                                    <img src="{{ asset('images/payment/checkout.svg') }}" class="img-fluid mb-3" alt="">
-                                                    <p>After clicking “Complete order”, you will be redirected to Paystack to complete your purchase securely.</p>
+                                                    <img src="{{ secure_asset('images/payment/checkout.svg') }}"
+                                                        class="img-fluid mb-3" alt="">
+                                                    <p>After clicking “Complete order”, you will be redirected to
+                                                        Paystack to complete your purchase securely.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -144,18 +148,22 @@
                                             <div class="accordion-button">
                                                 <div class="custom-control custom-radio">
                                                     <input data-bs-toggle="collapse" data-bs-target="#flutterwave"
-                                                        type="radio" id="customRadio2" value="flutterwave" name="payment_method"
+                                                        type="radio" id="customRadio2" value="flutterwave"
+                                                        name="payment_method"
                                                         class="form-check-input custom-control-input" />
                                                     <label class="custom-control-label" for="customRadio2">
-                                                        <img src="{{ asset('images/payment/flutterwave.svg')}}" style=" height: 31px; " class="img-fluid" alt="">
+                                                        <img src="{{ secure_asset('images/payment/flutterwave.svg')}}"
+                                                            style=" height: 31px; " class="img-fluid" alt="">
                                                     </label>
                                                 </div>
                                             </div>
                                             <div id="flutterwave" class="collapse"
                                                 data-bs-parent="#accordionWithRadioExample">
                                                 <div class="card-body text-center px-5">
-                                                    <img src="{{ asset('images/payment/checkout.svg') }}" class="img-fluid mb-3" alt="">
-                                                    <p>After clicking “Complete order”, you will be redirected to Flutterwave to complete your purchase securely.</p>
+                                                    <img src="{{ secure_asset('images/payment/checkout.svg') }}"
+                                                        class="img-fluid mb-3" alt="">
+                                                    <p>After clicking “Complete order”, you will be redirected to
+                                                        Flutterwave to complete your purchase securely.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -163,18 +171,22 @@
                                             <div class="accordion-button">
                                                 <div class="custom-control custom-radio">
                                                     <input data-bs-toggle="collapse" data-bs-target="#stripe"
-                                                        type="radio" id="customRadio2" value="stripe" name="payment_method"
+                                                        type="radio" id="customRadio2" value="stripe"
+                                                        name="payment_method"
                                                         class="form-check-input custom-control-input" />
                                                     <label class="custom-control-label" for="customRadio2">
-                                                        <img src="{{ asset('images/payment/stripe.svg')}}" style=" height: 29px; " class="img-fluid" alt="">
+                                                        <img src="{{ secure_asset('images/payment/stripe.svg')}}"
+                                                            style=" height: 29px; " class="img-fluid" alt="">
                                                     </label>
                                                 </div>
                                             </div>
                                             <div id="stripe" class="collapse"
                                                 data-bs-parent="#accordionWithRadioExample">
                                                 <div class="card-body text-center px-5">
-                                                    <img src="{{ asset('images/payment/checkout.svg') }}" class="img-fluid mb-3" alt="">
-                                                    <p>After clicking “Complete order”, you will be redirected to Stripe to complete your purchase securely.</p>
+                                                    <img src="{{ secure_asset('images/payment/checkout.svg') }}"
+                                                        class="img-fluid mb-3" alt="">
+                                                    <p>After clicking “Complete order”, you will be redirected to Stripe
+                                                        to complete your purchase securely.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -182,25 +194,32 @@
                                             <div class="accordion-button">
                                                 <div class="custom-control custom-radio">
                                                     <input data-bs-toggle="collapse" data-bs-target="#paypal"
-                                                        type="radio" id="customRadio2" value="paypal" name="payment_method"
+                                                        type="radio" id="customRadio2" value="paypal"
+                                                        name="payment_method"
                                                         class="form-check-input custom-control-input" />
                                                     <label class="custom-control-label" for="customRadio2">
-                                                        <img src="{{ asset('images/payment/paypal.svg')}}" style=" height: 25px; " class="img-fluid" alt="">
+                                                        <img src="{{ secure_asset('images/payment/paypal.svg')}}"
+                                                            style=" height: 25px; " class="img-fluid" alt="">
                                                     </label>
                                                 </div>
                                             </div>
                                             <div id="paypal" class="collapse"
                                                 data-bs-parent="#accordionWithRadioExample">
                                                 <div class="card-body text-center px-5">
-                                                    <img src="{{ asset('images/payment/checkout.svg') }}" class="img-fluid mb-3" alt="">
-                                                    <p>After clicking “Complete order”, you will be redirected to Paypal to complete your purchase securely.</p>
+                                                    <img src="{{ secure_asset('images/payment/checkout.svg') }}"
+                                                        class="img-fluid mb-3" alt="">
+                                                    <p>After clicking “Complete order”, you will be redirected to Paypal
+                                                        to complete your purchase securely.</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center pt-3">
-                                        <a href="{{ route('checkout.page-2',$session) }}" class="text-decoration-none"><i class="fa fa-angle-left me-3" aria-hidden="true"></i> Return to shipping</a>
-                                        <button type="submit" disabled class="btn btn-primary btn-dark py-3 px-3" style="font-weight: 400">Complete Order</button>
+                                        <a href="{{ route('checkout.page-2',$session) }}"
+                                            class="text-decoration-none"><i class="fa fa-angle-left me-3"
+                                                aria-hidden="true"></i> Return to shipping</a>
+                                        <button type="submit" disabled class="btn btn-primary btn-dark py-3 px-3"
+                                            style="font-weight: 400">Complete Order</button>
                                     </div>
                                 </form>
                             </div>

@@ -69,7 +69,7 @@
                 <div class="col-md-11 col-12">
                     <div class="main ps-0 ms-0 ps-md-5 ms-md-5 ps-lg-5">
                         <div class="header text-center">
-                            <img src="{{ asset('logo.svg') }}" class="img-fluid" style="height: 4em;" alt="">
+                            <img src="{{ secure_asset('logo.svg') }}" class="img-fluid" style="height: 4em;" alt="">
                             <nav aria-label="breadcrumb" class="pb-4 text-center">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item " aria-current="page"><a
@@ -122,13 +122,15 @@
                                     <div class="row g-2 mb-3">
                                         <div class="col">
                                             <!-- <small class="text-muted">First Name</small> -->
-                                            <input type="text" name="shipping_fname" class="form-control form-control-lg"
-                                                required placeholder="First name" aria-label="First name">
+                                            <input type="text" name="shipping_fname"
+                                                class="form-control form-control-lg" required placeholder="First name"
+                                                aria-label="First name">
                                         </div>
                                         <div class="col">
                                             <!-- <small class="text-muted">Last Name</small> -->
-                                            <input type="text" name="shipping_lname" class="form-control form-control-lg"
-                                                required placeholder="Last name" aria-label="Last name">
+                                            <input type="text" name="shipping_lname"
+                                                class="form-control form-control-lg" required placeholder="Last name"
+                                                aria-label="Last name">
                                         </div>
                                     </div>
                                     <div class="mb-3">
@@ -146,20 +148,21 @@
                                     </div>
                                     <div class="row g-2 mb-3">
                                         <div class="col-4">
-                                            <input type="text" name="shipping_city" class="form-control form-control-lg" required
-                                                placeholder="City" aria-label="City">
+                                            <input type="text" name="shipping_city" class="form-control form-control-lg"
+                                                required placeholder="City" aria-label="City">
                                         </div>
                                         <div class="col-4">
-                                            <select class="form-control form-control-lg py-2" name="shipping_state" required
-                                                aria-label="Default select example">
+                                            <select class="form-control form-control-lg py-2" name="shipping_state"
+                                                required aria-label="Default select example">
                                                 <option value="">State</option>
                                                 <option value="LOS">Lagos</option>
                                             </select>
                                         </div>
                                         <div class="col-4">
                                             <!-- <small class="text-muted">Postal Code</small> -->
-                                            <input type="text" name="shipping_postal_code" class="form-control form-control-lg"
-                                                required placeholder="Postal Code" aria-label="Postal Code">
+                                            <input type="text" name="shipping_postal_code"
+                                                class="form-control form-control-lg" required placeholder="Postal Code"
+                                                aria-label="Postal Code">
                                         </div>
                                     </div>
                                     <div class="mb-3">

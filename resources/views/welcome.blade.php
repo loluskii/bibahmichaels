@@ -3,7 +3,7 @@
 @section('css')
 <style>
     .main-header {
-        background-image: url("{{ asset('images/pexels-godisable-jacob-923210.jpg') }}");
+        background-image: url("{{ secure_asset('images/pexels-godisable-jacob-923210.jpg') }}");
         background-color: #cccccc;
         height: 700px;
         background-position: center;
@@ -13,8 +13,8 @@
         padding: 60px;
     }
 
-    .jumbotron{
-        background-image: url("{{ asset('images/pexels-godisable-jacob-928000.jpg') }}");
+    .jumbotron {
+        background-image: url("{{ secure_asset('images/pexels-godisable-jacob-928000.jpg') }}");
         background-color: #cccccc;
         /* height: 700px; */
         background-position: center;
@@ -24,6 +24,7 @@
         padding: 60px;
         border-radius: 0;
     }
+
     .header-text {
         position: absolute;
         top: 55%;
@@ -104,23 +105,25 @@
         <div class="row justify-content-center">
             @foreach ($products as $product)
             @php
-                        $currencies = App\Models\Currency::where('status','active')->get();
-                        App\Helpers\Helper::currency_load();
-                        $currency_code = session('currency_code');
-                        $currency_symbol = session('currency_symbol');
-                        if($currency_symbol == ""){
-                            $system_default_currency_info = session('system_default_currency_info');
-                            $currency_symbol = $system_default_currency_info->symbol;
-                            $currency_code = $system_default_currency_info->code;
-                        }
-                    @endphp
+            $currencies = App\Models\Currency::where('status','active')->get();
+            App\Helpers\Helper::currency_load();
+            $currency_code = session('currency_code');
+            $currency_symbol = session('currency_symbol');
+            if($currency_symbol == ""){
+            $system_default_currency_info = session('system_default_currency_info');
+            $currency_symbol = $system_default_currency_info->symbol;
+            $currency_code = $system_default_currency_info->code;
+            }
+            @endphp
             <div class="col-md-3 mb-3">
                 <a class=" text-decoration-none" href="{{ route('shop.product.show',$product->slug) }}">
                     <div class="card rounded-0 border-0">
-                        <div class="product-image" style="background-image: url('{{ $product->images()->first()->url ?? '' }}')"></div>
+                        <div class="product-image"
+                            style="background-image: url('{{ $product->images()->first()->url ?? '' }}')"></div>
                         <div class="card-body text-center text-decoration-none">
                             <h5 class="card-title text-uppercase  text-decoration-none">{{ $product->name }}</h5>
-                            <p class="card-text ">{{ $currency_symbol }}{{ number_format(App\Helpers\Helper::currency_converter($product->price), 2) }}</p>
+                            <p class="card-text ">{{ $currency_symbol }}{{
+                                number_format(App\Helpers\Helper::currency_converter($product->price), 2) }}</p>
                         </div>
                     </div>
                 </a>
@@ -144,7 +147,8 @@
     <div class="row g-5">
         <div class="col-md-4">
             <div class="card position-relative">
-                <img class="card-img-top" src="{{ asset('images/pexels-destiawan-nur-agustra-1113554.jpg') }}" alt="Title">
+                <img class="card-img-top" src="{{ secure_asset('images/pexels-destiawan-nur-agustra-1113554.jpg') }}"
+                    alt="Title">
                 <div class="card-body position-absolute bottom-0">
                     <h4 class="card-title">DRESSES</h4>
                     <p class="card-text">Text</p>
@@ -153,7 +157,8 @@
         </div>
         <div class="col-md-4">
             <div class="card position-relative">
-                <img class="card-img-top" src="{{ asset('images/pexels-gabriel-rodrigues-7050929.jpg') }}" alt="Title">
+                <img class="card-img-top" src="{{ secure_asset('images/pexels-gabriel-rodrigues-7050929.jpg') }}"
+                    alt="Title">
                 <div class="card-body text-white position-absolute bottom-0">
                     <h4 class="card-title">JUMPSUITS</h4>
                     <p class="card-text">Text</p>
@@ -162,7 +167,8 @@
         </div>
         <div class="col-md-4">
             <div class="card position-relative">
-                <img class="card-img-top" src="{{ asset('images/pexels-rodnae-productions-6192585.jpg') }}" alt="Title">
+                <img class="card-img-top" src="{{ secure_asset('images/pexels-rodnae-productions-6192585.jpg') }}"
+                    alt="Title">
                 <div class="card-body  position-absolute bottom-0 text-white">
                     <h4 class="card-title">TOPS</h4>
                     <p class="card-text">Text</p>

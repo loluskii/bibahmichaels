@@ -12,11 +12,11 @@
 
     }
 
-    .form-control{
+    .form-control {
         border-radius: 0.3rem;
     }
 
-    h5{
+    h5 {
         font-weight: 400;
     }
 
@@ -29,7 +29,7 @@
 
 
 
-    .breadcrumb{
+    .breadcrumb {
         justify-content: center;
     }
 
@@ -68,11 +68,14 @@
                 <div class="col-md-11 col-12">
                     <div class="main ps-0 ms-0 ps-md-5 ms-md-5 ps-lg-5">
                         <div class="header text-center">
-                            <img src="{{ asset('logo.svg') }}" class="img-fluid" style="height: 4em;" alt="">
+                            <img src="{{ secure_asset('logo.svg') }}" class="img-fluid" style="height: 4em;" alt="">
                             <nav aria-label="breadcrumb" class="pb-4 text-center">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item " aria-current="page"><a class="text-decoration-none text-muted" href="#"><small>Cart</small></a></li>
-                                    <li class="breadcrumb-item"><a class="text-decoration-none text-muted"  href="#"><small>Information</small></a></li>
+                                    <li class="breadcrumb-item " aria-current="page"><a
+                                            class="text-decoration-none text-muted" href="#"><small>Cart</small></a>
+                                    </li>
+                                    <li class="breadcrumb-item"><a class="text-decoration-none text-muted"
+                                            href="#"><small>Information</small></a></li>
                                     <li class="breadcrumb-item active text-dark"><small>Shipping</small></li>
                                     <li class="breadcrumb-item  text-muted"><small>Payment</small></li>
                                 </ol>
@@ -90,11 +93,11 @@
                                                 <span class="text-muted">Contact</span>
                                             </div>
                                             <div class="col-auto">
-                                                <span
-                                                    class=" text-wrap">{{ $order->shipping_email }}</span>
+                                                <span class=" text-wrap">{{ $order->shipping_email }}</span>
                                             </div>
                                         </div>
-                                        <a href="" class="text-decoration-none"><small style=" font-weight: 500">Change</small></a>
+                                        <a href="" class="text-decoration-none"><small
+                                                style=" font-weight: 500">Change</small></a>
                                     </div>
                                     <hr style="width: auto">
                                     <div class="shipping d-flex justify-content-between align-items-center">
@@ -103,18 +106,20 @@
                                                 <span class="text-muted">Ships to</span>
                                             </div>
                                             <div class="col-auto">
-                                                <span
-                                                    class="text-wrap">{{ $order->shipping_address }}</span>
+                                                <span class="text-wrap">{{ $order->shipping_address }}</span>
                                             </div>
                                         </div>
-                                        <a href="" class="text-decoration-none"><small style=" font-weight: 500">Change</small></a>
+                                        <a href="" class="text-decoration-none"><small
+                                                style=" font-weight: 500">Change</small></a>
                                     </div>
                                 </div>
                             </div>
                             <form action="{{ route('checkout.page-2.store') }}" method="POST" class="pb-5">
                                 @csrf
-                                <input type="hidden" name="subtotal" value="{{ \Cart::session(auth()->check() ? auth()->id() : 'guest')->getSubTotal() }}">
-                                <input type="hidden" name="grand_total" value="{{ \Cart::session(auth()->check() ? auth()->id() : 'guest')->getTotal() }}">
+                                <input type="hidden" name="subtotal"
+                                    value="{{ \Cart::session(auth()->check() ? auth()->id() : 'guest')->getSubTotal() }}">
+                                <input type="hidden" name="grand_total"
+                                    value="{{ \Cart::session(auth()->check() ? auth()->id() : 'guest')->getTotal() }}">
 
                                 <div class="shipping-information">
                                     <h4 style="font-weight: normal" class="mb-4">Shipping Method</h4>
@@ -128,7 +133,8 @@
                                                 <h5 class="h6 text-muted">Standard Shipping</h5>
                                             </div> --}}
                                             <div class="form-check">
-                                                <input class="form-check-input me-3" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                                <input class="form-check-input me-3" type="radio" name="exampleRadios"
+                                                    id="exampleRadios1" value="option1" checked>
                                                 <label class="form-check-label" for="exampleRadios1">
                                                     <h6 class="mb-0">Standard Shipping</h6>
                                                     <small class="mb-0 text-muted">
@@ -142,8 +148,11 @@
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center pt-3">
-                                    <a href="{{ route('checkout.page-1',$session) }}" class="text-decoration-none"><i class="fa fa-angle-left me-3" aria-hidden="true"></i> Return to information</a>
-                                    <button type="submit" class="btn btn-primary btn-dark py-3 px-3" style="font-weight: 400">Continue to
+                                    <a href="{{ route('checkout.page-1',$session) }}" class="text-decoration-none"><i
+                                            class="fa fa-angle-left me-3" aria-hidden="true"></i> Return to
+                                        information</a>
+                                    <button type="submit" class="btn btn-primary btn-dark py-3 px-3"
+                                        style="font-weight: 400">Continue to
                                         Payment</button>
                                 </div>
                             </form>
@@ -162,9 +171,11 @@
                                 <tr class="d-flex align-items-center">
                                     <td scope="row" style="width: 20%; position: relative; height: 64px; width: 64px">
                                         <img class="img-fluid img-thumbnail" style=""
-                                            src="{{ asset('images/pexels-gabriel-rodrigues-7050929.jpg') }}" alt="">
+                                            src="{{ secure_asset('images/pexels-gabriel-rodrigues-7050929.jpg') }}"
+                                            alt="">
 
-                                            <span class="position-absolute badge bg-dark border border-light rounded-circle" style="">{{ $item->quantity }}</span>
+                                        <span class="position-absolute badge bg-dark border border-light rounded-circle"
+                                            style="">{{ $item->quantity }}</span>
 
                                     </td>
                                     <td style="width: 60%;">
@@ -186,7 +197,8 @@
                     <div class="price border-bottom">
                         <div class="d-flex justify-content-between align-items-center pt-3 pb-2">
                             <span>Subtotal</span>
-                            <span><span class="currency">£</span>{{ number_format(Cart::session(auth()->check() ? auth()->id() : 'guest')->getSubTotal(), 2) }}</span>
+                            <span><span class="currency">£</span>{{ number_format(Cart::session(auth()->check() ?
+                                auth()->id() : 'guest')->getSubTotal(), 2) }}</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
                             <p>Shipping</p>
@@ -195,7 +207,8 @@
                     </div>
                     <div class="d-flex justify-content-between align-items-center py-4">
                         <h5>Total</h5>
-                        <h3>${{ number_format(Cart::session(auth()->check() ? auth()->id() : 'guest')->getTotal(), 2) }} </h3>
+                        <h3>${{ number_format(Cart::session(auth()->check() ? auth()->id() : 'guest')->getTotal(), 2) }}
+                        </h3>
                     </div>
                 </div>
             </div>
@@ -208,9 +221,3 @@
 @section('scripts')
 
 @endsection
-
-
-
-
-
-

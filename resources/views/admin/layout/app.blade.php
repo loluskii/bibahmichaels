@@ -8,11 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS v5.2.0-beta1 -->
-    <link rel="stylesheet" href="{{ asset('admin/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('admin/vendor/bootstrap/css/bootstrap.min.css') }}">
-    <link href="{{ asset('admin/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/vendor/simple-datatables/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ secure_asset('admin/css/style.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('admin/vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link href="{{ secure_asset('admin/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('admin/vendor/simple-datatables/style.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('admin/css/style.css') }}" rel="stylesheet">
 
 
 </head>
@@ -36,13 +36,14 @@
     </main>
     <!-- End #main -->
 
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
 
     <!-- Bootstrap JavaScript Libraries -->
-    <script src="{{ asset('admin/vendor/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('admin/vendor/simple-datatables/simple-datatables.js') }}"></script>
-    <script src="{{ asset('admin/js/main.js') }}"></script>
+    <script src="{{ secure_asset('admin/vendor/apexcharts/apexcharts.min.js') }}"></script>
+    <script src="{{ secure_asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ secure_asset('admin/vendor/simple-datatables/simple-datatables.js') }}"></script>
+    <script src="{{ secure_asset('admin/js/main.js') }}"></script>
 </body>
 
 </html>

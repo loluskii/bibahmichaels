@@ -112,35 +112,38 @@
                         </div>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-12 order-lg-last order-md-last order-first product-image">
-                        <img src="{{ $product->images()->first()->url ?? '' }}" id="product-image"
-                            style="" class="primary img-fluid">
+                        <img src="{{ $product->images()->first()->url ?? '' }}" id="product-image" style=""
+                            class="primary img-fluid">
                         {{-- <div class="prodcut-image"></div> --}}
                     </div>
                 </div>
             </aside>
             <aside class="col-md-6">
                 <article class="card-body px-lg-5 px-md-5 p-sm-2 py-0">
-                    <header class="d-flex flex-lg-column flex-md-column flex-column align-items-lg-start align-items-center align-items-md-start">
+                    <header
+                        class="d-flex flex-lg-column flex-md-column flex-column align-items-lg-start align-items-center align-items-md-start">
                         <p class=" text-decoration-underline">Size Chart <i class="fa-solid fa-ruler"></i></p>
                         <h4 class="text-uppercase me-md-auto me-lg-auto me-xl-auto fw-bold">{{ $product->name }}</h4>
                         @php
-                            $currencies = App\Models\Currency::where('status','active')->get();
-                            App\Helpers\Helper::currency_load();
-                            $currency_code = session('currency_code');
-                            $currency_symbol = session('currency_symbol');
-                            if($currency_symbol == ""){
-                                $system_default_currency_info = session('system_default_currency_info');
-                                $currency_symbol = $system_default_currency_info->symbol;
-                                $currency_code = $system_default_currency_info->code;
-                            }
+                        $currencies = App\Models\Currency::where('status','active')->get();
+                        App\Helpers\Helper::currency_load();
+                        $currency_code = session('currency_code');
+                        $currency_symbol = session('currency_symbol');
+                        if($currency_symbol == ""){
+                        $system_default_currency_info = session('system_default_currency_info');
+                        $currency_symbol = $system_default_currency_info->symbol;
+                        $currency_code = $system_default_currency_info->code;
+                        }
                         @endphp
                         <p class="price-detail-wrap">
                             <span class="price h6" style="font-weight: 500">
-                                <span class="num font-weight-bold">{{ $currency_symbol }}{{ number_format(App\Helpers\Helper::currency_converter($product->price), 2) }}</span>
+                                <span class="num font-weight-bold">{{ $currency_symbol }}{{
+                                    number_format(App\Helpers\Helper::currency_converter($product->price), 2) }}</span>
                             </span>
                         </p>
                     </header>
-                    <form id="addToCart" class="pt-2 pt-md-4 pt-lg-4 pt-xl-4" action="{{ route('cart.add',$product->id) }}" method="post">
+                    <form id="addToCart" class="pt-2 pt-md-4 pt-lg-4 pt-xl-4"
+                        action="{{ route('cart.add',$product->id) }}" method="post">
                         @csrf
 
                         @foreach ($group as $key => $item)
@@ -152,7 +155,8 @@
                                     @foreach ($item as $value)
                                     <div class="cat action">
                                         <label>
-                                            <input type="radio" name="{{ $key }}" value="{{ $value->value }}"><span class="text-uppercase">{{
+                                            <input type="radio" name="{{ $key }}" value="{{ $value->value }}"><span
+                                                class="text-uppercase">{{
                                                 $value->value }}</span>
                                         </label>
                                     </div>
@@ -178,7 +182,8 @@
                         </div>
                         <div class="d-flex flex-lg-row flex-md-row flex-column g-2">
                             <button type="submit" class="btn btn-dark rounded-0 me-sm-3 mb-3 px-5">ADD TO CART</button>
-                            <button type="submit" id="buyNow" class="btn btn-outline-dark rounded-0 mb-3 px-5">BUY NOW</button>
+                            <button type="submit" id="buyNow" class="btn btn-outline-dark rounded-0 mb-3 px-5">BUY
+                                NOW</button>
                         </div>
                     </form>
                 </article>
@@ -220,8 +225,8 @@
         <div class="row justify-content-center">
             <div class="col-md-3 mb-3">
                 <div class="card rounded-0 border-0">
-                    <img src="{{ asset('images/pexels-destiawan-nur-agustra-1113554.jpg') }}" class="card-img-top"
-                        alt="...">
+                    <img src="{{ secure_asset('images/pexels-destiawan-nur-agustra-1113554.jpg') }}"
+                        class="card-img-top" alt="...">
                     <div class="card-body text-center">
                         <h5 class="card-title text-uppercase">feyi dress</h5>
                         <p class="card-text">£25.99</p>
@@ -230,8 +235,8 @@
             </div>
             <div class="col-md-3 mb-3">
                 <div class="card rounded-0 border-0">
-                    <img src="{{ asset('images/pexels-destiawan-nur-agustra-1113554.jpg') }}" class="card-img-top"
-                        alt="...">
+                    <img src="{{ secure_asset('images/pexels-destiawan-nur-agustra-1113554.jpg') }}"
+                        class="card-img-top" alt="...">
                     <div class="card-body text-center">
                         <h5 class="card-title text-uppercase">feyi dress</h5>
                         <p class="card-text">£25.99</p>
@@ -240,8 +245,8 @@
             </div>
             <div class="col-md-3 mb-3">
                 <div class="card rounded-0 border-0">
-                    <img src="{{ asset('images/pexels-destiawan-nur-agustra-1113554.jpg') }}" class="card-img-top"
-                        alt="...">
+                    <img src="{{ secure_asset('images/pexels-destiawan-nur-agustra-1113554.jpg') }}"
+                        class="card-img-top" alt="...">
                     <div class="card-body text-center">
                         <h5 class="card-title text-uppercase">feyi dress</h5>
                         <p class="card-text">£25.99</p>
@@ -250,8 +255,8 @@
             </div>
             <div class="col-md-3 mb-3">
                 <div class="card rounded-0 border-0">
-                    <img src="{{ asset('images/pexels-destiawan-nur-agustra-1113554.jpg') }}" class="card-img-top"
-                        alt="...">
+                    <img src="{{ secure_asset('images/pexels-destiawan-nur-agustra-1113554.jpg') }}"
+                        class="card-img-top" alt="...">
                     <div class="card-body text-center">
                         <h5 class="card-title text-uppercase">feyi dress</h5>
                         <p class="card-text">£25.99</p>
