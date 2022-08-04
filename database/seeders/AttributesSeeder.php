@@ -44,13 +44,30 @@ class AttributesSeeder extends Seeder
         ]);
         ProductAttribute::create([
             'product_id' => 2,
-            'attribute_name' => 'color',
-            'value' => 'yellow'
+            'attribute_name' => 'size',
+            'value' => 'black'
         ]);
         ProductAttribute::create([
             'product_id' => 2,
-            'attribute_name' => 'color',
-            'value' => 'green'
+            'attribute_name' => 'size',
+            'value' => 'XL'
+        ]);
+
+        ProductAttribute::create([
+            'product_id' => 2,
+            'attribute_name' => 'size',
+            'value' => 'L'
+        ]);
+
+        ProductAttribute::create([
+            'product_id' => 2,
+            'attribute_name' => 'size',
+            'value' => 'M'
+        ]);
+        ProductAttribute::create([
+            'product_id' => 2,
+            'attribute_name' => 'size',
+            'value' => 'S'
         ]);
     }
 }

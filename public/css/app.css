@@ -3329,7 +3329,7 @@ textarea.form-control-lg {
   z-index: 1000;
   display: none;
   min-width: 10rem;
-  padding: 0.5rem 0;
+  padding: 1rem;
   margin: 0;
   font-size: 0.9rem;
   color: #212529;
@@ -3530,7 +3530,7 @@ textarea.form-control-lg {
   width: 100%;
   padding: 0.25rem 1rem;
   clear: both;
-  font-weight: 400;
+  font-weight: 300;
   color: #212529;
   text-align: inherit;
   text-decoration: none;
@@ -4467,7 +4467,7 @@ textarea.form-control-lg {
 .accordion-button::after {
   flex-shrink: 0;
   /* color: var(--bs-dark); */
-  
+
   width: 1.25rem;
   height: 1.25rem;
   margin-left: auto;

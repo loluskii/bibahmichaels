@@ -13,13 +13,14 @@ class CartController extends Controller
     public function add(Request $request, $id)
     {
         $product = Product::find($id);
+        // dd(Helper::currency_converter($product->price));
 
         if($request->has('buy_now')){
             \Cart::session(Helper::getSessionID())->clear();
             \Cart::session(Helper::getSessionID())->add(array(
                 'id' => $product->id,
                 'name' => $product->name,
-                'price' => $product->price,
+                'price' => Helper::currency_converter($product->price),
                 'quantity' => $request->quantity,
                 'attributes' => array(
                     'size' => $request->size ?? '',
@@ -28,13 +29,12 @@ class CartController extends Controller
                 'associatedModel' => $product
             ));
             $request->session()->put('session',session_create_id());
-            // dd(session('session'));
             return redirect()->route('checkout.page-1',['session'=> session('session')]);
         }
         \Cart::session(Helper::getSessionID())->add(array(
             'id' => $product->id,
             'name' => $product->name,
-            'price' => $product->price,
+            'price' => Helper::currency_converter($product->price),
             'quantity' => $request->quantity,
             'attributes' => array(
                 'size' => $request->size ?? '',

@@ -27,9 +27,20 @@
                                 class="product__description__variant order-summary__small-text text-uppercase"
                                 style="display: block;">{{ $item->name }}</span>
                         </td>
+                        @php
+                            $currencies = App\Models\Currency::where('status','active')->get();
+                            App\Helpers\Helper::currency_load();
+                            $currency_code = session('currency_code');
+                            $currency_symbol = session('currency_symbol');
+                            if($currency_symbol == ""){
+                                $system_default_currency_info = session('system_default_currency_info');
+                                $currency_symbol = $system_default_currency_info->symbol;
+                                $currency_code = $system_default_currency_info->code;
+                            }
+                        @endphp
                         <td style="width: 20%; justify-content: end">
                             <div class="float-end">
-                                <span class="currency">£</span>{{ number_format($item->price, 2) }}
+                                <span class="currency">{{ $currency_symbol }}</span>{{ number_format($item->price, 2) }}
                             </div>
                         </td>
                     </tr>
@@ -41,7 +52,7 @@
         <div class="price border-bottom">
             <div class="d-flex justify-content-between align-items-center pt-3 pb-2">
                 <span>Subtotal</span>
-                <span><span class="currency">£</span>{{ number_format(Cart::session(auth()->check() ? auth()->id() : 'guest')->getSubTotal(), 2) }}</span>
+                <span><span class="currency">{{ $currency_symbol }}</span>{{ number_format(Cart::session(auth()->check() ? auth()->id() : 'guest')->getSubTotal(), 2) }}</span>
             </div>
             <div class="d-flex justify-content-between align-items-center">
                 <p>Shipping</p>
@@ -50,7 +61,7 @@
         </div>
         <div class="d-flex justify-content-between align-items-center py-4">
             <h5>Total</h5>
-            <h3>${{ number_format(Cart::session(auth()->check() ? auth()->id() : 'guest')->getTotal(), 2) }} </h3>
+            <h3>{{ $currency_symbol }}{{ number_format(Cart::session(auth()->check() ? auth()->id() : 'guest')->getTotal(), 2) }} </h3>
         </div>
     </div>
 </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CurrencyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +20,12 @@ use App\Http\Controllers\PaymentController;
 */
 
 Route::get('/', [BaseController::class,'index'])->name('home');
-
+Route::post('currency_load',[CurrencyController::class, 'currencyLoad'])->name('currency.load');
 Auth::routes();
 
-Route::get('/shop',[BaseController::class,'viewShop'])->name('shop');
-Route::get('/shop/product/{slug}',[BaseController::class,'viewProduct'])->name('shop.product.show');
+Route::get('/collections/all',[BaseController::class,'viewShop'])->name('shop');
+Route::get('/collections/{category}',[BaseController::class,'getCategory'])->name('shop.category');
+Route::get('/products/{slug}',[BaseController::class,'viewProduct'])->name('shop.product.show');
 Route::get('/cart',[BaseController::class,'viewCart'])->name('shop.cart');
 Route::post('/add/{id}',[CartController::class, 'add'])->name('cart.add');
 

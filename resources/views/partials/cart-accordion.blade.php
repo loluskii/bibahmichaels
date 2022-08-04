@@ -1,4 +1,14 @@
-
+@php
+    $currencies = App\Models\Currency::where('status','active')->get();
+    App\Helpers\Helper::currency_load();
+    $currency_code = session('currency_code');
+    $currency_symbol = session('currency_symbol');
+    if($currency_symbol == ""){
+        $system_default_currency_info = session('system_default_currency_info');
+        $currency_symbol = $system_default_currency_info->symbol;
+        $currency_code = $system_default_currency_info->code;
+    }
+@endphp
 
 <div class="accordion accordion-flush" id="accordionFlushExample">
     <div class="accordion-item">
@@ -9,7 +19,8 @@
                 aria-controls="flush-collapseOne">
                 <i class="bi bi-cart4 me-2" style="font-size: 25px"></i> Show Order
                 Summary
-                ${{ number_format(\Cart::session(auth()->check() ? auth()->id() : 'guest')->getTotal(), 2) }}
+                {{ $currency_symbol }}{{ number_format(\Cart::session(auth()->check() ? auth()->id() : 'guest')->getTotal(), 2) }}
+
             </button>
         </h2>
         <div id="flush-collapseOne" class="accordion-collapse collapse"
@@ -32,7 +43,7 @@
                                             style="display: block;">{{ $item->name }}</span>
                                     </td>
                                     <td style="width: 20%;">
-                                        ${{ number_format($item->price, 2) }}
+                                        {{ $currency_symbol }}{{ number_format($item->price, 2) }}
                                     </td>
                                 </tr>
                             @endforeach
@@ -43,7 +54,7 @@
                 <div class="price border-bottom">
                     <div class="d-flex justify-content-between align-items-center py-3">
                         <span>Subtotal</span>
-                        <span>${{ number_format(Cart::session(auth()->check() ? auth()->id() : 'guest')->getSubTotal(), 2) }}</span>
+                        <span>{{ $currency_symbol }}{{ number_format(Cart::session(auth()->check() ? auth()->id() : 'guest')->getSubTotal(), 2) }}</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center py-3">
                         <span>Shipping</span>
@@ -52,7 +63,7 @@
                 </div>
                 <div class="d-flex justify-content-between align-items-center py-4">
                     <span>Order Total</span>
-                    <h3>${{ number_format(Cart::session(auth()->check() ? auth()->id() : 'guest')->getTotal(), 2) }}
+                    <h3>{{ $currency_symbol }}{{ number_format(Cart::session(auth()->check() ? auth()->id() : 'guest')->getTotal(), 2) }}
                     </h3>
                 </div>
 

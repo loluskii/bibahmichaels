@@ -123,11 +123,20 @@
                     <header class="d-flex flex-lg-column flex-md-column flex-column align-items-lg-start align-items-center align-items-md-start">
                         <p class=" text-decoration-underline">Size Chart <i class="fa-solid fa-ruler"></i></p>
                         <h4 class="text-uppercase me-md-auto me-lg-auto me-xl-auto fw-bold">{{ $product->name }}</h4>
-
+                        @php
+                            $currencies = App\Models\Currency::where('status','active')->get();
+                            App\Helpers\Helper::currency_load();
+                            $currency_code = session('currency_code');
+                            $currency_symbol = session('currency_symbol');
+                            if($currency_symbol == ""){
+                                $system_default_currency_info = session('system_default_currency_info');
+                                $currency_symbol = $system_default_currency_info->symbol;
+                                $currency_code = $system_default_currency_info->code;
+                            }
+                        @endphp
                         <p class="price-detail-wrap">
                             <span class="price h6" style="font-weight: 500">
-                                <span class="currency">$</span>
-                                <span class="num font-weight-bold">{{ $product->price }}</span>
+                                <span class="num font-weight-bold">{{ $currency_symbol }}{{ number_format(App\Helpers\Helper::currency_converter($product->price), 2) }}</span>
                             </span>
                         </p>
                     </header>
@@ -169,7 +178,7 @@
                         </div>
                         <div class="d-flex flex-lg-row flex-md-row flex-column g-2">
                             <button type="submit" class="btn btn-dark rounded-0 me-sm-3 mb-3 px-5">ADD TO CART</button>
-                            <button type="submit" class="btn btn-outline-dark rounded-0 mb-3 px-5">BUY NOW</button>
+                            <button type="submit" id="buyNow" class="btn btn-outline-dark rounded-0 mb-3 px-5">BUY NOW</button>
                         </div>
                     </form>
                 </article>
@@ -271,8 +280,8 @@
             $input.change();
             return false;
         });
-        $("#addToCart").on("submit", function () {
-            $(this).append("<input type='hidden' name='buy_now' value='true'/>");
+        $("#buyNow").on("click", function () {
+            $('#addToCart').append("<input type='hidden' name='buy_now' value='true'/>");
         });
         $('.thumbnail').on('click', function(e) {
             console.log('clicked');

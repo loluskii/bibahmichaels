@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             AttributesSeeder::class,
             ImageSeeder::class,
             AddressSeeder::class,
+            CurrencySeeder::class,
         ]);
     }
 }
