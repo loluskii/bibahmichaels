@@ -119,7 +119,6 @@
             <div class="col-md-3 mb-3">
                 <a class=" text-decoration-none" href="{{ route('shop.product.show',$product->slug) }}">
                     <div class="card rounded-0 border-0">
-                        {{ App\Models\Image::where('product_id',$product->id)->get() }}
                         <div class="product-image"
                             style="background-image: url('{{ $product->images()->first()->url ?? '' }}')"></div>
                         <div class="card-body text-center text-decoration-none">
