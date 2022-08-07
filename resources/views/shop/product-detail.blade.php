@@ -103,7 +103,7 @@
                     <div class="col-lg-4 col-md-4 col-sm-12 order-lg-first order-md-first order-last">
                         <div
                             class="img-small-wrap d-flex justify-content-between align-items-center flex-lg-column flex-md-column flex-sm-row order-lg-1 mt-lg-0 mt-md-0 mt-3">
-                            @foreach ($product->images->take(4) as $image)
+                            @foreach ($product->images->take(3) as $image)
                             <div class="item-gallery d-flex align-items-center ">
                                 <a href="#" class="thumbnail mb-3" data-big="{{ $image->url }}"
                                     style="background-image: url('{{ $image->url }}')"></a>
@@ -137,8 +137,7 @@
                         @endphp
                         <p class="price-detail-wrap">
                             <span class="price h6" style="font-weight: 500">
-                                <span class="num font-weight-bold">{{ $currency_symbol }}{{
-                                    number_format(App\Helpers\Helper::currency_converter($product->price), 2) }}</span>
+                                <span class="num font-weight-bold">{{ $currency_symbol }}{{ number_format(App\Helpers\Helper::currency_converter($product->price), 2) }}</span>
                             </span>
                         </p>
                     </header>

@@ -35,25 +35,8 @@ class ProductSeeder extends Seeder
             'category_id'=>5,
             'price'=>60,
         ]);
+
         
-        Product::create([
-            'sku' => 'SKU0123452',
-            'slug'=> 'feyi-dress2',
-            'name'=>'feyi dress',
-            'description'=>'The perfect summer outfit does exist, and you need it in your closet girl! This maxi jumpsuit is perfect for so many different occasions and can be casual or glammed up! It has a deep v-neckline, elastic at the waist and pockets. Paired with a simple high heel and hand bag for a beautiful summer look. ',
-            'additional_information'=>'Model is 5 ft 8 and wearing size XL. Items fit true to size. We recommend you choose your regular UK size. Please refer to the size guide for the best fit. Colour may vary due lighting of images. The images of models are closest to the true colour of the fabric.',
-            'category_id'=>1,
-            'price'=>25.99,
-        ]);
-        Product::create([
-            'sku' => 'SKU0123453',
-            'slug'=> 'feyi-dress3',
-            'name'=>'feyi dress',
-            'description'=>'The perfect summer outfit does exist, and you need it in your closet girl! This maxi jumpsuit is perfect for so many different occasions and can be casual or glammed up! It has a deep v-neckline, elastic at the waist and pockets. Paired with a simple high heel and hand bag for a beautiful summer look. ',
-            'additional_information'=>'Model is 5 ft 8 and wearing size XL. Items fit true to size. We recommend you choose your regular UK size. Please refer to the size guide for the best fit. Colour may vary due lighting of images. The images of models are closest to the true colour of the fabric.',
-            'category_id'=>1,
-            'price'=>25.99,
-        ]);
 
     }
 }

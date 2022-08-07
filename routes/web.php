@@ -28,6 +28,8 @@ Route::get('/collections/{category}',[BaseController::class,'getCategory'])->nam
 Route::get('/products/{slug}',[BaseController::class,'viewProduct'])->name('shop.product.show');
 Route::get('/cart',[BaseController::class,'viewCart'])->name('shop.cart');
 Route::post('/add/{id}',[CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
+Route::get('/cart/destroy/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
 
 //Checkout Routes
 Route::get('/checkout/{session}', [PaymentController::class,'checkout'])->name('checkout.page-1');

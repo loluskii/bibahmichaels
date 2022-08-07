@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('css')
 <style>
     .main-header {
@@ -80,7 +81,7 @@
 
         .header-text {
             position: absolute;
-            top: 65%;
+            top: 70%;
             color: white;
             text-transform: uppercase;
             width: auto;
@@ -91,7 +92,7 @@
 @endsection
 
 @section('content')
-<div class="container-sm">
+<div class="container container-md container-lg">
     <div class="main-header my-4">
         <div class="header-text">
             <h3>get your best wears for your best moments</h3>
@@ -129,7 +130,7 @@
                 </a>
             </div>
             @endforeach
-            <div class="col-4 text-center">
+            <div class="d-flex justify-content-center text-center">
                 <button class="btn btn-dark">VISIT STORE</button>
             </div>
         </div>
@@ -143,7 +144,7 @@
             liking.</p>
     </div>
 </div>
-<div class="container py-5">
+<div class="container py-5 d-none">
     <div class="row g-5">
         <div class="col-md-4">
             <div class="card position-relative">

@@ -41,7 +41,7 @@
         /* border: solid 2px transparent; */
         /* background: #fff; */
         /* padding: 10px; */
-        transition: .3s ease-in-out all;
+        transition: padding .2s ease-in-out, opacity .2s ease-in-out;
         height: 100%;
     }
 
@@ -56,23 +56,24 @@
     }
 
     .checkbox-label .icon {
-        width: 10px;
-        height: 10px;
+        width: 0px;
+        height: 0px;
         border: solid 2px #e3e3e3;
         border-radius: 50%;
         position: absolute;
-        top: 19px;
-        left: 10px;
-        transition: .3s ease-in-out all;
+        top: 9px;
+        transition: padding .2s ease-in-out, opacity .2s ease-in-out;
         transform: scale(1);
         z-index: 1;
         visibility: hidden;
     }
 
     .checkbox-label input:checked+.icon {
-        background: #2A707D;
-        border-color: #2A707D;
-        transform: scale(1.2);
+        background: #121212;
+        border-color: #121212;
+        transition: padding .2s ease-in-out, opacity .2s ease-in-out;
+        transform: scale(1);
+        /* transform: scale(1.2); */
         visibility: visible;
     }
 
@@ -80,18 +81,14 @@
     .checkbox-label input:checked+.icon:before {
         color: #fff;
         opacity: 1;
+        transition: padding .2s ease-in-out, opacity .2s ease-in-out;
+        transform: scale(1);
         /* transform: scale(.8); */
     }
 
-    .checkbox-label input:checked~.checkbox-content {
-        box-shadow: 0 2px 4px 0 rgba(219, 215, 215, 0.5);
-        /* border: solid 1px #2A707D; */
-        /* color: #2A707D; */
-    }
-
-    .checkbox-label input:checked~.checkbox-content h6 {
-        margin-left: 20px;
-        transition: .3s ease-in-out all;
+    .checkbox-label input:checked~.checkbox-content p {
+        margin-left: 10px;
+        transition: padding .2s ease-in-out, opacity .2s ease-in-out;
     }
 </style>
 @endsection
@@ -110,10 +107,19 @@
                     <div class="category">
                         <h6>CATEGORY</h6>
                         @foreach ($categories as $category)
+                        @php
+                            $checked = array();
+                            if(isset($_GET['category'])){
+                                $checked[] = $_GET['category'];
+                            }
+                        @endphp
                         <label class="checkbox-label w-100">
                             <input type="radio" value="{{ $category->slug }}" onclick="this.form.submit()"
+                                @if (in_array($category->slug, $checked))
+                                    checked
+                                @endif
                                 name="category" />
-                            {{-- <span class="icon"></span> --}}
+                            <span class="icon"></span>
                             <div class="checkbox-content">
                                 <p class="font-weight-bold mb-1">{{ $category->name }}</p>
                             </div>
@@ -154,10 +160,10 @@
                         @endforeach
                     @else
                         <div class="container">
-                            <div class="row justify-content-center">
+                            <div class="row justify-content-center align-items-center">
                                 <div class="col-md-12 text-center">
-                                    <div class="mb-4 lead">Oops! No products available!</div>
-                                    <a href="{{ route('home') }}" class="btn btn-link">Back to Home</a>
+                                    <div class="mb-4">Oops! No products available!</div>
+                                    {{-- <a href="{{ route('home') }}" class="btn btn-link">Back to Home</a> --}}
                                 </div>
                             </div>
                         </div>

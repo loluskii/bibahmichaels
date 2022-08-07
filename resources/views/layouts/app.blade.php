@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="{{ secure_asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/bootstrap-side-modals.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,12 +42,26 @@
 
         .dropdown:hover .dropdown-menu {
             display: block;
-            margin-top: 0; // remove the gap so it doesn't close
+            margin-top: 5px;
         }
 
         span.bage {
             bottom: 10px;
             transition: all .3s ease-in-out;
+        }
+
+        .nav-item::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #000;
+            transition: width .3s;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+            // transition: width .3s;
         }
     </style>
     @yield('css')
@@ -57,10 +72,10 @@
         @if (Route::is('checkout.*'))
         @else
         <header class="header border-bottom">
-            <div class="d-flex align-items-center justify-content-between top py-2 bg-dark px-5">
-                <a href="" class="text-white">Size Chart</a>
+            <div class="d-flex align-items-center justify-content-between top py-2 bg-dark px-2 px-lg-5 px-md">
+                <p class="mb-0 text-white text-decoration-underline">Size Chart</p>
                 <div class="col-auto">
-                    <select class="form-select form-select-sm bg-transparent text-white" name="currency" id="currency">
+                    <select class="form-select form-select-sm rounded-0 bg-transparent text-white" name="currency" id="currency">
                         @php
                         $currencies = App\Models\Currency::where('status','active')->get();
                         App\Helpers\Helper::currency_load();
@@ -82,9 +97,8 @@
             <div class="container-fluid">
                 <nav class="navbar navbar-expand-lg bg-white py-1">
                     <div class="row gx-0 w-100 align-items-center">
-                        <div class="col-3 col-md-3 text-start">
-                            <button class="navbar-toggler d-lg-none" type="button" aria-controls="collapsibleNavId"
-                                aria-expanded="false">
+                        <div class="col-2 col-md-2 text-start">
+                            <button class="navbar-toggler d-lg-none" data-bs-toggle="modal" data-bs-target="#mobileSideNav" type="button" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 448 512">
                                     <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                                     <path
@@ -92,19 +106,20 @@
                                 </svg>
                             </button>
                         </div>
-                        <div class="col-6 col-md-6 text-center">
+                        <div class="col-8 col-md-8 text-center">
                             <a class="navbar-brand me-0" href="/">
                                 <img src="{{ secure_asset('logo.svg') }}" class="d-inline-block align-text-top" alt=""
                                     srcset="">
                             </a>
                         </div>
-                        <div class="col-3 col-md-3 text-end">
+                        <div class="col-2 col-md-2 text-end">
                             <div class="d-flex justify-content-end align-items-center mobile d-lg-none">
                                 <i class="bi bi-search me-3" style="font-size: 20px"></i>
                                 <div>
-                                    <i class="bi bi-bag" style="font-size: 20px"></i>
-                                    <span
-                                        class="position-absolute bage start-100 translate-middle p-1 bg-dark border border-light rounded-circle"></span>
+                                    <a data-bs-toggle="modal" data-bs-target="#modelId">
+                                        <i class="bi bi-bag" style="font-size: 20px"></i>
+                                        <span class="position-absolute bage start-100 translate-middle p-1 bg-dark border border-light rounded-circle {{ \Cart::session(App\Helpers\Helper::getSessionID())->getContent()->count() > 0 ? '' : 'd-none'}}" ></span>
+                                    </a>
                                 </div>
                             </div>
                             <div class="desktop d-none d-lg-block">
@@ -113,15 +128,15 @@
                                             style="font-weight: 300">Account</a></li>
                                     <li><a href="{{ route('shop.cart') }}"
                                             class="text-decoration-none mx-3 text-uppercase"
-                                            style="font-weight: 300">Cart ( {{
-                                            Cart::session('guest')->getContent()->count() }} )</a></li>
+                                            style="font-weight: 300">Cart ({{
+                                            Cart::session('guest')->getContent()->count() }})</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </nav>
 
-                <nav class="navbar navbar-expand-lg bg-light d-none d-md-block d-lg-block">
+                <nav class="navbar navbar-expand-lg bg-light d-none d-lg-block py-0">
                     {{-- <a class="navbar-brand me-0" href="#">
                         SUBSCRIBE
                     </a> --}}
@@ -132,8 +147,7 @@
                                 <a class="nav-link" aria-current="page" href="{{ route('home') }}">HOME</a>
                             </li>
                             <li class="nav-item dropdown mx-4">
-                                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
-                                    href="#">BIBAH STUDIOS</a>
+                                <a class="nav-link" role="button" href="{{ route('shop') }}">BIBAH STUDIOS</a>
                                 <ul class="dropdown-menu border-0 shadow" style="letter-spacing: normal;">
                                     @foreach (App\Models\Category::all() as $item)
                                     <li><a class="dropdown-item" href="{{ route('shop.category',$item->slug) }}">{{
@@ -165,6 +179,8 @@
             </div>
 
         </header>
+        @include('partials.mobile-nav')
+        @include('partials.cart-modal')
         @endif
 
         <div class="content">

@@ -13,6 +13,10 @@ class CartController extends Controller
     public function add(Request $request, $id)
     {
         $product = Product::find($id);
+        $attributes = [];
+        foreach($request->except('_token','quantity') as $key => $value){
+            $attributes[$key] = $value;
+        }
         // dd(Helper::currency_converter($product->price));
 
         if($request->has('buy_now')){
@@ -20,29 +24,44 @@ class CartController extends Controller
             \Cart::session(Helper::getSessionID())->add(array(
                 'id' => $product->id,
                 'name' => $product->name,
-                'price' => Helper::currency_converter($product->price),
+                'price' => $product->price,
                 'quantity' => $request->quantity,
-                'attributes' => array(
-                    'size' => $request->size ?? '',
-                    'color' => $request->color ?? '',
-                ),
+                'attributes' => $attributes,
                 'associatedModel' => $product
             ));
-            $request->session()->put('session',session_create_id());
+            if(session()->has('session') == false){
+                session()->put('session',session_create_id());
+            }
             return redirect()->route('checkout.page-1',['session'=> session('session')]);
         }
+
         \Cart::session(Helper::getSessionID())->add(array(
             'id' => $product->id,
             'name' => $product->name,
-            'price' => Helper::currency_converter($product->price),
+            'price' => $product->price,
             'quantity' => $request->quantity,
-            'attributes' => array(
-                'size' => $request->size ?? '',
-                'color' => $request->color ?? '',
-            ),
+            'attributes' => $attributes,
             'associatedModel' => $product
         ));
         return redirect()->route('shop.product.show',['slug' => $product->slug]);
+    }
+
+    public function update($id){
+        \Cart::session(Helper::getSessionID())->update($id,[
+            'quantity' =>  array(
+                'relative' => false,
+                'value' => request('quantity'),
+            )
+        ]);
+
+        return back();
+    }
+
+    public function destroy($id)
+    {
+        $cartItems = \Cart::session(Helper::getSessionID())->remove($id);
+
+        return back();
     }
 
 

@@ -44,7 +44,7 @@ class AttributesSeeder extends Seeder
         ]);
         ProductAttribute::create([
             'product_id' => 2,
-            'attribute_name' => 'size',
+            'attribute_name' => 'color',
             'value' => 'black'
         ]);
         ProductAttribute::create([
