@@ -25,8 +25,7 @@ Route::get('/overview/router', function () {
 Route::post('login', [AuthController::class, 'authenticate'])->name('login');
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware('admin')->group(function () {
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/orders/all', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{id}',[OrderController::class, 'show'])->name('orders.show');
@@ -49,5 +48,3 @@ Route::middleware('admin')->group(function () {
     Route::get('/products/{id}/delete', [ProductController::class, 'destroy'])->name('products.delete');
 
     Route::get('/customers/all',[UserController::class, 'index'])->name('user.index');
-
-});
