@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('user_id');
             $table->string('order_number');
             $table->string('order_reference');
+            $table->integer('status')->default(1);
             $table->float('subtotal');
             $table->float('grand_total');
             $table->integer('item_count');

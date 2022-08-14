@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class BaseController extends Controller
 {
+    public function __construct(){
+
+        $this->middleware('force_admin');
+    }
+
     public function getSessionID(){
         if(!Auth::check()){
             return 'guest';
@@ -23,6 +28,9 @@ class BaseController extends Controller
      */
     public function index()
     {
+        if (Auth::check() && Auth::user()->is_admin == 1) {
+            return redirect()->route('admin.dashboard');
+        }
         $products = Product::take(8)->get();
         $categories = Category::all();
         if(session()->has('session') == false){

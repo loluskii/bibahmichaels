@@ -34,4 +34,9 @@ class Order extends Model
     {
         return $this->belongsToMany(Product::class, 'order_items','order_id','product_id')->withPivot('quantity','price','size','color','length');
     }
+
+    public function pending()
+    {
+        return $this->where('status',1)->get();
+    }
 }

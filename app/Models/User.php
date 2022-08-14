@@ -56,6 +56,15 @@ class User extends Authenticatable
         }
     }
 
+    public function getCountry(){
+        $address = Address::where('user_id',$this->id)->where('default',true)->first();
+        if($address){
+            return $address->shipping_state.', '.$address->shipping_country;
+        }else{
+            return null;
+        }
+    }
+
     public function addresses(){
         return $this->hasMany(Address::class);
     }

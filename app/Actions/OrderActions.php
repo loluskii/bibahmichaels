@@ -10,11 +10,14 @@ use Illuminate\Support\Facades\DB;
 class ProductActions
 {
     public static function store($request){
-        
+
     }
 
     public static function update($request, $id){
-
+        $order = Order::findOrFail($id);
+        $order->status = $request->status;
+        $order->update();
+        return true;
     }
 
 }

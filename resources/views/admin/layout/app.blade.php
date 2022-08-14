@@ -2,48 +2,68 @@
 <html lang="en">
 
 <head>
-    <title>Title</title>
-    <!-- Required meta tags -->
+    <title>Home</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="description" content="Bibah Michael">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 
-    <!-- Bootstrap CSS v5.2.0-beta1 -->
-    <link rel="stylesheet" href="{{ secure_asset('admin/css/style.css') }}">
-    <link rel="stylesheet" href="{{ secure_asset('admin/vendor/bootstrap/css/bootstrap.min.css') }}">
-    <link href="{{ secure_asset('admin/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-    <link href="{{ secure_asset('admin/vendor/simple-datatables/style.css') }}" rel="stylesheet">
-    <link href="{{ secure_asset('admin/css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://www.wrraptheme.com/templates/lucid/html/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet"
+        href="https://www.wrraptheme.com/templates/lucid/html/assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet"
+        href="https://www.wrraptheme.com/templates/lucid/html/assets/vendor/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css">
+    <link rel="stylesheet"
+        href="https://www.wrraptheme.com/templates/lucid/html/assets/vendor/chartist/css/chartist.min.css">
+    <link rel="stylesheet"
+        href="https://www.wrraptheme.com/templates/lucid/html/assets/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css">
+    <link rel="stylesheet" href="https://www.wrraptheme.com/templates/lucid/html/assets/vendor/toastr/toastr.min.css">
+
+    <link rel="stylesheet" href="{{ secure_asset('admin/css/main.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('admin/css/color_skins.css') }}">
 
 
 </head>
 
-<body>
-    <!-- ======= Header ======= -->
-    @include('admin.layout.header')
-    <!-- End Header -->
-
-    <!-- ======= Sidebar ======= -->
-    @include('admin.layout.sidebar')
-    <!-- End Sidebar-->
-
-    <main id="main" class="main">
-        <div class="pagetitle">
-            @yield('page-title')
+<body class="theme-cyan">
+    <div class="page-loader-wrapper">
+        <div class="loader">
+            <div class="m-t-30"><img src="https://www.wrraptheme.com/templates/lucid/html/assets/images/logo-icon.svg"
+                    width="48" height="48" alt="Lucid"></div>
+            <p>Please wait...</p>
         </div>
-        <section class="section dashboard">
-            @yield('content')
-        </section>
-    </main>
-    <!-- End #main -->
+    </div>
 
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
+    <div class="wrapper">
+        @include('admin.layout.header')
+        @include('admin.layout.sidebar')
+
+        <div id="main-content">
+            <div class="container-fluid">
+                <div class="block-header">
+                    <div class="row">
+                        <div class="col-lg-5 col-md-8 col-sm-12">
+                            <h2> @yield('title')</h2>
+                        </div>
+                        @yield('content')
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Bootstrap JavaScript Libraries -->
-    <script src="{{ secure_asset('admin/vendor/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ secure_asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ secure_asset('admin/vendor/simple-datatables/simple-datatables.js') }}"></script>
-    <script src="{{ secure_asset('admin/js/main.js') }}"></script>
+    <script src="{{ secure_asset('admin/bundles/libscripts.bundle.js') }}"></script>
+    <script src="{{ secure_asset('admin/bundles/vendorscripts.bundle.js') }}"></script>
+    <script src="{{ secure_asset('admin/bundles/morrisscripts.bundle.js') }}"></script>
+    <script src="{{ secure_asset('admin/bundles/knob.bundle.js') }}"></script>
+    <script src="{{ secure_asset('admin/bundles/mainscripts.bundle.js') }}"></script>
+    <script src="{{ secure_asset('admin/js/index8.js') }}"></script>
+
+    @yield('scripts')
 </body>
 
 </html>
