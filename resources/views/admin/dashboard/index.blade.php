@@ -51,11 +51,7 @@
                 <div class="row clearfix">
                     <div class="col-lg-4 col-md-4 col-sm-4">
                         <span class="text-muted">Monthly Report</span>
-                        <h3 class="text-warning">$4,516</h3>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4">
-                        <span class="text-muted">Annual Report </span>
-                        <h3 class="text-info">$6,481</h3>
+                        <h3 class="text-warning">£{{ number_format($monthlyRevenue, 2) }}</h3>
                     </div>
                 </div>
                 <div id="area_char" class="graph"></div>

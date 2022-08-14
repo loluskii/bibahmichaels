@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Services\OrderQueries;
 use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
@@ -18,9 +19,10 @@ class DashboardController extends Controller
         $recent_orders = Order::latest()->take(10)->get();
         $users = User::count();
         $recent_users = User::latest()->take(10)->get();
+        $monthlyRevenue = OrderQueries::getMonthlyRevenue();
         // $chartSales = UserQueries::orderSalesJson();
         // $chartCustomers = UserQueries::userCountJson();
 
-        return view('admin.dashboard.index',compact('products','sales','orders','recent_orders','users','recent_users'));
+        return view('admin.dashboard.index',compact('products','sales','orders','recent_orders','users','recent_users','monthlyRevenue'));
     }
 }

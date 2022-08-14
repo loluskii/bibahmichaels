@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\DashboardController;
 
 /*
@@ -25,7 +26,8 @@ Route::get('/overview/router', function () {
 Route::post('login', [AuthController::class, 'authenticate'])->name('login');
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware('admin')->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/orders/all', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{id}',[OrderController::class, 'show'])->name('orders.show');
@@ -44,7 +46,14 @@ Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard'
     Route::get('/products',[ProductController::class,'index'])->name('products.index');
     Route::post('/products/create', [ProductController::class, 'create'])->name('products.create');
     Route::get('/products/{id}/show',[ProductController::class, 'view_products'])->name('products.show');
-    Route::get('/products/{id}/update', [ProductController::class, 'edit'])->name('products.update');
+    Route::post('/products/{id}/update', [ProductController::class, 'edit'])->name('products.update');
     Route::get('/products/{id}/delete', [ProductController::class, 'destroy'])->name('products.delete');
 
+    Route::get('/settings/currency', [SettingsController::class, 'currencyIndex'])->name('settings.currency.index');
+    Route::post('/settings/create', [SettingsController::class, 'addCurrency'])->name('settings.currency.add');
+    Route::post('/settings/currency/{id}/update', [SettingsController::class, 'editCurrency'])->name('settings.currency.edit');
+    Route::get('/settings/currency/{id}/delete', [SettingsController::class, 'deleteCurrency'])->name('settings.currency.delete');
+
     Route::get('/customers/all',[UserController::class, 'index'])->name('user.index');
+
+});

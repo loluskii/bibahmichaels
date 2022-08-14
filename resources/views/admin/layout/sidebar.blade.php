@@ -51,8 +51,7 @@
                     <a href="#" class="has-arrow"><i class="icon-diamond"></i> <span>Settings</span></a>
                     <ul>
                         <li><a href="ui-typography.html">Locales</a></li>
-                        <li><a href="ui-tabs.html">Currency Settings</a></li>
-                        <li><a href="ui-buttons.html">Shipping</a></li>
+                        <li><a href="{{ route('admin.settings.currency.index') }}">Currency Settings</a></li>
                     </ul>
                 </li>
             </ul>

@@ -48,10 +48,7 @@ class AuthController extends Controller
     {
         Auth::logout();
 
-        return redirect('/admin')->with(
-            'success',
-            'Logged Out Successfully',
-        );
+        return redirect()->route('admin.login.view');
     }
 
 }

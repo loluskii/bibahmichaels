@@ -13,6 +13,7 @@ class Currency extends Model
         'symbol',
         'exchange_rate',
         'code',
-        'status'
+        'status',
+        'icon',
     ];
 }
