@@ -104,6 +104,7 @@
             <h4>NEW ARRIVALS</h4>
         </div>
         <div class="row justify-content-center">
+            @if ($products->count() > 0)
             @foreach ($products as $product)
             @php
             $currencies = App\Models\Currency::where('status','active')->get();
@@ -133,6 +134,9 @@
             <div class="d-flex justify-content-center text-center">
                 <button class="btn btn-dark">VISIT STORE</button>
             </div>
+            @else
+            <p class="py-5">No Products Available</p>
+            @endif
         </div>
     </div>
 </div>
