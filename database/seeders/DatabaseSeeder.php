@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CategorySeeder::class,
             // ProductSeeder::class,
-            AttributesSeeder::class,
+            // AttributesSeeder::class,
             ImageSeeder::class,
             AddressSeeder::class,
             CurrencySeeder::class,
