@@ -19,9 +19,10 @@ return new class extends Migration
             $table->string('lname');
             $table->string('email');
             $table->string('event_date');
-            $table->string('standard_size');
+            $table->string('measurements');
             $table->string('country');
             $table->longText('order_description');
+            $table->string('budget');
             $table->timestamps();
         });
     }

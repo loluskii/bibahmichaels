@@ -147,7 +147,7 @@
                                 <a class="nav-link" aria-current="page" href="{{ route('home') }}">HOME</a>
                             </li>
                             <li class="nav-item dropdown mx-4">
-                                <a class="nav-link" role="button" href="{{ route('shop') }}">BIBAH STUDIOS</a>
+                                <a class="nav-link" role="button" href="{{ route('shop') }}">SHOP</a>
                                 <ul class="dropdown-menu border-0 shadow" style="letter-spacing: normal;">
                                     @foreach (App\Models\Category::all() as $item)
                                     <li><a class="dropdown-item" href="{{ route('shop.category',$item->slug) }}">{{
@@ -161,11 +161,11 @@
 
 
                             <li class="nav-item mx-4">
-                                <a href="{{ route('bridal') }}" class="nav-link">BRIDAL</a>
+                                <a href="{{ route('bridal') }}" class="nav-link">CUSTOM ORDER</a>
                             </li>
-                            <li class="nav-item mx-4">
+                            {{-- <li class="nav-item mx-4">
                                 <a href="{{ route('bespoke') }}" class="nav-link">BESPOKE</a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item">
                                 <a href="{{ route('contact') }}" class="nav-link">CONTACT</a>
                             </li>

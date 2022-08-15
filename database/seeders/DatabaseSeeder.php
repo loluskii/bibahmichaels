@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             // ProductSeeder::class,
             // AttributesSeeder::class,
-            ImageSeeder::class,
+            // ImageSeeder::class,
             AddressSeeder::class,
             CurrencySeeder::class,
         ]);
