@@ -31,6 +31,11 @@
                                             $categories = App\Models\Category::all();
                                             @endphp
                                             {{-- <ul class="list-unstyled"> --}}
+                                                <div class="py-2">
+                                                    <a class="text-muted"
+                                                        style="font-weight: 800; font-size: 13px; text-transform: uppercase; text-decoration: none"
+                                                        href="{{ route('shop') }}">ALL</a>
+                                                </div>
                                                 @foreach ($categories as $category)
                                                 <div class="py-2">
                                                     <a class="text-muted"

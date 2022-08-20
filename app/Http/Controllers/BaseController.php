@@ -13,6 +13,9 @@ class BaseController extends Controller
     public function __construct(){
 
         $this->middleware('force_admin');
+        if(session()->has('session') == false){
+            session()->put('session',session_create_id());
+        }
     }
 
     public function getSessionID(){
@@ -33,9 +36,9 @@ class BaseController extends Controller
         }
         $products = Product::take(8)->get();
         $categories = Category::all();
-        if(session()->has('session') == false){
-            session()->put('session',session_create_id());
-        }
+        // if(session()->has('session') == false){
+        //     session()->put('session',session_create_id());
+        // }
         return view('welcome', compact('products','categories'));
     }
 
@@ -85,6 +88,7 @@ class BaseController extends Controller
         }
         return view('shop.cart', compact('cartItems', 'cartTotalQuantity'));
     }
+    
 
     public function customOrder(Request $request){
         dd($request->all());
