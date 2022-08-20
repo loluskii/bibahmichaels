@@ -21,7 +21,7 @@
                                         <button class="ps-0 accordion-button collapsed" style="font-weight: 500;" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
                                             aria-expanded="false" aria-controls="flush-collapseOne">
-                                            BIBAH STUDIOS
+                                            SHOP
                                         </button>
                                     </h2>
                                     <div id="flush-collapseOne" class="accordion-collapse collapse"
