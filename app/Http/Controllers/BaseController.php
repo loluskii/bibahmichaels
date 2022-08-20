@@ -77,7 +77,7 @@ class BaseController extends Controller
     }
 
     public function viewCart(){
-        
+
         $cartTotalQuantity = \Cart::session(Helper::getSessionID())->getContent()->count();
         $cartItems = \Cart::session(Helper::getSessionID())->getContent();
         if(session()->has('session') == false){
@@ -86,15 +86,9 @@ class BaseController extends Controller
         return view('shop.cart', compact('cartItems', 'cartTotalQuantity'));
     }
 
-    public function bridalOrder(Request $request){
+    public function customOrder(Request $request){
         dd($request->all());
     }
-
-    public function bespokeOrder(Request $request)
-    {
-        dd('');
-    }
-
 
 
 

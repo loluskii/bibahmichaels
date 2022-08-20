@@ -165,9 +165,9 @@
                             <li class="nav-item mx-4">
                                 <a href="{{ route('custom') }}" class="nav-link">CUSTOM ORDER</a>
                             </li>
-                            {{-- <li class="nav-item mx-4">
-                                <a href="{{ route('bespoke') }}" class="nav-link">BESPOKE</a>
-                            </li> --}}
+                            <li class="nav-item mx-4">
+                                <a href="{{ route('gallery') }}" class="nav-link">GALLERY</a>
+                            </li>
                             <li class="nav-item">
                                 <a href="{{ route('contact') }}" class="nav-link">CONTACT</a>
                             </li>

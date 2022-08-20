@@ -5,7 +5,14 @@
     <div class="row py-5">
         <div class="col-md-7 mx-auto">
             <h2 style="font-weight: 300">Custom Design Order</h2>
-            <p>Please complete the form below to place your order. We aim to respond to your requests within 24-48 hours, after which we provide a realistic estimate for delivery date and cost.</p>
+            <p>In addition to the designs offered in our collections, Bibah Michael also
+                offers custom designs for any client that wants to bring their
+                dream dress to life.</p>
+
+                <p>If you are looking for a custom design, please fill out the
+                Custom Design Inquiry form below.Our team will get back to you within 1-3 business days. We will guide
+                you through the process step by step and provide a realistic estimate
+                for deliver date and cost.</p>
 
             <form action="" class=" mt-5">
                 <div class="row">
