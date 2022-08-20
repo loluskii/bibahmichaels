@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\Helper;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\CartController;

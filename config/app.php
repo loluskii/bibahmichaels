@@ -210,12 +210,12 @@ return [
     |
     */
 
-    'aliases' => Facade::defaultAliases()->merge([
+    'aliases' => [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
         'Helpers' => App\Helpers\Helper::class,
         'PayPal' => Srmklive\PayPal\Facades\PayPal::class,
         'Paystack' => Unicodeveloper\Paystack\Facades\Paystack::class,
-    ])->toArray(),
+    ],
 
 ];
