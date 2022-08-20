@@ -54,6 +54,10 @@
                   <label for="" class="form-label">Order Request Ddescription</label>
                   <textarea class="form-control form-control-lg" name="order_desc" id="" rows="3"></textarea>
                 </div>
+                <div class="mb-3">
+                    <label for="" class="form-label">Budget</label>
+                    <input type="text" name="budget" id="" class="form-control form-control-lg" placeholder="" aria-describedby="helpId">
+                </div>
                 <button type="submit" disabled class="btn btn-dark rounded-0 btn-block text-uppercase btn-block w-100">submit request</button>
             </form>
         </div>
