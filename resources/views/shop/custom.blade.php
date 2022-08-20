@@ -9,10 +9,10 @@
                 offers custom designs for any client that wants to bring their
                 dream dress to life.</p>
 
-                <p>If you are looking for a custom design, please fill out the
-                Custom Design Inquiry form below.Our team will get back to you within 1-3 business days. We will guide
-                you through the process step by step and provide a realistic estimate
-                for deliver date and cost.</p>
+                <p>If you are looking for a custom design, please fill out the form below.
+                Our team will get back to you within 1-3 business days and guide
+                you through the process. We will also provide a realistic estimate
+                for the delivery date and cost.</p>
 
             <form action="" class=" mt-5">
                 <div class="row">
