@@ -7,7 +7,7 @@
             <h2 style="font-weight: 300">Custom Design Order</h2>
             <p>Please complete the form below to place your order. We aim to respond to your requests within 24-48 hours, after which we provide a realistic estimate for delivery date and cost.</p>
 
-            <form action="{{ route('store.bridal') }}" class=" mt-5">
+            <form action="" class=" mt-5">
                 <div class="row">
                     <div class="col">
                         <div class="mb-3">
@@ -47,7 +47,7 @@
                   <label for="" class="form-label">Order Request Ddescription</label>
                   <textarea class="form-control form-control-lg" name="order_desc" id="" rows="3"></textarea>
                 </div>
-                <button type="submit" class="btn btn-dark rounded-0 btn-block text-uppercase btn-block w-100">submit request</button>
+                <button type="submit" disabled class="btn btn-dark rounded-0 btn-block text-uppercase btn-block w-100">submit request</button>
             </form>
         </div>
     </div>

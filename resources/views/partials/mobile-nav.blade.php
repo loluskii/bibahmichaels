@@ -44,10 +44,7 @@
                                 </div>
                             </div>
                             <div class="py-4 border-bottom">
-                                <a class="text-decoration-none text-uppercase" style="font-weight: 500; font-size: 0.9rem;" href="{{ route('shop') }}">BRIDAL</a>
-                            </div>
-                            <div class="py-4 border-bottom">
-                                <a class="text-decoration-none text-uppercase" style="font-weight: 500; font-size: 0.9rem;" href="{{ route('shop') }}">BESPOKE</a>
+                                <a class="text-decoration-none text-uppercase" style="font-weight: 500; font-size: 0.9rem;" href="{{ route('custom') }}">CUSTOM ORDER</a>
                             </div>
                             <div class="py-4 border-bottom">
                                 <a class="text-decoration-none text-uppercase" style="font-weight: 500; font-size: 0.9rem;" href="{{ route('shop') }}">CONTACT</a>

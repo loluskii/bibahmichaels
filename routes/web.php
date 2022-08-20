@@ -55,14 +55,12 @@ Route::get('/payment/callback', [PaymentController::class, 'paystackHandleGatewa
 Route::get('/user',[UserController::class, 'index'])->name('user');
 
 //Bridal & Bespoke Orders
-Route::get('/bridal-order', function () {
-    return view('shop.bridal');
-})->name('bridal');
-Route::get('/bespoke-order', function () {
-    return view('shop.bespoke');
-})->name('bespoke');
-Route::post('/bridal-order/store',[BaseController::class,'bridalOrder'])->name('store.bridal');
-Route::post('/bridal-order',[BaseController::class,'bespokeOrder'])->name('store.bespoke');
+Route::get('/custom-order', function () {
+    return view('shop.custom');
+})->name('custom');
+
+// Route::post('/bridal-order/store',[BaseController::class,'bridalOrder'])->name('store.bridal');
+// Route::post('/bridal-order',[BaseController::class,'bespokeOrder'])->name('store.bespoke');
 
 //CMS Routes
 Route::get('/contact', function () {

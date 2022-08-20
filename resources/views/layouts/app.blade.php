@@ -163,7 +163,7 @@
 
 
                             <li class="nav-item mx-4">
-                                <a href="{{ route('bridal') }}" class="nav-link">CUSTOM ORDER</a>
+                                <a href="{{ route('custom') }}" class="nav-link">CUSTOM ORDER</a>
                             </li>
                             {{-- <li class="nav-item mx-4">
                                 <a href="{{ route('bespoke') }}" class="nav-link">BESPOKE</a>
