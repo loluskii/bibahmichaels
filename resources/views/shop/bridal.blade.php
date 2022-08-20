@@ -40,13 +40,9 @@
                     <input type="text" name="measurements" id="" class="form-control form-control-lg" placeholder="" aria-describedby="helpId">
                 </div>
                 <div class="mb-3">
-                    <label for="" class="form-label">Your Country</label>
-                    <select class="form-select form-select-lg" name="country" id="">
-                      <option>New Delhi</option>
-                      <option>Istanbul</option>
-                      <option>Jakarta</option>
-                    </select>
-                  </div>
+                  <label for="" class="form-label">Design image</label>
+                  <input type="file" class="form-control" name="" id="" placeholder="" aria-describedby="fileHelpId">
+                </div>
                 <div class="mb-3">
                   <label for="" class="form-label">Order Request Ddescription</label>
                   <textarea class="form-control form-control-lg" name="order_desc" id="" rows="3"></textarea>

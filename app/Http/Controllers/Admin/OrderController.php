@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Order;
-use App\Models\Bridal;
-use App\Models\Bespoke;
+use App\Models\Custom;
 use Illuminate\Http\Request;
 use App\Actions\OrderActions;
 use App\Http\Controllers\Controller;
@@ -68,28 +67,16 @@ class OrderController extends Controller
         }
     }
 
-    public function bespokeOrders()
+    public function customOrders()
     {
         // return true;
-        $orders = Bespoke::all();
-        return view('admin.sales.bespoke.index', compact('orders'));
+        $orders = Custom::all();
+        return view('admin.sales.custom.index', compact('orders'));
     }
 
-    public function viewBespoke($id)
+    public function viewCustom($id)
     {
-        $order = Bespoke::findOrFail($id);
-        return view('admin.sales.bespoke.show', compact('order'));
-    }
-
-    public function bridalOrders()
-    {
-        $orders = Bridal::all();
-        return view('admin.sales.bridals.index', compact('orders'));
-    }
-
-    public function viewBridal($id)
-    {
-        $order = Bridal::findOrFail($id);
-        return view('admin.sales.bridals.show', compact('order'));
+        $order = Custom::findOrFail($id);
+        return view('admin.sales.custom.show', compact('order'));
     }
 }

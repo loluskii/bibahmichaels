@@ -40,20 +40,20 @@
 
                     <ul class="Linklist">
                         <li class="Linklist__Item">
-                            <a href="/pages/contact-us" class="Link Link--primary">Contact Us</a>
+                            <a href="{{ route('contact') }}" class="Link Link--primary">Contact Us</a>
                         </li>
-                        <li class="Linklist__Item">
+                        {{-- <li class="Linklist__Item">
                             <a href="/pages/frequently-asked-questions" class="Link Link--primary">FAQs</a>
-                        </li>
+                        </li> --}}
                         <li class="Linklist__Item">
                             <a href="https://nuraniya-studios.myshopify.com/apps/sizings?id=16613353"
                                 class="Link Link--primary">Size Chart</a>
                         </li>
                         <li class="Linklist__Item">
-                            <a href="/pages/shipping" class="Link Link--primary">Shipping</a>
+                            <a href="{{ route('shipping') }}" class="Link Link--primary">Shipping</a>
                         </li>
                         <li class="Linklist__Item">
-                            <a href="/pages/returns-exchanges" class="Link Link--primary">Returns &amp; Exchanges</a>
+                            <a href="{{ route('returns') }}" class="Link Link--primary">Returns &amp; Exchanges</a>
                         </li>
                     </ul>
                 </div>
@@ -64,13 +64,13 @@
 
                     <ul class="Linklist">
                         <li class="Linklist__Item">
-                            <a href="/pages/contact-us" class="Link Link--primary">Terms of Service</a>
+                            <a href="#" class="Link Link--primary">Terms of Service</a>
                         </li>
                         <li class="Linklist__Item">
-                            <a href="/pages/frequently-asked-questions" class="Link Link--primary">Privacy Policy</a>
+                            <a href="#" class="Link Link--primary">Privacy Policy</a>
                         </li>
                         <li class="Linklist__Item">
-                            <a href="/pages/frequently-asked-questions" class="Link Link--primary">Cookie Policy</a>
+                            <a href="#" class="Link Link--primary">Cookie Policy</a>
                         </li>
                     </ul>
                 </div>

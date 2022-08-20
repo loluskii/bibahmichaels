@@ -9,8 +9,11 @@ use Illuminate\Support\Facades\DB;
 
 class ProductActions
 {
-    public static function store($request){
-
+    public static function store($order, $amount, $subamount, $user_id = null, $method, $orderItems = null){
+        $newOrder = new Order();
+        $ref = Str::random(20);
+        $newOrder->user_id =
+        $newOrder->order_number = uniqid('#');
     }
 
     public static function update($request, $id){

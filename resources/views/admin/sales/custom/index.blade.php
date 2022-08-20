@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 
 @section('title')
-    Bridal Orders
+    Custom Orders
 @endsection
 
 
@@ -11,7 +11,7 @@
         <div class="card overflowhidden">
             <div class="body">
                 <h3>{{ $orders->count() }} <i class="icon-briefcase float-right"></i></h3>
-                <span>Total Bridal Orders</span>
+                <span>Total Custom Orders</span>
             </div>
         </div>
     </div>
@@ -48,7 +48,7 @@
                                     <td>{{ $order->event_date->format('d M, Y') }}</td>
                                     <td>{{ $order->country }}</td>
                                     <td>{{ $order->created_at }}</td>
-                                    <td><a  href="{{ route('admin.orders.bespoke.show', $order->id) }}" class="btn btn-info btn-sm">View</a></td>
+                                    <td><a  href="{{ route('admin.orders.custom.show', $order->id) }}" class="btn btn-info btn-sm">View</a></td>
                                 </tr>
                                 @endforeach
                             @else

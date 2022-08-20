@@ -13,14 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bridals', function (Blueprint $table) {
+        Schema::create('customs', function (Blueprint $table) {
             $table->id();
             $table->string('fname');
             $table->string('lname');
             $table->string('email');
+            $table->string('occassion');
             $table->string('event_date');
             $table->string('measurements');
-            $table->string('country');
+            $table->string('image')->nullable();
             $table->longText('order_description');
             $table->string('budget');
             $table->timestamps();

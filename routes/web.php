@@ -65,10 +65,6 @@ Route::post('/bridal-order/store',[BaseController::class,'bridalOrder'])->name('
 Route::post('/bridal-order',[BaseController::class,'bespokeOrder'])->name('store.bespoke');
 
 //CMS Routes
-Route::get('/faqs', function () {
-    return view('cms.faqs');
-})->name('faqs');
-
 Route::get('/contact', function () {
     return view('cms.contact');
 })->name('contact');
@@ -77,7 +73,11 @@ Route::get('/size-chart', function () {
     return view('cms.size-chart');
 })->name('size_chart');
 
-Route::get('/shipping-returns', function () {
+Route::get('/return-policy', function () {
+    return view('cms.returns');
+})->name('returns');
+
+Route::get('/shipping', function () {
     return view('cms.shipping');
-})->name('shipping_and_returns');
+})->name('shipping');
 

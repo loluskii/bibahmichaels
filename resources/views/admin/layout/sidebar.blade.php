@@ -29,8 +29,7 @@
                     <a href="#" class="has-arrow"><i class="icon-grid"></i> <span>Sales</span></a>
                     <ul>
                         <li class="{{ Route::is('admin.orders.index') ? 'active' : '' }}"><a href="{{ route('admin.orders.index') }}">Orders</a></li>
-                        <li class="{{ Route::is('admin.orders.bespoke') ? 'active' : '' }}"><a href="{{ route('admin.orders.bespoke') }}">Bespoke Orders</a></li>
-                        <li class="{{ Route::is('admin.orders.bridal') ? 'active' : '' }}"><a href="{{ route('admin.orders.bridal') }}">Bridal Orders</a></li>
+                        <li class="{{ Route::is('admin.orders.custom') ? 'active' : '' }}"><a href="{{ route('admin.orders.custom') }}">Custom Orders</a></li>
                     </ul>
                 </li>
                 <li class="{{ Route::is('admin.category.*') ? 'active' : '' }}">

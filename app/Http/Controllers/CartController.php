@@ -14,7 +14,7 @@ class CartController extends Controller
     {
         $product = Product::find($id);
         $attributes = [];
-        foreach($request->except('_token','quantity') as $key => $value){
+        foreach($request->except('_token','quantity','buy_now') as $key => $value){
             $attributes[$key] = $value;
         }
         // dd(Helper::currency_converter($product->price));

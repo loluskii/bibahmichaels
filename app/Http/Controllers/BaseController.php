@@ -77,6 +77,7 @@ class BaseController extends Controller
     }
 
     public function viewCart(){
+        
         $cartTotalQuantity = \Cart::session(Helper::getSessionID())->getContent()->count();
         $cartItems = \Cart::session(Helper::getSessionID())->getContent();
         if(session()->has('session') == false){

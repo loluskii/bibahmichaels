@@ -20,7 +20,7 @@ class isAdmin
             return $next($request);
         }
         else{
-            abort(404);
+            return redirect()->route('admin.login.view');
         }
     }
 }

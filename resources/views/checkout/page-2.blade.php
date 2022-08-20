@@ -90,7 +90,7 @@
                                     <div class="contact d-flex justify-content-between align-items-center">
                                         <div class="row">
                                             <div class="col-auto">
-                                                <span class="text-muted">Contact</span>
+                                                <span class="text-muted">Contact</span> {{ \Cart::session(App\Helpers\Helper::getSessionID())->getTotal(); }}
                                             </div>
                                             <div class="col-auto">
                                                 <span class=" text-wrap">{{ $order->shipping_email }}</span>
@@ -114,12 +114,23 @@
                                     </div>
                                 </div>
                             </div>
+                            @php
+                            $currencies = App\Models\Currency::where('status','active')->get();
+                            App\Helpers\Helper::currency_load();
+                            $currency_code = session('currency_code');
+                            $currency_symbol = session('currency_symbol');
+                            if($currency_symbol == ""){
+                            $system_default_currency_info = session('system_default_currency_info');
+                            $currency_symbol = $system_default_currency_info->symbol;
+                            $currency_code = $system_default_currency_info->code;
+                            }
+                            @endphp
                             <form action="{{ route('checkout.page-2.store') }}" method="POST" class="pb-5">
                                 @csrf
                                 <input type="hidden" name="subtotal"
-                                    value="{{ \Cart::session(auth()->check() ? auth()->id() : 'guest')->getSubTotal() }}">
+                                    value="{{ \Cart::session(App\Helpers\Helper::getSessionID())->getSubTotal() }}">
                                 <input type="hidden" name="grand_total"
-                                    value="{{ \Cart::session(auth()->check() ? auth()->id() : 'guest')->getTotal() }}">
+                                    value="{{ \Cart::session(App\Helpers\Helper::getSessionID())->getTotal() }}">
 
                                 <div class="shipping-information">
                                     <h4 style="font-weight: normal" class="mb-4">Shipping Method</h4>
@@ -142,7 +153,7 @@
                                                     </small>
                                                 </label>
                                             </div>
-                                            <span>${{ $conditionValue }}</span>
+                                            <span> {{ $currency_symbol }} {{ number_format(App\Helpers\Helper::currency_converter($conditionValue), 2) }}</span>
                                         </div>
                                     </label>
                                 </div>
@@ -162,56 +173,7 @@
             </div>
         </div>
         <div class="col-md-5 bg-light  d-sm-none d-md-block border-start ps-4 pt-5 d-sm-block d-none">
-            <div class="checkout-main">
-                <div class=" pe-0 me-0 pe-md-5 me-md-5 pe-lg-5">
-                    <div class="product border-bottom">
-                        <table class="table table-borderless">
-                            <tbody>
-                                @foreach ($cartItems as $item)
-                                <tr class="d-flex align-items-center">
-                                    <td scope="row" style="width: 20%; position: relative; height: 64px; width: 64px">
-                                        <img class="img-fluid img-thumbnail" style=""
-                                            src="{{ secure_asset('images/pexels-gabriel-rodrigues-7050929.jpg') }}"
-                                            alt="">
-
-                                        <span class="position-absolute badge bg-dark border border-light rounded-circle"
-                                            style="">{{ $item->quantity }}</span>
-
-                                    </td>
-                                    <td style="width: 60%;">
-                                        <span
-                                            class="product__description__variant order-summary__small-text text-uppercase"
-                                            style="display: block;">{{ $item->name }}</span>
-                                    </td>
-                                    <td style="width: 20%; justify-content: end">
-                                        <div class="float-end">
-                                            <span class="currency">£</span>{{ number_format($item->price, 2) }}
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-
-                    </div>
-                    <div class="price border-bottom">
-                        <div class="d-flex justify-content-between align-items-center pt-3 pb-2">
-                            <span>Subtotal</span>
-                            <span><span class="currency">£</span>{{ number_format(Cart::session(auth()->check() ?
-                                auth()->id() : 'guest')->getSubTotal(), 2) }}</span>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p>Shipping</p>
-                            <p><small class="text-muted">Calculated at the next step</small></p>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center py-4">
-                        <h5>Total</h5>
-                        <h3>${{ number_format(Cart::session(auth()->check() ? auth()->id() : 'guest')->getTotal(), 2) }}
-                        </h3>
-                    </div>
-                </div>
-            </div>
+            @include('partials.fullpage-cart_details')
         </div>
     </div>
 </div>

@@ -34,9 +34,16 @@ class ProductActions
 
             }
             if($request->has('image')){
+                // SaveProductImage::dispatch($request->file('image'),$product)
+
+
+
+
                 foreach ($request->file('image') as $imagefile){
-                    $path = $imagefile->storeOnCloudinary('bibahmichael/'.$product->slug);
-                    $imageUrl =  $path->getSecurePath();
+                    $filename = date('YmdHi').$imagefile->getClientOriginalName();
+                    $imagefile->move(public_path('products/'.$product->slug), $filename);
+                    // $path = $imagefile->storeOnCloudinary('bibahmichael/'.$product->slug);
+                    $imageUrl =  $filename;
                     $image = new Image;
                     $image->product_id = $product->id;
                     $image->thumbnail = $product->slug;

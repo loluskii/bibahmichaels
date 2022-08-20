@@ -70,10 +70,12 @@
 <body>
     <div class="main">
         @if (Route::is('checkout.*'))
+
         @else
         <header class="header border-bottom">
             <div class="d-flex align-items-center justify-content-between top py-2 bg-dark px-2 px-lg-5 px-md">
-                <p class="mb-0 text-white text-decoration-underline">Size Chart</p>
+                <p class="mb-0 text-white text-decoration-underline" data-bs-toggle="modal" data-bs-target="#size-chart">Size Chart</p>
+                @include('partials.size-chart')
                 <div class="col-auto">
                     <select class="form-select form-select-sm rounded-0 bg-transparent text-white" name="currency" id="currency">
                         @php
@@ -182,7 +184,11 @@
         @include('partials.mobile-nav')
         @include('partials.cart-modal')
         @endif
+        @if (Route::is('home'))
+            {{-- @include('partials.shop-with-bm-modal') --}}
+        @else
 
+        @endif
         <div class="content">
             @yield('content')
         </div>
@@ -201,6 +207,7 @@
     </script>
     <script>
         $(document).ready(function (){
+            $("#myModal").modal('show');
             $('#currency').on('change',function (){
                 var currency_code = $(this).val();
                 $.ajax({

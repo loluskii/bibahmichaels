@@ -144,7 +144,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="accordion-item">
+                                        <div class="accordion-item d-none">
                                             <div class="accordion-button">
                                                 <div class="custom-control custom-radio">
                                                     <input data-bs-toggle="collapse" data-bs-target="#flutterwave"

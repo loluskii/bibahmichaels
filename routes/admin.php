@@ -32,10 +32,8 @@ Route::middleware('admin')->group(function () {
     Route::get('/orders/all', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{id}',[OrderController::class, 'show'])->name('orders.show');
     Route::post('/orders/update/{id}',[OrderController::class, 'update'])->name('orders.update');
-    Route::get('/bespoke',[OrderController::class, 'bespokeOrders'])->name('orders.bespoke');
-    Route::get('/bespoke/{id}',[OrderController::class, 'viewBespoke'])->name('orders.bespoke.show');
-    Route::get('/bridals',[OrderController::class, 'bridalOrders'])->name('orders.bridal');
-    Route::get('/bridals/{id}',[OrderController::class, 'viewBridal'])->name('orders.bridal.show');
+    Route::get('/custom',[OrderController::class, 'customOrders'])->name('orders.custom');
+    Route::get('/custom/{id}',[OrderController::class, 'viewCustom'])->name('orders.custom.show');
 
     Route::get('/category/all', [CategoryController::class, 'index'])->name('category.index');
     Route::post('/category/create',[CategoryController::class,'create'])->name('category.store');
