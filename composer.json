@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "cloudinary-labs/cloudinary-laravel": "^2.0",
         "darryldecode/cart": "^4.2",
+        "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "kingflamez/laravelrave": "^4.2",
         "laravel/framework": "^8.40",
