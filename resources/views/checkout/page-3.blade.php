@@ -144,7 +144,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="accordion-item d-none">
+                                        <div class="accordion-item">
                                             <div class="accordion-button">
                                                 <div class="custom-control custom-radio">
                                                     <input data-bs-toggle="collapse" data-bs-target="#flutterwave"
@@ -218,7 +218,7 @@
                                         <a href="{{ route('checkout.page-2',$session) }}"
                                             class="text-decoration-none"><i class="fa fa-angle-left me-3"
                                                 aria-hidden="true"></i> Return to shipping</a>
-                                        <button type="submit" disabled class="btn btn-primary btn-dark py-3 px-3"
+                                        <button type="submit"  class="btn btn-primary btn-dark py-3 px-3"
                                             style="font-weight: 400">Complete Order</button>
                                     </div>
                                 </form>

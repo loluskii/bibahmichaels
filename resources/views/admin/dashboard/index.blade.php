@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 
 @section('title')
-    Dashboard
+Dashboard
 @endsection
 
 
@@ -16,14 +16,14 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6">
+    {{-- <div class="col-lg-3 col-md-6">
         <div class="card overflowhidden">
             <div class="body">
                 <h3>{{ $sales }} <i class="fa fa-money float-right"></i></h3>
                 <span>Total Sales</span>
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="col-lg-3 col-md-6">
         <div class="card overflowhidden">
             <div class="body">
@@ -45,13 +45,21 @@
     <div class="col-md-12">
         <div class="card">
             <div class="header">
-                <h2>Annual Report</h2>
+                <h2>Monthly Report</h2>
             </div>
             <div class="body">
                 <div class="row clearfix">
                     <div class="col-lg-4 col-md-4 col-sm-4">
-                        <span class="text-muted">Monthly Report</span>
-                        <h3 class="text-warning">£{{ number_format($monthlyRevenue, 2) }}</h3>
+                        <span class="text-muted">Monthly Report (GBP)</span>
+                        <h3 class="text-warning">£{{ number_format($gbp, 2) }}</h3>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <span class="text-muted">Monthly Report (NGN)</span>
+                        <h3 class="text-warning">₦{{ number_format($ngn, 2) }}</h3>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <span class="text-muted">Monthly Report (USD)</span>
+                        <h3 class="text-warning">${{ number_format($usd, 2) }}</h3>
                     </div>
                 </div>
                 <div id="area_char" class="graph"></div>
@@ -82,21 +90,52 @@
                         </thead>
                         <tbody>
                             @if ($recent_orders->count() > 0)
-                                @foreach ($recent_orders as $order)
-                                <tr>
-                                    <td>{{ $loop->index }}</td>
-                                    <td>{{ $order->order_reference }}</td>
-                                    <td>{{ $order->shipping_email }}</td>
-                                    <td>{{ $order->payment_method }}</td>
-                                    <td>{{ $order->grand_total }}</td>
-                                    <td><span class="badge badge-success">{{ $order->status }}</span></td>
-                                    <td><a  href="{{ route('admin.orders.show', $order->id) }}" class="btn btn-info btn-sm">View</a></td>
-                                </tr>
-                                @endforeach
+                            @foreach ($recent_orders as $key => $order)
+                            @php
+                            if($order->status == 1){
+                                // $color == null;
+                                $status = 'Payment Confirmed';
+                            }elseif ($order->status == 2) {
+                                // $color = null;
+                                $status = 'Awaiting Pickup';
+                            }elseif ($order->status == 3) {
+                                // $color = null;
+                                $status = 'Shipping in Progress';
+                            }elseif ($order->status == 5) {
+                                // $color = 'bg-success';
+                                $status = 'Delivered';
+                            }elseif ($order->status == 6) {
+                                $color = 'bg-danger';
+                                $status = 'Cancelled';
+                            }else {
+                                $color = 'bg-secondary';
+                                $status = 'Unknown';
+                            }
+
+
+                            if($order->order_currency == "GBP"){
+                                $code = "£";
+                            }else if($order->order_currency == "USD"){
+                                $code = "$";
+                            }else{
+                                $code = "₦";
+                            }
+                            @endphp
+                            <tr>
+                                <td>{{ ++$key }}</td>
+                                <td>{{ $order->order_reference }}</td>
+                                <td>{{ $order->shipping_email }}</td>
+                                <td>{{ $order->payment_method }}</td>
+                                <td>{{ $code }}{{ number_format($order->grand_total, 2) }}</td>
+                                <td><span class="badge badge-success">{{ $status }}</span></td>
+                                <td><a href="{{ route('admin.orders.show', $order->order_reference) }}"
+                                        class="btn btn-info btn-sm">View</a></td>
+                            </tr>
+                            @endforeach
                             @else
-                                <tr class="text-center" >
-                                    <td colspan="7">No Recent Orders</td>
-                                </tr>
+                            <tr class="text-center">
+                                <td colspan="7">No Recent Orders</td>
+                            </tr>
                             @endif
                         </tbody>
                     </table>

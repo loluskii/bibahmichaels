@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             // ImageSeeder::class,
             AddressSeeder::class,
             CurrencySeeder::class,
+            CustomSeeder::class,
         ]);
     }
 }

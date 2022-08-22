@@ -42,7 +42,7 @@ Register | Bibah Michael
                             <label for="" class="form-label"></label>
                             <input type="text" required name="fname" id=""
                                 class="form-control form-control-lg"
-                                placeholder="Last Name" aria-describedby="helpId">
+                                placeholder="First Name" aria-describedby="helpId">
                         </div>
                         <div class="mb-2">
                             <label for="" class="form-label"></label>

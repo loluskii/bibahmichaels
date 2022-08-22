@@ -31,22 +31,22 @@
                                 <th style="width:60px;">#</th>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th>Phone Number</th>
+                                <th>Occassion</th>
                                 <th>Event Date</th>
-                                <th>Country</th>
                                 <th>Created at</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @if ($orders->count() > 0)
-                                @foreach ($orders as $order)
+                                @foreach ($orders as $key => $order)
                                 <tr>
-                                    <td>{{ $loop->index }}</td>
+                                    <td>{{ ++$key }}</td>
                                     <td>{{ $order->fname }} {{ $order->lname }}</td>
-                                    <td>{{ $order->phone_number }}</td>
-                                    <td>{{ $order->event_date->format('d M, Y') }}</td>
-                                    <td>{{ $order->country }}</td>
+                                    <td>{{ $order->email }}</td>
+                                    <td>{{ $order->occassion }}</td>
+                                    <td>{{ $order->event_date }}</td>
+                                    {{-- <td>{{ $order->country }}</td> --}}
                                     <td>{{ $order->created_at }}</td>
                                     <td><a  href="{{ route('admin.orders.custom.show', $order->id) }}" class="btn btn-info btn-sm">View</a></td>
                                 </tr>

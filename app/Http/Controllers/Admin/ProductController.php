@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Actions\ProductActions;
 use App\Models\ProductAttribute;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -56,6 +58,7 @@ class ProductController extends Controller
     public function destroy(Product $id)
     {
         $id->delete();
+        $res = File::deleteDirectory(public_path('products/'.$id->slug));
         return back()->with('success','Deleted successfully');
     }
 }

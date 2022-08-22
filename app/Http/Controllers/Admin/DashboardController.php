@@ -19,10 +19,12 @@ class DashboardController extends Controller
         $recent_orders = Order::latest()->take(10)->get();
         $users = User::count();
         $recent_users = User::latest()->take(10)->get();
-        $monthlyRevenue = OrderQueries::getMonthlyRevenue();
+        $gbp = OrderQueries::getMonthlyRevenuePounds();
+        $usd = OrderQueries::getMonthlyRevenueDollars();
+        $ngn = OrderQueries::getMonthlyRevenueNaira();
         // $chartSales = UserQueries::orderSalesJson();
         // $chartCustomers = UserQueries::userCountJson();
 
-        return view('admin.dashboard.index',compact('products','sales','orders','recent_orders','users','recent_users','monthlyRevenue'));
+        return view('admin.dashboard.index',compact('products','sales','orders','recent_orders','users','recent_users','gbp','usd','ngn'));
     }
 }

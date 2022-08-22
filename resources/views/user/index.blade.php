@@ -34,11 +34,11 @@
         <div class="col-md-4">
             <div class="card border-0">
                 <h6 class="card-title py-2 border-bottom">ADDRESS</h6>
-                <div class="card-body px-0">
-                    <p class="card-text">{{ $default->shipping_fname }} {{ $default->shipping_fname }}</p>
+                <div class="card-body px-0 {{ $default->shipping_fname ?? 'd-none' }} ">
+                    {{-- <p class="card-text">{{ $default->shipping_fname }} {{ $default->shipping_fname }}</p>
                     <p class="mb-0">{{ $default->shipping_address }}</p>
                     <p class="mb-0">{{ $default->shipping_zipcode }}, {{ $default->shipping_city }}</p>
-                    <p>{{ $default->shipping_state }}, {{ $default->shipping_country }}</p>
+                    <p>{{ $default->shipping_state }}, {{ $default->shipping_country }}</p> --}}
                 </div>
             </div>
             <a href="" class="btn btn-dark text-uppercase rounded-0 ">Edit Addresss</a>

@@ -47,6 +47,15 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
+    public function getFullName()
+    {
+        if($this->fname != null){
+            return $this->fname.' '.$this->lname;
+        }else{
+            return null;
+        }
+    }
+
     public function getDefaultAddress(){
         $address = Address::where('user_id',$this->id)->where('default',true)->first();
         if($address){

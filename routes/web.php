@@ -22,7 +22,23 @@ use App\Http\Controllers\CurrencyController;
 
 Route::get('/', [BaseController::class,'index'])->name('home');
 Route::post('currency_load',[CurrencyController::class, 'currencyLoad'])->name('currency.load');
+
 Auth::routes();
+
+// Route::get('/email/verify/{id}/{hash}', function (NewRegistrationVerificationEmail $request) {
+//     $request->fulfill();
+//     return redirect('/');
+// })->middleware(['auth', 'signed'])->name('verification.verify');
+
+// Route::get('update/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+//     $request->fulfillUpdateEmail();
+//     return redirect('/');
+// })->middleware(['auth', 'signed'])->name('verification.verify.update');
+
+// Route::post('/email/verification-notification', function (Request $request) {
+//     $request->user()->sendEmailVerificationNotification();
+//     return back()->with('succeess', 'Verification link sent!');
+// })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::get('/collections/all',[BaseController::class,'viewShop'])->name('shop');
 Route::get('/collections/{category}',[BaseController::class,'getCategory'])->name('shop.category');
@@ -43,7 +59,9 @@ Route::post('/checkout/3/store', [PaymentController::class,'getPaymentMethod'])-
 //Payment Routes
 Route::post('/pay/paystack', [PaymentController::class, 'paystackRedirectToGateway'])->name('pay.paystack');
 Route::get('/payment/callback', [PaymentController::class, 'paystackHandleGatewayCallback'])->name('payment');
-
+//Flutterwave Checkout
+Route::post('/pay', [PaymentController::class, 'flutterInit'])->name('pay.flutter');
+Route::get('/rave/callback', [PaymentController::class,'flutterwaveCallback'])->name('flutter.callback');
 
 // Route::get('/checkout/step2', function () {
 //     $cartItems = \Cart::session(Helper::getSessionID())->getContent();

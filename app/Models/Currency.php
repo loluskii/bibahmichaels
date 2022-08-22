@@ -16,4 +16,8 @@ class Currency extends Model
         'status',
         'icon',
     ];
+
+    // public function order(){
+    //     return $this->hasOne(Order::class, 'code');
+    // }
 }

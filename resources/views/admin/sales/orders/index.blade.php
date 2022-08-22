@@ -48,15 +48,48 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if ($orders->count() > 0)
+                            @foreach ($orders as $key => $order)
+                            @php
+                            if($order->status == 1){
+                            // $color == null;
+                            $status = 'Payment Confirmed';
+                            }elseif ($order->status == 2) {
+                            // $color = null;
+                            $status = 'Awaiting Pickup';
+                            }elseif ($order->status == 3) {
+                            // $color = null;
+                            $status = 'Shipping in Progress';
+                            }elseif ($order->status == 4) {
+                            // $color = 'bg-warning';
+                            $status = 'Shipped';
+                            }elseif ($order->status == 5) {
+                            // $color = 'bg-success';
+                            $status = 'Delivered';
+                            }elseif ($order->status == 6) {
+                            $color = 'bg-danger';
+                            $status = 'Cancelled';
+                            }else {
+                            $color = 'bg-secondary';
+                            $status = 'Unknown';
+                            }
+                            @endphp
                             <tr>
-                                <td>1.</td>
-                                <td>#23mf034-2323</td>
-                                <td>test@email.com</td>
-                                <td>Paystack</td>
-                                <td>£60.00</td>
-                                <td><span class="badge badge-success">shipping in progress</span></td>
-                                <td><button class="btn btn-info btn-sm">View</button></td>
+                                <td>{{ ++$key }}</td>
+                                <td>{{ $order->order_reference }}</td>
+                                <td>{{ $order->shipping_email }}</td>
+                                <td>{{ $order->payment_method }}</td>
+                                <td>{{ $order->order_currency }} {{ number_format($order->grand_total, 2) }}</td>
+                                <td><span class="badge badge-success">{{ $status }}</span></td>
+                                <td><a href="{{ route('admin.orders.show', $order->order_reference) }}"
+                                        class="btn btn-info btn-sm">View</a></td>
                             </tr>
+                            @endforeach
+                            @else
+                            <tr class="text-center">
+                                <td colspan="7">No Recent Orders</td>
+                            </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>

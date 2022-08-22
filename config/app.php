@@ -251,7 +251,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
-        'Rave' => KingFlamez\Rave\Facades\Rave::class,
         'Helpers' => App\Helpers\Helper::class,
         'PayPal' => Srmklive\PayPal\Facades\PayPal::class,
         'Paystack' => Unicodeveloper\Paystack\Facades\Paystack::class,

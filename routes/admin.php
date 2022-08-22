@@ -30,7 +30,7 @@ Route::middleware('admin')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/orders/all', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/orders/{id}',[OrderController::class, 'show'])->name('orders.show');
+    Route::get('/orders/{ref}',[OrderController::class, 'show'])->name('orders.show');
     Route::post('/orders/update/{id}',[OrderController::class, 'update'])->name('orders.update');
     Route::get('/custom',[OrderController::class, 'customOrders'])->name('orders.custom');
     Route::get('/custom/{id}',[OrderController::class, 'viewCustom'])->name('orders.custom.show');

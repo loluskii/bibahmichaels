@@ -32,11 +32,17 @@ class Order extends Model
 
     public function items()
     {
-        return $this->belongsToMany(Product::class, 'order_items','order_id','product_id')->withPivot('quantity','price','size','color','length');
+        return $this->belongsToMany(Product::class, 'order_items','order_id','product_id')->withPivot('quantity','price','size','color');
     }
 
     public function pending()
     {
         return $this->where('status',1)->get();
     }
+
+    // public function currency(){
+    //     $order = Currency::where('code','=',$this->order_currency)->first();
+    //     return $order->code;
+    //     // return $this->belongsTo(Currency::class, 'order_currency');
+    // }
 }

@@ -10,11 +10,11 @@
                 @php
                 $cartItems = \Cart::session(App\Helpers\Helper::getSessionID())->getContent();
                 @endphp
+                @if ($cartItems->count() > 0)
                 @foreach ($cartItems as $item)
                 <div class="d-flex border-bottom  py-3">
-                    {{-- <div class="d-flex w-100"> --}}
-                        <img src="{{ secure_asset('products/'.$item->associatedModel->slug.'/'.$item->associatedModel->images()->first()->url) }}"
-                            class="img-fluid" style="height: 150px;" alt="" srcset="">
+                        {{-- <img src="{{ secure_asset('products/'.$item->associatedModel->slug.'/'.$item->associatedModel->images()->first()->url ?? '') }}"
+                            class="img-fluid" style="height: 150px;" alt="" srcset=""> --}}
                         <div class="ms-3 d-flex flex-column">
                             <h6 class="mb-auto text-uppercase" style="line-height: 1.2">{{ $item->name }}</h6>
 
@@ -38,29 +38,11 @@
                                         href="{{ route('cart.destroy', $item->id) }}">DELETE</a></small>
                             </div>
                         </div>
-                        {{-- <div class="ms-4 d-flex flex-column">
-                            <p>{{ $item->name }}</p>
-                            <div class="d-flex mt-auto">
-                                <form action="{{ route('cart.update', $item->id) }}" method="POST">
-                                    @csrf
-                                    <input type="number" onchange="this.form.submit()" class="qty-text me-5" id="qty2"
-                                        step="1" min="1" max="99" name="quantity"
-                                        style="width: 50px; text-align: center; border-radius: 3px; border: 1px solid rgb(228, 228, 228)"
-                                        value="{{ $item->quantity }}">
-                                </form>
-                                <p class="me-5">${{ number_format($item->price, 2) }}</p>
-                                <a href="{{ route('cart.destroy', $item->id) }}">
-                                    <small> DELETE</small>
-                                </a>
-
-                            </div>
-                        </div> --}}
-                        {{--
-                    </div> --}}
-                    {{-- <td>${{ $item->price }}</td> --}}
-
                 </div>
                 @endforeach
+                @else
+
+                @endif
                 <div class="d-flex justify-content-between mt-3">
                     <small>SUBTOTAL</small>
                     <p class="mb-0 fw-bold">{{ $currency_symbol }}{{

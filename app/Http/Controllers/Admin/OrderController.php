@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Order;
 use App\Models\Custom;
+use App\Models\Currency;
 use Illuminate\Http\Request;
 use App\Actions\OrderActions;
 use App\Http\Controllers\Controller;
@@ -19,8 +20,9 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        $order = Order::where('order_reference',$id)->first();
-        return view('admin.sales.orders.show', compact('order'));
+        $order = Order::where('order_reference','=',$id)->first();
+        $currency = Currency::where('code','=',$order->order_currency)->first();
+        return view('admin.sales.orders.show', compact('order','currency'));
     }
 
     public function update(Request $request, $id)

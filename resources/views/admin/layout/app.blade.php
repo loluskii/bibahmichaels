@@ -23,6 +23,7 @@
 
     <link rel="stylesheet" href="{{ secure_asset('admin/css/main.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('admin/css/color_skins.css') }}">
+    @yield('styles')
 
 
 </head>

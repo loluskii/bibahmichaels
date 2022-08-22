@@ -7,7 +7,7 @@
                 <a href="javascript:void(0);" class="user-name" data-toggle="dropdown"><strong>Administrator</strong></a>
             </div>
             <hr>
-            <ul class="row list-unstyled">
+            {{-- <ul class="row list-unstyled">
                 <li class="col-4">
                     <small>Orders</small>
                     <h6>{{ App\Models\Order::all()->count() }}</h6>
@@ -16,7 +16,7 @@
                     <small>Profit</small>
                     <h6>£ 0.00</h6>
                 </li>
-            </ul>
+            </ul> --}}
         </div>
 
         <nav id="left-sidebar-nav" class="sidebar-nav">

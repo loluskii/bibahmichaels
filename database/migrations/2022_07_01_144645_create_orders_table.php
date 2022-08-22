@@ -28,7 +28,6 @@ return new class extends Migration
             $table->string('shipping_fname');
             $table->string('shipping_lname');
             $table->string('shipping_address');
-            $table->string('shipping_landmark')->nullable();
             $table->string('shipping_city');
             $table->string('shipping_state');
             $table->string('shipping_postal_code');

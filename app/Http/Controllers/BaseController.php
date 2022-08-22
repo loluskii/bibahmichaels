@@ -88,7 +88,7 @@ class BaseController extends Controller
         }
         return view('shop.cart', compact('cartItems', 'cartTotalQuantity'));
     }
-    
+
 
     public function customOrder(Request $request){
         dd($request->all());
