@@ -92,11 +92,10 @@ class PaymentController extends Controller
     }
 
     public function getPaymentMethod(Request $request){
-        $currency = session('currency_code');
+        $currency = session('currency_code') ?? session('system_default_currency_info')->code;
         if($request->payment_method == "paystack"){
             $order = $request->session()->get('order');
             $reference = Paystack::genTranxRef();
-            // $currency = $system_default_currency_info->currency_code;
             $amount = Helper::currency_converter(Cart::session(Helper::getSessionID())->getTotal());
             $email = $order->shipping_email;
             $request->merge(['metadata'=>$order,'reference'=>$reference, 'currency'=>$currency,'amount'=>$amount,'email'=>$email]);
@@ -105,7 +104,6 @@ class PaymentController extends Controller
         else if($request->payment_method == "flutterwave"){
             $order = $request->session()->get('order');
             $reference = Flutterwave::generateReference();
-            // $currency = $system_default_currency_info->code;
             $amount = Helper::currency_converter(\Cart::session(Helper::getSessionID())->getTotal());
             $email = $order->shipping_email;
             $request->merge(['metadata'=>$order,'reference'=>$reference, 'currency'=>$currency,'amount'=>$amount,'email'=>$email]);
@@ -146,18 +144,15 @@ class PaymentController extends Controller
 
     public function flutterwaveCallback()
     {
-        // dd(request()->status);
         $status = request()->status;
         $order = session()->get('order');
         $currency = session('currency_code');
         if ($status != "cancelled") {
             $transactionID = Flutterwave::getTransactionIDFromCallback();
         }
-        // dd($order);
         $amount = \Cart::session(Helper::getSessionID())->getTotal();
         $subamount = \Cart::session(Helper::getSessionID())->getSubTotal();
         $method = 'flutterwave';
-        // $currency = $system_default_currency_info->currency_code;
         $user_id = auth()->check() ? auth()->id() : rand(0000, 9999);
 
         //if payment is successful
@@ -192,7 +187,7 @@ class PaymentController extends Controller
                 // NotifyAdminOrder::dispatch($newOrder, $admin);
                 // SendOrderInvoice::dispatch($newOrder, $user)->delay(now()->addMinutes(3));
 
-                return 'successful!';
+                return redirect()->route('checkout.success', ['reference' => $newOrder->order_reference]);;
             }
         } else {
             return 'an error occurred';
@@ -211,11 +206,20 @@ class PaymentController extends Controller
 
     public function paystackRedirectToGateway(Request $request)
     {
-        // dd($request->all());
         try{
             return Paystack::getAuthorizationUrl()->redirectNow();
         }catch(\Exception $e) {
             return $e->getMessage();
         }
+    }
+
+    public function checkoutSuccessful($ref){
+        $order = OrderQueries::findByRef($ref);
+        if($order){
+            return view('shop.order-success', compact('order'));
+        }else{
+            abort(404);
+        }
+
     }
 }

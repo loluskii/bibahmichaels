@@ -84,6 +84,7 @@ Dashboard
                                 <th>Email</th>
                                 <th>Payment Method</th>
                                 <th>Total</th>
+                                <th>Date</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -93,19 +94,19 @@ Dashboard
                             @foreach ($recent_orders as $key => $order)
                             @php
                             if($order->status == 1){
-                                // $color == null;
+                                $color = 'success';
                                 $status = 'Payment Confirmed';
                             }elseif ($order->status == 2) {
-                                // $color = null;
+                                $color = 'success';
                                 $status = 'Awaiting Pickup';
                             }elseif ($order->status == 3) {
-                                // $color = null;
+                                $color = 'success';
                                 $status = 'Shipping in Progress';
                             }elseif ($order->status == 5) {
-                                // $color = 'bg-success';
+                                $color = 'success';
                                 $status = 'Delivered';
                             }elseif ($order->status == 6) {
-                                $color = 'bg-danger';
+                                $color = 'danger';
                                 $status = 'Cancelled';
                             }else {
                                 $color = 'bg-secondary';
@@ -126,8 +127,9 @@ Dashboard
                                 <td>{{ $order->order_reference }}</td>
                                 <td>{{ $order->shipping_email }}</td>
                                 <td>{{ $order->payment_method }}</td>
-                                <td>{{ $code }}{{ number_format($order->grand_total, 2) }}</td>
-                                <td><span class="badge badge-success">{{ $status }}</span></td>
+                                <td>{{ $code }}{{ number_format($order->subtotal, 2) }}</td>
+                                <td>{{ $order->created_at->diffForHumans() }}</td>
+                                <td><span class="badge badge-{{ $color ?? 'success' }}">{{ $status }}</span></td>
                                 <td><a href="{{ route('admin.orders.show', $order->order_reference) }}"
                                         class="btn btn-info btn-sm">View</a></td>
                             </tr>

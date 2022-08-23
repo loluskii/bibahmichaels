@@ -37,12 +37,12 @@ class OrderActions
         $newOrder->shipping_country = $order->shipping_country;
         $newOrder->save();
 
-        // if($method == "flutterwave"){
-        //     $cartItems =  \Cart::session(auth()->check() ? auth()->id() : 'guest')->getContent();
-        //     foreach($cartItems as $item){
-        //         $newOrder->items()->attach($item->id, ['price'=> $item->price, 'quantity'=> $item->quantity, 'size'=>$item->attributes->size, 'color'=>$item->attributes->color]);
-        //     }
-        // }
+        if($method == "flutterwave"){
+            $cartItems =  \Cart::session(Helper::getSessionID())->getContent();
+            foreach($cartItems as $item){
+                $newOrder->items()->attach($item->id, ['price'=> $item->price*session('currency_exchange_rate'), 'quantity'=> $item->quantity, 'size'=>$item->attributes->size, 'color'=>$item->attributes->color]);
+            }
+        }
 
         return $ref;
     }

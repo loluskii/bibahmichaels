@@ -55,6 +55,7 @@ Route::get('/checkout/2/{session}', [PaymentController::class,'shipping'])->name
 Route::post('/checkout/2/store', [PaymentController::class,'postShipping'])->name('checkout.page-2.store');
 Route::get('/checkout/3/{session}', [PaymentController::class,'showPayment'])->name('checkout.page-3');
 Route::post('/checkout/3/store', [PaymentController::class,'getPaymentMethod'])->name('checkout.page-3.store');
+Route::get('/orders/{reference}', [PaymentController::class, 'checkoutSuccessful'])->name('checkout.success');
 
 //Payment Routes
 Route::post('/pay/paystack', [PaymentController::class, 'paystackRedirectToGateway'])->name('pay.paystack');
@@ -103,4 +104,6 @@ Route::get('/return-policy', function () {
 Route::get('/shipping', function () {
     return view('cms.shipping');
 })->name('shipping');
+
+
 

@@ -121,29 +121,34 @@
                                 <form action="{{ route('checkout.page-3.store') }}" method="POST">
                                     @csrf
                                     <div class="accordion" id="accordionWithRadioExample">
-                                        <div class="accordion-item">
-                                            <div class="accordion-button">
-                                                <div class="custom-control custom-radio">
-                                                    <input data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                                                        type="radio" id="customRadio1" value="paystack"
-                                                        name="payment_method"
-                                                        class="form-check-input custom-control-input" />
-                                                    <label class="custom-control-label" for="customRadio1">
-                                                        <img src="{{ secure_asset('images/payment/paystack.svg')}}"
-                                                            style=" height: 27px; " class="img-fluid" alt="">
-                                                    </label>
+                                        @php
+                                            $currency = session('currency_code') ?? session('system_default_currency_info')->code;
+                                        @endphp
+                                        @if ($currency == "NGN")
+                                            <div class="accordion-item">
+                                                <div class="accordion-button">
+                                                    <div class="custom-control custom-radio">
+                                                        <input data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                                                            type="radio" id="customRadio1" value="paystack"
+                                                            name="payment_method"
+                                                            class="form-check-input custom-control-input" />
+                                                        <label class="custom-control-label" for="customRadio1">
+                                                            <img src="{{ secure_asset('images/payment/paystack.svg')}}"
+                                                                style=" height: 27px; " class="img-fluid" alt="">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div id="collapseOne" class="accordion-collapse collapse"
+                                                    data-bs-parent="#accordionWithRadioExample">
+                                                    <div class="card-body text-center px-5">
+                                                        <img src="{{ secure_asset('images/payment/checkout.svg') }}"
+                                                            class="img-fluid mb-3" alt="">
+                                                        <p>After clicking “Complete order”, you will be redirected to
+                                                            Paystack to complete your purchase securely.</p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div id="collapseOne" class="accordion-collapse collapse"
-                                                data-bs-parent="#accordionWithRadioExample">
-                                                <div class="card-body text-center px-5">
-                                                    <img src="{{ secure_asset('images/payment/checkout.svg') }}"
-                                                        class="img-fluid mb-3" alt="">
-                                                    <p>After clicking “Complete order”, you will be redirected to
-                                                        Paystack to complete your purchase securely.</p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        @endif
                                         <div class="accordion-item">
                                             <div class="accordion-button">
                                                 <div class="custom-control custom-radio">

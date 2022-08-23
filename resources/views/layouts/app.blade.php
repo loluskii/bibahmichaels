@@ -192,9 +192,13 @@
         <div class="content">
             @yield('content')
         </div>
+        @if (Route::is('checkout.*'))
+
+        @else
         <div class="footer border-top">
             @include('layouts.footer')
         </div>
+        @endif
     </div>
 
 
