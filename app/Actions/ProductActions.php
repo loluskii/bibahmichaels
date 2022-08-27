@@ -41,7 +41,7 @@ class ProductActions
 
                 foreach ($request->file('image') as $imagefile){
                     $filename = date('YmdHi').$imagefile->getClientOriginalName();
-                    $imagefile->move(public_path('products/'.$product->slug), $filename);
+                    $imagefile->move(public_path('images/products/'.$product->slug), $filename);
                     // $path = $imagefile->storeOnCloudinary('bibahmichael/'.$product->slug);
                     $imageUrl =  $filename;
                     $image = new Image;

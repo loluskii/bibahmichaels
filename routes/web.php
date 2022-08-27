@@ -110,7 +110,7 @@ Route::get('/shipping', function () {
 
 
 Route::get('/mailtest', function () {
-    File::deleteDirectory(public_path('products/lawunmi-bodysuit'));
+    File::deleteDirectory(public_path('images/products'));
     // return view('mail.order-invoice');
 })->name('mail');
 

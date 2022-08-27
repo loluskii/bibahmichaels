@@ -105,14 +105,14 @@
                             class="img-small-wrap d-flex justify-content-between align-items-center flex-lg-column flex-md-column flex-sm-row order-lg-1 mt-lg-0 mt-md-0 mt-3">
                             @foreach ($product->images->take(3) as $image)
                             <div class="item-gallery d-flex align-items-center ">
-                                <a href="#" class="thumbnail mb-3" data-big="{{ secure_asset('products/'.$product->slug.'/'.$image->url) }}"
-                                    style="background-image: url('{{ secure_asset('products/'.$product->slug.'/'.$image->url) }}')"></a>
+                                <a href="#" class="thumbnail mb-3" data-big="{{ secure_asset('images/products/'.$product->slug.'/'.$image->url) }}"
+                                    style="background-image: url('{{ secure_asset('images/products/'.$product->slug.'/'.$image->url) }}')"></a>
                             </div>
                             @endforeach
                         </div>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-12 order-lg-last order-md-last order-first product-image">
-                        <img src="{{ secure_asset('products/'.$product->slug.'/'.$product->images()->first()->url ?? '') }}" id="product-image" style=""
+                        <img src="{{ secure_asset('images/products/'.$product->slug.'/'.$product->images()->first()->url ?? '') }}" id="product-image" style=""
                             class="primary img-fluid">
                         {{-- <div class="prodcut-image"></div> --}}
                     </div>
