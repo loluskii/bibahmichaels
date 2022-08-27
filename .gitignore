@@ -1,5 +1,6 @@
 /node_modules
 /public/hot
+/public/images/products
 /public/storage
 /storage/*.key
 /vendor
@@ -12,4 +13,4 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-/public/images/products
+
