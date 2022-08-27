@@ -6,10 +6,10 @@
         <div class="col-md-8 col-12 mx-auto">
             <h4>Shipping</h4>
             <p>All items are made to order (unless otherwise noted). Please note that during peak season turnaround time
-                for <b>CUSTOM ORDERS</b> is 2-3months, while <b>Ready To Wear</b> is 5-7 working days. from the date of
-                purchase for
-                your item to be made and prepared for shipping If you need an item sooner, please email us at
-                info@bibahmichael.com to see if this is possible BEFORE placing your order, as you cannot cancel an
+                for <b>CUSTOM ORDERS</b> is 2-3months, while <b>Ready To Wear</b> is 5-7 working days from the date of
+                purchase, for
+                your item to be made and prepared for shipping. If you need an item sooner, please email us at
+                <a href="mailto:info@bibahmichael.com">info@bibahmichael.com</a> to see if this is possible BEFORE placing your order, as you cannot cancel an
                 order once we have begun the process. If you cancel anytime during the process, you lose your
                 deposit/payments.
             </p>

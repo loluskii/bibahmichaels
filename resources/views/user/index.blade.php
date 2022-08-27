@@ -14,6 +14,7 @@
             </form>
             <h4>MY ACCOUNT</h4>
             <p>Welcome back, {{ Auth::user()->fname }}.</p>
+            {{ auth()->user()->hasVerifiedEmail() ? 'true' : 'false' }}
         </div>
     </div>
     <div class="row">

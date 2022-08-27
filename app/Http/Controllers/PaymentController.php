@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use Paystack;
+use Exception;
+use App\Models\User;
 use App\Models\Order;
 use App\Helpers\Helper;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use App\Actions\OrderActions;
+use App\Jobs\SendOrderInvoice;
 use App\Services\OrderQueries;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Jobs\AdminOrderNotification;
 use Illuminate\Support\Facades\Auth;
 use KingFlamez\Rave\Facades\Rave as Flutterwave;
 
@@ -96,9 +100,10 @@ class PaymentController extends Controller
         if($request->payment_method == "paystack"){
             $order = $request->session()->get('order');
             $reference = Paystack::genTranxRef();
-            $amount = Helper::currency_converter(Cart::session(Helper::getSessionID())->getTotal());
+            $amount = Helper::currency_converter(\Cart::session(Helper::getSessionID())->getTotal());
             $email = $order->shipping_email;
-            $request->merge(['metadata'=>$order,'reference'=>$reference, 'currency'=>$currency,'amount'=>$amount,'email'=>$email]);
+            $metadata =
+            $request->merge(['metadata'=>$order,'reference'=>$reference, 'currency'=>$currency,'amount'=>$amount*100,'email'=>$email]);
             return $this->paystackRedirectToGateway($request);
         }
         else if($request->payment_method == "flutterwave"){
@@ -111,6 +116,12 @@ class PaymentController extends Controller
         }
     }
 
+
+    /**
+     * Flutterwave Payment functions
+     *
+     * @return void
+     */
     public function flutterInit(Request $request)
     {
         try {
@@ -141,7 +152,6 @@ class PaymentController extends Controller
             return $th->getMessage();
         }
     }
-
     public function flutterwaveCallback()
     {
         $status = request()->status;
@@ -177,33 +187,29 @@ class PaymentController extends Controller
                 $payment->save();
                 DB::commit();
 
-                // $admin = User::where('is_admin', 1)->get();
-                // $user = $newOrder->shipping_email;
+                $admin = User::where('is_admin', 1)->get();
+                $user = $newOrder->shipping_email;
 
                 \Cart::session(auth()->check() ? auth()->id() : 'guest')->clear();
                 request()->session()->forget('order');
                 request()->session()->forget('session');
 
-                // NotifyAdminOrder::dispatch($newOrder, $admin);
-                // SendOrderInvoice::dispatch($newOrder, $user)->delay(now()->addMinutes(3));
+                AdminOrderNotification::dispatch($newOrder, $admin);
+                SendOrderInvoice::dispatch($newOrder, $user)->delay(now()->addMinutes(3));
 
                 return redirect()->route('checkout.success', ['reference' => $newOrder->order_reference]);;
             }
         } else {
             return 'an error occurred';
         }
-        // Get the transaction from your DB using the transaction reference (txref)
-        // Check if you have previously given value for the transaction. If you have, redirect to your successpage else, continue
-        // Confirm that the currency on your db transaction is equal to the returned currency
-        // Confirm that the db transaction amount is equal to the returned amount
-        // Update the db transaction record (including parameters that didn't exist before the transaction is completed. for audit purpose)
-        // Give value for the transaction
-        // Update the transaction to note that you have given value for the transaction
-        // You can also redirect to your success page from here
-
     }
 
 
+    /**
+     * Paystack Payment functions
+     *
+     * @return void
+     */
     public function paystackRedirectToGateway(Request $request)
     {
         try{
@@ -211,6 +217,49 @@ class PaymentController extends Controller
         }catch(\Exception $e) {
             return $e->getMessage();
         }
+    }
+
+    public function paystackHandleGatewayCallback(Request $request){
+        $paymentDetails = Paystack::getPaymentData();
+        // dd($paymentDetails);
+        $order = $paymentDetails['data']['metadata'];
+        $amount = \Cart::session(Helper::getSessionID())->getTotal();
+        $subamount = \Cart::session(Helper::getSessionID())->getSubTotal();
+        $user_id = auth()->check() ? auth()->id() : rand(0000, 9999);
+        $method = "paystack";
+        $currency = "NGN";
+        if($paymentDetails['status']){
+            $res = OrderActions::store($order, $amount, $subamount, $user_id, $method, $currency);
+            $newOrder = OrderQueries::findByRef($res);
+
+            DB::beginTransaction();
+            if (Payment::where('payment_ref', $paymentDetails['data']['reference'])->first()) {
+                throw new Exception('Duplicate transaction');
+            } else {
+                $payment = new Payment();
+                $payment->user_id = $newOrder->user_id;
+                $payment->order_id = $newOrder->id;
+                $payment->amount = $amount;
+                $payment->currency = $newOrder->order_currency;
+                $payment->description = 'Payment for Order ' . $newOrder->order_number;
+                $payment->payment_ref = $paymentDetails['data']['id'];
+                $payment->save();
+                DB::commit();
+
+                $admin = User::where('is_admin', 1)->get();
+                $user = $newOrder->shipping_email;
+
+                \Cart::session(auth()->check() ? auth()->id() : 'guest')->clear();
+                request()->session()->forget('order');
+                request()->session()->forget('session');
+
+                AdminOrderNotification::dispatch($newOrder, $admin);
+                SendOrderInvoice::dispatch($newOrder, $user)->delay(now()->addMinutes(3));
+
+                return redirect()->route('checkout.success', ['reference' => $newOrder->order_reference]);;
+            }
+        }
+
     }
 
     public function checkoutSuccessful($ref){

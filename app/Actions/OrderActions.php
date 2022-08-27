@@ -21,23 +21,23 @@ class OrderActions
         $newOrder->subtotal = $subamount * session('currency_exchange_rate');
         $newOrder->grand_total = $amount * session('currency_exchange_rate');
         $newOrder->order_currency = $currency;
-        if($method === "flutterwave"){
+        if($method === "flutterwave" || $method == "paystack"){
             $newOrder->item_count = \Cart::session(Helper::getSessionID())->getContent()->count();
         }
         $newOrder->is_paid = 1;
         $newOrder->payment_method = $method;
-        $newOrder->shipping_email = $order->shipping_email;
-        $newOrder->shipping_fname = $order->shipping_fname;
-        $newOrder->shipping_lname = $order->shipping_lname;
-        $newOrder->shipping_address = $order->shipping_address;
-        $newOrder->shipping_city = $order->shipping_city;
-        $newOrder->shipping_state = $order->shipping_state;
-        $newOrder->shipping_phone = $order->shipping_phone;
+        $newOrder->shipping_email = $order->shipping_email ?? $order['shipping_email'];
+        $newOrder->shipping_fname = $order->shipping_fname ?? $order['shipping_fname'];
+        $newOrder->shipping_lname = $order->shipping_lname ?? $order['shipping_lname'];
+        $newOrder->shipping_address = $order->shipping_address ?? $order['shipping_address'];
+        $newOrder->shipping_city = $order->shipping_city ?? $order['shipping_city'];
+        $newOrder->shipping_state = $order->shipping_state ?? $order['shipping_state'];
+        $newOrder->shipping_phone = $order->shipping_phone ?? $order['shipping_phone'];
         $newOrder->shipping_postal_code = $order->shipping_postal_code ?? '098809';
-        $newOrder->shipping_country = $order->shipping_country;
+        $newOrder->shipping_country = $order->shipping_country ?? $order['shipping_country'];
         $newOrder->save();
 
-        if($method == "flutterwave"){
+        if($method == "flutterwave" || $method == "paystack"){
             $cartItems =  \Cart::session(Helper::getSessionID())->getContent();
             foreach($cartItems as $item){
                 $newOrder->items()->attach($item->id, ['price'=> $item->price*session('currency_exchange_rate'), 'quantity'=> $item->quantity, 'size'=>$item->attributes->size, 'color'=>$item->attributes->color]);

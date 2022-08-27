@@ -82,8 +82,7 @@ Order {{ $order->order_number }}
                                                                 </option>
                                                                 @endforeach
                                                                 @elseif ($order->status == 2)
-                                                                @foreach([ "3" => "Shipping In Progress", "4" =>
-                                                                "Shipped", "5" =>
+                                                                @foreach([ "3" => "Shipping In Progress","5" =>
                                                                 "Delivered","6" => "Cancelled"] AS $status =>
                                                                 $statusLabel)
                                                                 <option value="{{ $status }}">{{ $statusLabel }}
@@ -122,16 +121,16 @@ Order {{ $order->order_number }}
                                 <div class="col-md-6">
                                     @php
                                     if($order->status == 1){
-                                    // $color == null;
+                                    $color = 'info';
                                     $status = 'Payment Confirmed';
                                     }elseif ($order->status == 2) {
-                                    // $color = null;
+                                    $color = 'primary';
                                     $status = 'Awaiting Pickup';
                                     }elseif ($order->status == 3) {
-                                    // $color = null;
-                                    $status = 'Shipping in Progress';
+                                        $color = 'success';
+                                        $status = 'Shipping in Progress';
                                     }elseif ($order->status == 5) {
-                                    // $color = 'bg-success';
+                                    $color = 'success';
                                     $status = 'Delivered';
                                     }elseif ($order->status == 6) {
                                     $color = 'danger';
@@ -182,6 +181,8 @@ Order {{ $order->order_number }}
                                                 <th>Item name</th>
                                                 <th>Quantity</th>
                                                 <th>Price</th>
+                                                <th>Size</th>
+                                                <th>Color</th>
                                                 <th>Total</th>
 
                                             </thead>
@@ -195,13 +196,16 @@ Order {{ $order->order_number }}
                                                 <tr>
                                                     <td>{{ $item->name }}</td>
                                                     <td>{{ $item->pivot->quantity }}</td>
-                                                    <td>{{ $currency->symbol }} {{ number_format($item->pivot->price, 2)
-                                                        }}</td>
+                                                    <td>{{ $currency->symbol }} {{ number_format($item->pivot->price, 2) }}</td>
+                                                    <td>{{ $item->pivot->size ?? 'None' }}</td>
+                                                    <td>{{ $item->pivot->color ?? 'None' }}</td>
                                                     <td>{{ $currency->symbol }} {{ number_format($total, 2) }}</td>
                                                 </tr>
                                                 @endforeach
 
                                                 <tr>
+                                                    <td class="thick-line"></td>
+                                                    <td class="thick-line"></td>
                                                     <td class="thick-line"></td>
                                                     <td class="thick-line"></td>
                                                     <td class="thick-line text-start"><strong>Subtotal</strong>
@@ -210,6 +214,8 @@ Order {{ $order->order_number }}
                                                         number_format($order->subtotal,2) }}</td>
                                                 </tr>
                                                 <tr>
+                                                    <td class="no-line"></td>
+                                                    <td class="no-line"></td>
                                                     <td class="no-line"></td>
                                                     <td class="no-line"></td>
                                                     <td class="no-line text-start"><strong>Shipping</strong>
@@ -221,6 +227,8 @@ Order {{ $order->order_number }}
                                                         number_format($shipping, 2) }}</td>
                                                 </tr>
                                                 <tr>
+                                                    <td class="no-line"></td>
+                                                    <td class="no-line"></td>
                                                     <td class="no-line"></td>
                                                     <td class="no-line"></td>
                                                     <td class="no-line text-start"><strong>Total</strong></td>

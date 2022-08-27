@@ -7,6 +7,7 @@ use App\Models\Custom;
 use App\Models\Currency;
 use Illuminate\Http\Request;
 use App\Actions\OrderActions;
+use App\Jobs\SendOrderUpdate;
 use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
@@ -21,6 +22,7 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::where('order_reference','=',$id)->first();
+        // dd($order->order_currency);
         $currency = Currency::where('code','=',$order->order_currency)->first();
         return view('admin.sales.orders.show', compact('order','currency'));
     }
@@ -32,26 +34,30 @@ class OrderController extends Controller
                 $newOrder = Order::findOrFail($id);
                 $user = $newOrder->shipping_email;
                 $res = OrderActions::update($request, $id);
+                $status = "Your order has been completed and is ready for shipping! We'll notify you once the order has been shipped. ";
                 if($res){
-                    // SendOrderInvoice::dispatch($newOrder, $user)->delay(now()->addSecond());
-                    return back()->with('success','Successful!');
+                    SendOrderUpdate::dispatch($newOrder, $user, $status)->delay(now()->addMinutes(3));
+                    return back()->with('success','Updated successfully!');
                 }
             }else if($request->status == 4){
-                $order = Order::findOrFail($id);
-                $user = $order->shipping_email;
+                $newOrder = Order::findOrFail($id);
+                $user = $newOrder->shipping_email;
                 $res = OrderActions::update($request, $id);
+                $status = "Your order has been shipped and is on its way to you!";
                 if($res){
-                    // UserOrderShipped::dispatch($order, $user)->delay(now()->addSecond());
-                    return back()->with('success','Successful!');
+                    SendOrderUpdate::dispatch($newOrder, $user, $status)->delay(now()->addMinutes(3));
+                    return back()->with('success','Updated successfully!');
                 }
             }else if($request->status == 5){
-                $order = Order::findOrFail($id);
-                $user = $order->shipping_email;
+                $newOrder = Order::findOrFail($id);
+                // dd($newOrder);
+                $user = $newOrder->shipping_email;
                 $res = OrderActions::update($request, $id);
+                $status = "Thank you for shopping with Bibah Michael. Your order has been delivered. We look forward to you shopping with us again soon.";
                 if($res){
                     try {
-                        // UserOrderDelivered::dispatch($order, $user)->delay(now()->addSecond());
-                        return back()->with('success','Successful!');
+                        SendOrderUpdate::dispatch($newOrder, $user, $status)->delay(now()->addMinutes(3));
+                        return back()->with('success','Updated successfully!');
                     } catch (\Exception $e) {
                         return back()->with('error',$e->getMessage());
                     }
@@ -59,7 +65,7 @@ class OrderController extends Controller
             }else{
                 $res = OrderActions::update($request, $id);
                 if($res){
-                    return back()->with('success','Successful!');
+                    return back()->with('success','Updated successfully');
                 }else{
                     return back()->with('error','An error occured');
                 }

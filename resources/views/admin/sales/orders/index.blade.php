@@ -60,9 +60,6 @@
                             }elseif ($order->status == 3) {
                             // $color = null;
                             $status = 'Shipping in Progress';
-                            }elseif ($order->status == 4) {
-                            // $color = 'bg-warning';
-                            $status = 'Shipped';
                             }elseif ($order->status == 5) {
                             // $color = 'bg-success';
                             $status = 'Delivered';

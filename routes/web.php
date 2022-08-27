@@ -1,13 +1,16 @@
 <?php
 
 use App\Helpers\Helper;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaymentController;
+
 use App\Http\Controllers\CurrencyController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest as NewRegistrationVerificationEmail;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,20 +28,24 @@ Route::post('currency_load',[CurrencyController::class, 'currencyLoad'])->name('
 
 Auth::routes();
 
-// Route::get('/email/verify/{id}/{hash}', function (NewRegistrationVerificationEmail $request) {
-//     $request->fulfill();
-//     return redirect('/');
-// })->middleware(['auth', 'signed'])->name('verification.verify');
+Route::get('/email/verify/{id}/{hash}', function (NewRegistrationVerificationEmail $request) {
+    $request->fulfill();
+    return redirect('/');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::get('/email/verify', function () {
+    return view('auth.verify');
+})->name('verification.notice')->middleware('auth');
 
 // Route::get('update/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
 //     $request->fulfillUpdateEmail();
 //     return redirect('/');
 // })->middleware(['auth', 'signed'])->name('verification.verify.update');
 
-// Route::post('/email/verification-notification', function (Request $request) {
-//     $request->user()->sendEmailVerificationNotification();
-//     return back()->with('succeess', 'Verification link sent!');
-// })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('success', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
 
 Route::get('/collections/all',[BaseController::class,'viewShop'])->name('shop');
 Route::get('/collections/{category}',[BaseController::class,'getCategory'])->name('shop.category');
@@ -64,15 +71,10 @@ Route::get('/payment/callback', [PaymentController::class, 'paystackHandleGatewa
 Route::post('/pay', [PaymentController::class, 'flutterInit'])->name('pay.flutter');
 Route::get('/rave/callback', [PaymentController::class,'flutterwaveCallback'])->name('flutter.callback');
 
-// Route::get('/checkout/step2', function () {
-//     $cartItems = \Cart::session(Helper::getSessionID())->getContent();
-//     $cartTotalQuantity = \Cart::session(Helper::getSessionID())->getContent()->count();
-//     $order = session('order');
-//     return view('checkout.page-2', compact('cartItems','cartTotalQuantity','order'));
-// })->name('checkout.page-2');
-
 //User Routes
-Route::get('/user',[UserController::class, 'index'])->name('user');
+Route::middleware(['auth','verified'])->group(function () {
+    Route::get('/user',[UserController::class, 'index'])->name('user');
+});
 
 //Custom Orders
 Route::get('/custom-order', function () {
@@ -105,5 +107,9 @@ Route::get('/shipping', function () {
     return view('cms.shipping');
 })->name('shipping');
 
+
+Route::get('/mailtest', function () {
+    return view('mail.order-invoice');
+})->name('mail');
 
 
