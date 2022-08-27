@@ -141,8 +141,7 @@
                             </span>
                         </p>
                     </header>
-                    <form id="addToCart" class="pt-2 pt-md-4 pt-lg-4 pt-xl-4"
-                        action="{{ route('cart.add',$product->id) }}" method="post">
+                    <form id="addToCart" class="pt-2 pt-md-4 pt-lg-4 pt-xl-4" action="{{ route('cart.add',$product->id) }}" method="post">
                         @csrf
 
                         @foreach ($group as $key => $item)
