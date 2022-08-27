@@ -58,7 +58,7 @@ class ProductController extends Controller
     public function destroy(Product $id)
     {
         $id->delete();
-        $res = File::deleteDirectory(public_path('products/'.$id->slug));
+        $res = File::deleteDirectory(public_path('images/products/'.$id->slug));
         return back()->with('success','Deleted successfully');
     }
 }
