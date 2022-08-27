@@ -3,12 +3,13 @@
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\PaymentController;
 
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CurrencyController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest as NewRegistrationVerificationEmail;
 
@@ -109,7 +110,8 @@ Route::get('/shipping', function () {
 
 
 Route::get('/mailtest', function () {
-    return view('mail.order-invoice');
+    File::deleteDirectory(public_path('products/lawunmi-bodysuit'));
+    // return view('mail.order-invoice');
 })->name('mail');
 
 
