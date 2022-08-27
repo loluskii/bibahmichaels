@@ -56,7 +56,7 @@
                 <div class="row d-flex justify-content-between align-items-center mb-5">
                     <div class="col-md-2 col-lg-2 col-xl-2">
                         <div class="image"
-                            style="background-image: url('{{ secure_asset('products/'.$item->associatedModel->slug.'/'.$item->associatedModel->images()->first()->url ?? '') }}')">
+                            style="background-image: url('{{ secure_asset('images/products/'.$item->associatedModel->slug.'/'.$item->associatedModel->images()->first()->url ?? '') }}')">
                         </div>
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-3">

@@ -144,7 +144,7 @@
                                         <div>
                                             <img class="img-fluid img-thumbnail"
                                                 style=" height: 64px; width: 64px; object-fit: contain;"
-                                                src="{{ secure_asset('products/'.$item->slug.'/'.$item->images()->first()->url) }}"
+                                                src="{{ secure_asset('images/products/'.$item->slug.'/'.$item->images()->first()->url) }}"
                                                 alt="">
                                         </div>
 
