@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Order;
 use App\Helpers\Helper;
 use App\Models\Payment;
+use App\Models\Currency;
 use Illuminate\Http\Request;
 use App\Actions\OrderActions;
 use App\Jobs\SendOrderInvoice;
@@ -102,16 +103,24 @@ class PaymentController extends Controller
             $reference = Paystack::genTranxRef();
             $amount = Helper::currency_converter(\Cart::session(Helper::getSessionID())->getTotal());
             $email = $order->shipping_email;
-            $metadata =
-            $request->merge(['metadata'=>$order,'reference'=>$reference, 'currency'=>$currency,'amount'=>$amount*100,'email'=>$email]);
+            $metadata = [
+                'order' => $request->session()->get('order'),
+                'cart' => \Cart::session(Helper::getSessionID())->getContent(),
+                'subamount' => \Cart::session(Helper::getSessionID())->getSubTotal(),
+            ];
+            $request->merge(['metadata'=>$metadata,'reference'=>$reference, 'currency'=>$currency,'amount'=>$amount*100,'email'=>$email]);
             return $this->paystackRedirectToGateway($request);
         }
         else if($request->payment_method == "flutterwave"){
             $order = $request->session()->get('order');
-            $reference = Flutterwave::generateReference();
             $amount = Helper::currency_converter(\Cart::session(Helper::getSessionID())->getTotal());
             $email = $order->shipping_email;
-            $request->merge(['metadata'=>$order,'reference'=>$reference, 'currency'=>$currency,'amount'=>$amount,'email'=>$email]);
+            $metadata = [
+                'order' => $request->session()->get('order'),
+                'cart' => \Cart::session(Helper::getSessionID())->getContent(),
+                'subamount' => \Cart::session(Helper::getSessionID())->getSubTotal(),
+            ];
+            $request->merge(['meta'=>$metadata, 'currency'=>$currency,'amount'=>$amount,'email'=>$email]);
             return $this->flutterInit($request);
         }
     }
@@ -124,16 +133,18 @@ class PaymentController extends Controller
      */
     public function flutterInit(Request $request)
     {
+        // dd($request->meta);
         try {
             $data = [
-                'payment_options' => 'card,banktransfer',
-                'amount' => $request->amount,
-                'email' => Auth::user()->email ?? $request->email,
-                'tx_ref' => Flutterwave::generateReference(),
-                'currency' => $request->currency,
-                'redirect_url' => route('flutter.callback'),
-                'customer' => [
-                    'email' => Auth::user()->email ?? $request->email,
+                "payment_options" => 'card,banktransfer',
+                "amount" => $request->amount,
+                "email" => Auth::user()->email ?? $request->email,
+                "tx_ref" => Flutterwave::generateReference(),
+                "currency" => $request->currency,
+                "redirect_url" => route('flutter.callback'),
+                "meta" => [ 'data' => ['data'=>'data'] ],
+                "customer" => [
+                    "email" => Auth::user()->email ?? $request->email,
                     "name" => $request->name,
                 ],
                 "customizations" => [
@@ -152,25 +163,25 @@ class PaymentController extends Controller
             return $th->getMessage();
         }
     }
+
     public function flutterwaveCallback()
     {
-        $status = request()->status;
-        $order = session()->get('order');
-        $currency = session('currency_code');
-        if ($status != "cancelled") {
-            $transactionID = Flutterwave::getTransactionIDFromCallback();
-        }
-        $amount = \Cart::session(Helper::getSessionID())->getTotal();
-        $subamount = \Cart::session(Helper::getSessionID())->getSubTotal();
-        $method = 'flutterwave';
-        $user_id = auth()->check() ? auth()->id() : rand(0000, 9999);
-
-        //if payment is successful
-        if ($status == "cancelled") {
+        $currency = session('currency_code') ?? session('system_default_currency_info')->code;
+        if (request()->status == "cancelled") {
             return redirect()->route("checkout.page-3", ['session', session()->get('session')])->with("error", "Transaction Cancelled");
-        } elseif ($status == 'successful') {
+        }else if(request()->status == "successful") {
+            $transactionID = Flutterwave::getTransactionIDFromCallback();
             $data = Flutterwave::verifyTransaction($transactionID);
-            $res = OrderActions::store($order, $amount, $subamount, $user_id, $method, $currency);
+            $txn_ref = $data['data']['flw_ref'];
+            $order = session()->get('order');
+            $amount = $data['data']['amount'];
+            $subamount = \Cart::session(Helper::getSessionID())->getSubTotal();
+            $user_id = auth()->check() ? auth()->id() : rand(0000, 9999);
+            $method = 'flutterwave';
+            $currency = Currency::where('code','=',$data['data']['currency'])->first();
+            $cart = \Cart::session(Helper::getSessionID())->getContent();
+            // store order
+            $res = OrderActions::store($order, $amount, $subamount, $user_id, $method, $currency, $cart);
             $newOrder = OrderQueries::findByRef($res);
 
             DB::beginTransaction();
@@ -183,7 +194,7 @@ class PaymentController extends Controller
                 $payment->amount = $amount;
                 $payment->currency = $newOrder->order_currency;
                 $payment->description = 'Payment for Order ' . $newOrder->order_number;
-                $payment->payment_ref = $transactionID;
+                $payment->payment_ref = $txn_ref;
                 $payment->save();
                 DB::commit();
 
@@ -200,7 +211,7 @@ class PaymentController extends Controller
                 return redirect()->route('checkout.success', ['reference' => $newOrder->order_reference]);;
             }
         } else {
-            return 'an error occurred';
+            abort(500);
         }
     }
 
@@ -222,14 +233,15 @@ class PaymentController extends Controller
     public function paystackHandleGatewayCallback(Request $request){
         $paymentDetails = Paystack::getPaymentData();
         // dd($paymentDetails);
-        $order = $paymentDetails['data']['metadata'];
-        $amount = \Cart::session(Helper::getSessionID())->getTotal();
-        $subamount = \Cart::session(Helper::getSessionID())->getSubTotal();
+        $order = $paymentDetails['data']['metadata']['order'];
+        $amount = $paymentDetails['data']['amount']/100;
+        $subamount = $paymentDetails['data']['metadata']['subamount'];
         $user_id = auth()->check() ? auth()->id() : rand(0000, 9999);
         $method = "paystack";
-        $currency = "NGN";
+        $currency = Currency::where('code',"NGN")->first();
+        $cart = $paymentDetails['data']['metadata']['cart'];
         if($paymentDetails['status']){
-            $res = OrderActions::store($order, $amount, $subamount, $user_id, $method, $currency);
+            $res = OrderActions::store($order, $amount, $subamount, $user_id, $method, $currency, $cart);
             $newOrder = OrderQueries::findByRef($res);
 
             DB::beginTransaction();
@@ -262,10 +274,113 @@ class PaymentController extends Controller
 
     }
 
+    /**
+     * Stripe Payment functions
+     *
+     * @return void
+     */
+
+    //Redirect to stripe checkout
+    public function stripeInit(Request $request)
+    {
+        $cart = \Cart::session(auth()->check() ? auth()->id() : 'guest')->getContent();
+        $x = [];
+        foreach ($cart as $key => $value) {
+            $x[] = array($value['id'], $value['price'], $value['quantity'], $value['attributes']['size']);
+        }
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        $subamount = \Cart::session(auth()->check() ? auth()->id() : 'guest')->getSubTotal();
+        $amount = \Cart::session(auth()->check() ? auth()->id() : 'guest')->getTotal();
+        $order = $request->session()->get('order');
+        $method = 'stripe';
+        $checkout_session = \Stripe\Checkout\Session::create([
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'usd',
+                    'product_data' => [
+                        'name' => 'Order from 2611 AUR',
+                    ],
+                    'unit_amount' => $amount * 100,
+                ],
+                'quantity' => 1,
+            ]],
+            'payment_intent_data' => [
+                'metadata' => [
+                    'order' => $order,
+                    'subamount' => $subamount,
+                    'user_id' => auth()->id() ?? rand(0000, 9999),
+                    'order_items' => json_encode($x),
+                ],
+            ],
+            'mode' => 'payment',
+            'success_url' => route('payment.success'),
+            'cancel_url' => route('payment.failure'),
+        ]);
+        \Cart::session(auth()->check() ? auth()->id() : 'guest')->clear();
+        $request->session()->forget('order');
+        return redirect()->away($checkout_session->url);
+    }
+
+    // //Handle Stripe Webhook
+    // public function webhook(Request $request)
+    // {
+    //     try {
+    //         $data = $request->all();
+    //         $method = "stripe";
+    //         $metadata = $data['data']['object']['metadata'];
+    //         $user_id = $metadata['user_id'];
+    //         switch ($data['type']) {
+    //             case 'charge.succeeded':
+    //                 $subamount = $metadata['subamount'];
+    //                 $amount = $data['data']['object']['amount'] / 100;
+    //                 $payment_id = $data['data']['object']['id'];
+    //                 $order_items = $metadata['order_items'];
+    //                 $res = (new OrderActions())->store(json_decode($metadata['order']), $amount, $subamount, $user_id, $method, json_decode($metadata['order_items']));
+    //                 $newOrder = (new OrderQueries())->findByRef($res);
+    //                 if ($newOrder) {
+    //                     DB::beginTransaction();
+    //                     if (PaymentRecord::where('payment_ref', $payment_id)->first()) {
+    //                         throw new Exception('Payment Already made!');
+    //                     }
+    //                     $payment = new PaymentRecord();
+    //                     $payment->user_id = auth()->id() ?? $newOrder->user_id;
+    //                     $payment->order_id = $newOrder->id;
+    //                     $payment->amount = $amount;
+    //                     $payment->description = 'Payment for Order ' . $newOrder->order_number;
+    //                     $payment->payment_ref = $payment_id;
+    //                     $payment->save();
+    //                     DB::commit();
+    //                 }
+    //                 $user = $newOrder->shipping_email;
+    //                 $admin = User::where('is_admin', 1)->get();
+    //                 NotifyAdminOrder::dispatch($newOrder, $admin);
+    //                 SendOrderInvoice::dispatch($newOrder, $user)->delay(now()->addMinutes(3));
+    //                 return 'webhook captured!';
+    //                 break;
+    //             default:
+    //                 return 'webhook event not found';
+    //         }
+    //     } catch (Exception $e) {
+    //         return $e;
+    //     }
+    // }
+
+
+
+
+
+
+
+
+
+
+
+
     public function checkoutSuccessful($ref){
         $order = OrderQueries::findByRef($ref);
+        $currency = Currency::where('code',$order->order_currency)->first();
         if($order){
-            return view('shop.order-success', compact('order'));
+            return view('shop.order-success', compact('order','currency'));
         }else{
             abort(404);
         }

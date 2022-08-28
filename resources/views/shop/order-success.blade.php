@@ -103,7 +103,7 @@
                                     </div>
                                     <div class="col-6">
                                         <h6>Payment Method</h6>
-                                        <p>{{ $order->payment_method }} - {{ $order->order_currency }}{{ $order->grand_total }}</p>
+                                        <p>{{ $order->payment_method }} - {{ $order->order_currency }} {{ number_format($order->grand_total, 2) }}</p>
                                         <h6>Shipping Method</h6>
                                         <p>Standard Shipping</p>
                                     </div>
@@ -139,6 +139,7 @@
                         <table class="table table-borderless">
                             <tbody>
                                 @foreach ($order->items as $item)
+                                {{-- {{ $item }} --}}
                                 <tr class="d-flex align-items-center">
                                     <td scope="row" style="width: 20%; position: relative;">
                                         <div>
@@ -150,7 +151,7 @@
 
                                         <span class="position-absolute badge bg-dark border border-light rounded-circle"
                                             style="">{{
-                                            $item->quantity }}</span>
+                                            $item->pivot->quantity }}</span>
 
                                     </td>
                                     <td style="width: 60%;">
@@ -161,7 +162,7 @@
 
                                     <td style="width: 30%; justify-content: end">
                                         <div class="float-end">
-                                            <small class="currency">{{ $order->order_currency }}</small> {{ number_format($item->price, 2) }}
+                                            {{ $currency->symbol }}{{ number_format($item->pivot->price, 2) }}
                                         </div>
                                     </td>
                                 </tr>
@@ -173,19 +174,19 @@
                     <div class="price border-bottom">
                         <div class="d-flex justify-content-between align-items-center pt-3 pb-2">
                             <span>Subtotal</span>
-                            <span><small class="currency">{{ $order->order_currency }}</small> {{ number_format($order->subtotal, 2) }}</span>
+                            <span>{{ $currency->symbol }}{{ number_format($order->subtotal, 2) }}</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
                             @php
                                 $shipping = $order->grand_total - $order->subtotal;
                             @endphp
                             <p>Shipping</p>
-                            <p><small class="text-muted">{{ $order->order_currency }} {{ number_format($shipping, 2) }}</small></p>
+                            <p><small class="text-muted">{{ $currency->symbol }}{{ number_format($shipping, 2) }}</small></p>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between align-items-center py-4">
                         <h5>Total</h5>
-                        <h3>{{ $order->order_currency }} {{ number_format($order->grand_total, 2) }}</h3>
+                        <h3><small class="">{{ $currency->symbol }}</small>{{ number_format($order->grand_total, 2) }} {{ $order->order_currency }}</h3>
                     </div>
                 </div>
             </div>
