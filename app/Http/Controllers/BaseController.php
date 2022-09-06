@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Custom;
 use App\Helpers\Helper;
 use App\Models\Product;
 use App\Models\Category;
@@ -90,8 +91,27 @@ class BaseController extends Controller
     }
 
 
-    public function customOrder(Request $request){
-        dd($request->all());
+    public function storeCustom(Request $request){
+        // dd($request->all());
+        if($request->image != null){
+            $path = $request->file('image')->storeOnCloudinary('custom_orders');
+            $imageUrl =  $path->getSecurePath();
+        }
+        $res = Custom::create([
+            'fname' => $request->fname,
+            'lname' => $request->lname,
+            'email' => $request->email,
+            'occassion' => $request->occassion,
+            'event_date' => $request->event_date,
+            'measurements' => $request->measurements,
+            'order_description' => $request->order_desc,
+            'budget' => $request->budget,
+            'image' => $imageUrl ?? ''
+        ]);
+
+        if($res){
+            return back()->with('success','Your order has been received. You will recieve a confirmation email soon.');
+        }
     }
 
 

@@ -56,7 +56,7 @@
                 <div class="row d-flex justify-content-between align-items-center mb-5">
                     <div class="col-md-2 col-lg-2 col-xl-2">
                         <div class="image"
-                            style="background-image: url('{{ secure_asset('images/products/'.$item->associatedModel->slug.'/'.$item->associatedModel->images()->first()->url ?? '') }}')">
+                            style="background-image: url('{{ $item->associatedModel->images()->first()->url ?? '' }}')">
                         </div>
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-3">
@@ -103,8 +103,7 @@
                     <h3> </h3>
 
                     <h6 class="text-capitalize">total: {{ $currency_symbol }}{{
-                        number_format(App\Helpers\Helper::currency_converter(Cart::session(App\Helpers\Helper::getSessionID())->getSubTotal())
-                        , 2) }} </h6>
+                        number_format(App\Helpers\Helper::currency_converter(Cart::session(App\Helpers\Helper::getSessionID())->getSubTotal()) , 2) }} </h6>
                     <p>Shipping & taxes calculated at checkout </p>
                     <a href="{{ route('checkout.page-1',session()->get('session')) }}"
                         class="btn btn-dark rounded-0">CHECKOUT</a>

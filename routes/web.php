@@ -66,11 +66,10 @@ Route::post('/checkout/3/store', [PaymentController::class,'getPaymentMethod'])-
 Route::get('/orders/{reference}', [PaymentController::class, 'checkoutSuccessful'])->name('checkout.success');
 
 //Payment Routes
-Route::post('/pay/paystack', [PaymentController::class, 'paystackRedirectToGateway'])->name('pay.paystack');
-Route::get('/payment/callback', [PaymentController::class, 'paystackHandleGatewayCallback'])->name('payment');
 //Flutterwave Checkout
 Route::post('/pay', [PaymentController::class, 'flutterInit'])->name('pay.flutter');
 Route::get('/rave/callback', [PaymentController::class,'flutterwaveCallback'])->name('flutter.callback');
+Route::post('/stripe/webhook', [PaymentController::class, 'stripeWebhook']);
 
 //User Routes
 Route::middleware(['auth','verified'])->group(function () {
@@ -79,8 +78,11 @@ Route::middleware(['auth','verified'])->group(function () {
 
 //Custom Orders
 Route::get('/custom-order', function () {
-    return view('shop.custom');
+    $message = null;
+    return view('shop.custom')->with('message',$message);
 })->name('custom');
+
+Route::post('/custom-order/store', [BaseController::class,'storeCustom'])->name('custom.store');
 
 //Gallery
 Route::get('/gallery', function () {

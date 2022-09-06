@@ -18,7 +18,7 @@
                             <div>
                                 <img class="img-fluid img-thumbnail"
                                     style=" height: 64px; width: 64px; object-fit: contain;"
-                                    src="{{ secure_asset('images/products/'.$item->associatedModel->slug.'/'.$item->associatedModel->images()->first()->url) }}"
+                                    src="{{ $item->associatedModel->images()->first()->url ?? '' }}"
                                     alt="">
                             </div>
 

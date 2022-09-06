@@ -124,7 +124,7 @@
                                         @php
                                             $currency = session('currency_code') ?? session('system_default_currency_info')->code;
                                         @endphp
-                                        @if ($currency == "NGN")
+                                        {{-- @if ($currency == "NGN")
                                             <div class="accordion-item">
                                                 <div class="accordion-button">
                                                     <div class="custom-control custom-radio">
@@ -132,7 +132,7 @@
                                                             type="radio" id="customRadio1" value="paystack"
                                                             name="payment_method"
                                                             class="form-check-input custom-control-input" />
-                                                        <label class="custom-control-label" for="customRadio1">
+                                                        <label class="custom-control-label" for="customRadio1"> Pay with
                                                             <img src="{{ secure_asset('images/payment/paystack.svg')}}"
                                                                 style=" height: 27px; " class="img-fluid" alt="">
                                                         </label>
@@ -148,17 +148,18 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endif
+                                        @endif --}}
                                         <div class="accordion-item">
                                             <div class="accordion-button">
-                                                <div class="custom-control custom-radio">
+                                                <div class="custom-control custom-radio w-100">
                                                     <input data-bs-toggle="collapse" data-bs-target="#flutterwave"
                                                         type="radio" id="customRadio2" value="flutterwave"
                                                         name="payment_method"
                                                         class="form-check-input custom-control-input" />
-                                                    <label class="custom-control-label" for="customRadio2">
-                                                        <img src="{{ secure_asset('images/payment/flutterwave.svg')}}"
-                                                            style=" height: 31px; " class="img-fluid" alt="">
+                                                    <label class="custom-control-label w-75 " for="customRadio2">
+                                                        Pay with Card
+                                                        <img src="{{ secure_asset('images/payment/flutterwave.png')}}"
+                                                            style=" height: 32px; " class="ms-5 img-fluid" alt="">
                                                     </label>
                                                 </div>
                                             </div>
@@ -179,23 +180,23 @@
                                                         type="radio" id="customRadio2" value="stripe"
                                                         name="payment_method"
                                                         class="form-check-input custom-control-input" />
-                                                    <label class="custom-control-label" for="customRadio2">
+                                                    <label class="custom-control-label" for="customRadio2">Pay with Stripe
                                                         <img src="{{ secure_asset('images/payment/stripe.svg')}}"
-                                                            style=" height: 29px; " class="img-fluid" alt="">
+                                                            style=" height: 20px; " class="img-fluid" alt="">
                                                     </label>
                                                 </div>
                                             </div>
                                             <div id="stripe" class="collapse"
                                                 data-bs-parent="#accordionWithRadioExample">
                                                 <div class="card-body text-center px-5">
-                                                    <img src="{{ secure_asset('images/payment/checkout.svg') }}"
+                                g                    <img src="{{ secure_asset('images/payment/checkout.svg') }}"
                                                         class="img-fluid mb-3" alt="">
                                                     <p>After clicking “Complete order”, you will be redirected to Stripe
                                                         to complete your purchase securely.</p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="accordion-item">
+                                        {{-- <div class="accordion-item">
                                             <div class="accordion-button">
                                                 <div class="custom-control custom-radio">
                                                     <input data-bs-toggle="collapse" data-bs-target="#paypal"
@@ -217,7 +218,7 @@
                                                         to complete your purchase securely.</p>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center pt-3">
                                         <a href="{{ route('checkout.page-2',$session) }}"

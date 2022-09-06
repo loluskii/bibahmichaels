@@ -148,7 +148,7 @@
                                                                                                         <td
                                                                                                             style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif">
 
-                                                                                                            <img src="{{ secure_asset('images/products/'.$item->slug.'/'.$item->images()->first()->url) }}"
+                                                                                                            <img src="{{ $item->images()->first()->url }}"
                                                                                                                 align="left"
                                                                                                                 height="60"
                                                                                                                 style="margin-right:15px;border-radius:8px;border:1px solid #e5e5e5"

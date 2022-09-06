@@ -181,3 +181,5 @@
         </div>
     </div>
 </footer>
+
+@include('layouts.footer-scripts')

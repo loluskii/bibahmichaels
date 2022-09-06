@@ -14,7 +14,18 @@
                 you through the process. We will also provide a realistic estimate
                 for the delivery date and cost.</p>
 
-            <form action="" class=" mt-5">
+            <form action="{{ route('custom.store') }}" method="POST" class=" mt-5">
+                @csrf
+                
+                @if ($message)
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <strong>Success!</strong> {{ $message ?? '' }}.
+                </div>
+                @endif
+
+
+
                 <div class="row">
                     <div class="col">
                         <div class="mb-3">
@@ -36,7 +47,7 @@
 
                 <div class="mb-3">
                     <label for="" class="form-label">Occassion</label>
-                    <input type="text" name="phone_no" id="" class="form-control form-control-lg" placeholder="" aria-describedby="helpId">
+                    <input type="text" name="occassion" id="" class="form-control form-control-lg" placeholder="" aria-describedby="helpId">
                 </div>
                 <div class="mb-3">
                     <label for="" class="form-label">Date of Event</label>
@@ -44,21 +55,27 @@
                 </div>
                 <div class="mb-3">
                     <label for="" class="form-label">Dress Size/ Measurements</label>
-                    <input type="text" name="measurements" id="" class="form-control form-control-lg" placeholder="" aria-describedby="helpId">
+                    <input type="text" name="measurements" id="" class="form-control form-control-lg" aria-describedby="helpId">
                 </div>
                 <div class="mb-3">
                   <label for="" class="form-label">Design image</label>
-                  <input type="file" class="form-control" name="" id="" placeholder="" aria-describedby="fileHelpId">
+                  <input type="file" class="form-control" name="image" id="" placeholder="" aria-describedby="fileHelpId">
                 </div>
                 <div class="mb-3">
                   <label for="" class="form-label">Order Request Ddescription</label>
                   <textarea class="form-control form-control-lg" name="order_desc" id="" rows="3"></textarea>
                 </div>
                 <div class="mb-3">
-                    <label for="" class="form-label">Budget</label>
-                    <input type="text" name="budget" id="" class="form-control form-control-lg" placeholder="" aria-describedby="helpId">
+                  <label for="" class="form-label">Budget</label>
+                  <select class="form-select form-select-lg rounded-0" name="budget" id="">
+                    <option value="">Choose a budget</option>
+                    <option value="cat_1">£700 - £1,000</option>
+                    <option value="cat_2">£1,000 - £1,500</option>
+                    <option value="cat_3">£1,500 - £2,000</option>
+                    <option value="cat_4">Above £2,000</option>
+                  </select>
                 </div>
-                <button type="submit" disabled class="btn btn-dark rounded-0 btn-block text-uppercase btn-block w-100">submit request</button>
+                <button type="submit" class="btn btn-dark rounded-0 btn-block text-uppercase btn-block w-100">submit request</button>
             </form>
         </div>
     </div>

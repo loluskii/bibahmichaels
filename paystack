@@ -1,0 +1,57 @@
+    /**
+     * Paystack Payment functions
+     *
+     * @return void
+     */
+    public function paystackRedirectToGateway(Request $request)
+    {
+        try{
+            return Paystack::getAuthorizationUrl()->redirectNow();
+        }catch(\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function paystackHandleGatewayCallback(Request $request){
+        $paymentDetails = Paystack::getPaymentData();
+        // dd($paymentDetails);
+        $order = $paymentDetails['data']['metadata']['order'];
+        $amount = $paymentDetails['data']['amount']/100;
+        $subamount = $paymentDetails['data']['metadata']['subamount'];
+        $user_id = auth()->check() ? auth()->id() : rand(0000, 9999);
+        $method = "paystack";
+        $currency = Currency::where('code',"NGN")->first();
+        $cart = $paymentDetails['data']['metadata']['cart'];
+        if($paymentDetails['status']){
+            $res = OrderActions::store($order, $amount, $subamount, $user_id, $method, $currency, $cart);
+            $newOrder = OrderQueries::findByRef($res);
+
+            DB::beginTransaction();
+            if (Payment::where('payment_ref', $paymentDetails['data']['reference'])->first()) {
+                throw new Exception('Duplicate transaction');
+            } else {
+                $payment = new Payment();
+                $payment->user_id = $newOrder->user_id;
+                $payment->order_id = $newOrder->id;
+                $payment->amount = $amount;
+                $payment->currency = $newOrder->order_currency;
+                $payment->description = 'Payment for Order ' . $newOrder->order_number;
+                $payment->payment_ref = $paymentDetails['data']['id'];
+                $payment->save();
+                DB::commit();
+
+                $admin = User::where('is_admin', 1)->get();
+                $user = $newOrder->shipping_email;
+
+                \Cart::session(auth()->check() ? auth()->id() : 'guest')->clear();
+                request()->session()->forget('order');
+                request()->session()->forget('session');
+
+                AdminOrderNotification::dispatch($newOrder, $admin);
+                SendOrderInvoice::dispatch($newOrder, $user)->delay(now()->addMinutes(3));
+
+                return redirect()->route('checkout.success', ['reference' => $newOrder->order_reference]);;
+            }
+        }
+
+    }

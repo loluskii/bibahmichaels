@@ -1,7 +1,7 @@
 <div class="modal modal-right fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
     aria-hidden="true">
     <div class="modal-dialog w-75" role="document">
-        <div class="modal-content p-4">
+        <div class="modal-content p-3">
             <div class="modal-header">
                 <h5 class="modal-title">SHOPPING BAG</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -13,11 +13,11 @@
                 @if ($cartItems->count() > 0)
                 @foreach ($cartItems as $item)
                 <div class="d-flex border-bottom  py-3">
-                        {{-- <img src="{{ secure_asset('products/'.$item->associatedModel->slug.'/'.$item->associatedModel->images()->first()->url ?? '') }}"
-                            class="img-fluid" style="height: 150px;" alt="" srcset=""> --}}
+                        <img src="{{ $item->associatedModel->images()->first()->url ?? '' }}"
+                            class="img-fluid" style="height: 150px;" alt="" srcset="">
                         <div class="ms-3 d-flex flex-column">
-                            <h6 class="mb-auto text-uppercase" style="line-height: 1.2">{{ $item->name }}</h6>
-
+                            <h6 class="text-uppercase" style="line-height: 1.2">{{ $item->name }}</h6>
+                            <small class="mb-auto ">Size: {{ $item->attributes->size ?? 'None' }} / Color: {{ $item->attributes->color ?? 'None' }}</small>
                             <form action="{{route('cart.update', $item->id)}}" method="POST">
                                 @csrf
                                 <div class="input-group mb-3">
@@ -25,7 +25,7 @@
                                         type="button" id="button-addon1">-</button>
                                     <input type="text" value="{{ $item->quantity }}" name="quantity"
                                         onchange="this.form.submit()" readonly
-                                        class="bg-white form-control w-25 text-center border-start-0 border-end-0"
+                                        class="bg-white form-control w-25 text-center"
                                         aria-label="Amount (to the nearest dollar)">
                                     <button class="btn btn-sm px-2 plus rounded-0 fw-bold" style="color: #bbb"
                                         type="button" id="button-addon2">+</button>

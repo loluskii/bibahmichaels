@@ -6,7 +6,7 @@
         background-color: #cccccc;
         height: 350px;
         width: auto;
-        background-position: center;
+        background-position: center -50px;
         background-repeat: no-repeat;
         background-size: cover;
         position: relative;
@@ -99,8 +99,71 @@
         <h3 class="text-uppercase">{{ $collection_title ?? 'PRODUCTS' }}</h3>
     </div>
     <div class="container-sm py-5">
+        <div class="row d-lg-none d-md-none d-block">
+            <div class="col">
+                <form action="{{ Route::is('shop') ? '' : route('shop') }}">
+                    <div class="mb-3">
+                        <label for="" class="form-label">CATEGORY</label>
+                        <select class="form-select rounded-0" onchange="this.form.submit()" name="category" id="">
+                          @foreach ($categories as $category)
+                              @php
+                                  $checked = array();
+                                  if(isset($_GET['category'])){
+                                      $checked[] = $_GET['category'];
+                                  }
+                              @endphp
+                              <option  {{ in_array($category->slug, $checked) ? 'selected' : ''}} value="{{ $category->slug }}">{{ $category->name }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                </form>
+            </div>
+            <div class="col">
+                <div class="row">
+                    @if ($products->count() > 0)
+                        @foreach ($products as $product)
+                        @php
+                            $currencies = App\Models\Currency::where('status','active')->get();
+                            App\Helpers\Helper::currency_load();
+                            $currency_code = session('currency_code');
+                            $currency_symbol = session('currency_symbol');
+                            if($currency_symbol == ""){
+                            $system_default_currency_info = session('system_default_currency_info');
+                            $currency_symbol = $system_default_currency_info->symbol;
+                            $currency_code = $system_default_currency_info->code;
+                            }
+                        @endphp
+                        <div class="col-md-3 mb-3">
+                            <a class=" text-decoration-none" href="{{ route('shop.product.show',$product->slug) }}">
+                                <div class="card rounded-0 border-0">
+                                    <div class="product-image"
+                                        style="background-image: url('{{ $product->images()->first()->url ?? '' }}')"></div>
+                                    <div class="card-body text-center text-decoration-none">
+                                        <h5 class="card-title text-uppercase  text-decoration-none">{{ $product->name }}
+                                        </h5>
+                                        <p class="card-text ">{{ $currency_symbol }}{{
+                                            number_format(App\Helpers\Helper::currency_converter($product->price), 2) }}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        @endforeach
+                    @else
+                        <div class="container">
+                            <div class="row justify-content-center align-items-center">
+                                <div class="col-md-12 text-center">
+                                    <div class="mb-4">Oops! No products available!</div>
+                                    {{-- <a href="{{ route('home') }}" class="btn btn-link">Back to Home</a> --}}
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+                </div>
+            </div>
+        </div>
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-2 d-lg-block d-none">
 
                 <form action="{{ Route::is('shop') ? '' : route('shop') }}" id="productsFilter">
                     <div class="price"></div>
@@ -128,7 +191,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-10 d-lg-block d-none">
                 <div class="row">
                     @if ($products->count() > 0)
                         @foreach ($products as $product)
@@ -147,7 +210,7 @@
                             <a class=" text-decoration-none" href="{{ route('shop.product.show',$product->slug) }}">
                                 <div class="card rounded-0 border-0">
                                     <div class="product-image"
-                                        style="background-image: url('{{ secure_asset('images/products/'.$product->slug.'/'.$product->images()->first()->url ?? '') }}')"></div>
+                                        style="background-image: url('{{ $product->images()->first()->url ?? '' }}')"></div>
                                     <div class="card-body text-center text-decoration-none">
                                         <h5 class="card-title text-uppercase  text-decoration-none">{{ $product->name }}
                                         </h5>

@@ -40,10 +40,9 @@ class ProductActions
 
 
                 foreach ($request->file('image') as $imagefile){
-                    $filename = date('YmdHi').$imagefile->getClientOriginalName();
-                    $imagefile->move(public_path('images/products/'.$product->slug), $filename);
-                    // $path = $imagefile->storeOnCloudinary('bibahmichael/'.$product->slug);
-                    $imageUrl =  $filename;
+                    $path = $imagefile->storeOnCloudinary($product->slug);
+                    $imageUrl =  $path->getSecurePath();
+                    // $imageUrl =  $filename;
                     $image = new Image;
                     $image->product_id = $product->id;
                     $image->thumbnail = $product->slug;

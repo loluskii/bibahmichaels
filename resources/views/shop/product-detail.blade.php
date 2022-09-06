@@ -88,7 +88,7 @@
     li.nav-item .nav-link.active {
         color: #121212;
         background-color: transparent;
-        border-bottom: 2px solid #121212;
+        /* border-bottom: 2px solid #121212; */
         font-weight: 600;
     }
 </style>
@@ -105,14 +105,14 @@
                             class="img-small-wrap d-flex justify-content-between align-items-center flex-lg-column flex-md-column flex-sm-row order-lg-1 mt-lg-0 mt-md-0 mt-3">
                             @foreach ($product->images->take(3) as $image)
                             <div class="item-gallery d-flex align-items-center ">
-                                <a href="#" class="thumbnail mb-3" data-big="{{ secure_asset('images/products/'.$product->slug.'/'.$image->url) }}"
-                                    style="background-image: url('{{ secure_asset('images/products/'.$product->slug.'/'.$image->url) }}')"></a>
+                                <a href="#" class="thumbnail mb-3" data-big="{{ $image->url ?? '' }}"
+                                    style="background-image: url('{{ $image->url ?? '' }}')"></a>
                             </div>
                             @endforeach
                         </div>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-12 order-lg-last order-md-last order-first product-image">
-                        <img src="{{ secure_asset('images/products/'.$product->slug.'/'.$product->images()->first()->url ?? '') }}" id="product-image" style=""
+                        <img src="{{ $product->images()->first()->url ?? '' }}" id="product-image" style=""
                             class="primary img-fluid">
                         {{-- <div class="prodcut-image"></div> --}}
                     </div>
@@ -121,8 +121,8 @@
             <aside class="col-md-6">
                 <article class="card-body px-lg-5 px-md-5 p-sm-2 py-0">
                     <header
-                        class="d-flex flex-lg-column flex-md-column flex-column align-items-lg-start align-items-center align-items-md-start">
-                        <p class=" text-decoration-underline">Size Chart <i class="fa-solid fa-ruler"></i></p>
+                        class="d-flex flex-lg-column flex-md-column flex-column align-items-lg-start align-items-md-start">
+                        <p class=" text-decoration-underline" style="cursor: pointer;"  data-bs-toggle="modal" data-bs-target="#size-chart">Size Chart <i class="fa-solid fa-ruler"></i></p>
                         <h4 class="text-uppercase me-md-auto me-lg-auto me-xl-auto fw-bold">{{ $product->name }}</h4>
                         @php
                         $currencies = App\Models\Currency::where('status','active')->get();
@@ -198,7 +198,7 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link rounded-0" id="pills-profile-tab" data-bs-toggle="pill"
                             data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-                            aria-selected="false">Additional Information</button>
+                            aria-selected="false">More Information</button>
                     </li>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
@@ -221,46 +221,24 @@
             <h4>YOU MAY LIKE THESE</h4>
         </div>
         <div class="row justify-content-center">
-            <div class="col-md-3 mb-3">
-                <div class="card rounded-0 border-0">
-                    <img src="{{ secure_asset('images/pexels-destiawan-nur-agustra-1113554.jpg') }}"
-                        class="card-img-top" alt="...">
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-uppercase">feyi dress</h5>
-                        <p class="card-text">£25.99</p>
-                    </div>
+            @if ($similar->count() > 0)
+                @foreach ($similar as $product)
+                <div class="col-md-3 mb-3">
+                    <a class=" text-decoration-none" href="{{ route('shop.product.show',$product->slug) }}">
+                        <div class="card rounded-0 border-0">
+                            <div class="product-image" style="background-image: url('{{ $product->images()->first()->url ?? '' }}')"></div>
+                            <div class="card-body text-center text-decoration-none">
+                                <h5 class="card-title text-uppercase  text-decoration-none">{{ $product->name }}</h5>
+                                <p class="card-text ">{{ $currency_symbol }}{{
+                                    number_format(App\Helpers\Helper::currency_converter($product->price), 2) }}</p>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </div>
-            <div class="col-md-3 mb-3">
-                <div class="card rounded-0 border-0">
-                    <img src="{{ secure_asset('images/pexels-destiawan-nur-agustra-1113554.jpg') }}"
-                        class="card-img-top" alt="...">
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-uppercase">feyi dress</h5>
-                        <p class="card-text">£25.99</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-3">
-                <div class="card rounded-0 border-0">
-                    <img src="{{ secure_asset('images/pexels-destiawan-nur-agustra-1113554.jpg') }}"
-                        class="card-img-top" alt="...">
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-uppercase">feyi dress</h5>
-                        <p class="card-text">£25.99</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-3">
-                <div class="card rounded-0 border-0">
-                    <img src="{{ secure_asset('images/pexels-destiawan-nur-agustra-1113554.jpg') }}"
-                        class="card-img-top" alt="...">
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-uppercase">feyi dress</h5>
-                        <p class="card-text">£25.99</p>
-                    </div>
-                </div>
-            </div>
+                @endforeach
+            @else
+                <p>No similar products. </p>
+            @endif
         </div>
     </div>
 </div>

@@ -120,8 +120,7 @@
             <div class="col-md-3 mb-3">
                 <a class=" text-decoration-none" href="{{ route('shop.product.show',$product->slug) }}">
                     <div class="card rounded-0 border-0">
-                        <div class="product-image"
-                            style="background-image: url('{{ secure_asset('images/products/'.$product->slug.'/'.$product->images()->first()->url ?? '') }}')"></div>
+                        <div class="product-image" style="background-image: url('{{ $product->images()->first()->url ?? '' }}')"></div>
                         <div class="card-body text-center text-decoration-none">
                             <h5 class="card-title text-uppercase  text-decoration-none">{{ $product->name }}</h5>
                             <p class="card-text ">{{ $currency_symbol }}{{

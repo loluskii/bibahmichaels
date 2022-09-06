@@ -48,7 +48,9 @@
                                     <td>{{ $order->event_date }}</td>
                                     {{-- <td>{{ $order->country }}</td> --}}
                                     <td>{{ $order->created_at }}</td>
-                                    <td><a  href="{{ route('admin.orders.custom.show', $order->id) }}" class="btn btn-info btn-sm">View</a></td>
+                                    <td><button data-toggle="modal" data-target="#order{{ $order->id }}" class="btn btn-info btn-sm">View</button>
+                                        @include('partials.custom-order-detail')
+                                    </td>
                                 </tr>
                                 @endforeach
                             @else
