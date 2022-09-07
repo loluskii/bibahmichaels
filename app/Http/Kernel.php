@@ -20,9 +20,9 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
-        \App\Http\Middleware\HttpRedirect::class,
-        \App\Http\Middleware\HSTS::class,
-        \Bepsvpt\SecureHeaders\SecureHeadersMiddleware::class,
+        // \App\Http\Middleware\HttpRedirect::class,
+        // \App\Http\Middleware\HSTS::class,
+        // \Bepsvpt\SecureHeaders\SecureHeadersMiddleware::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
 
