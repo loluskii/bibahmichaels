@@ -294,7 +294,7 @@ class PaymentController extends Controller
                     $amount = $data['data']['object']['amount'] / 100;
                     $payment_id = $data['data']['object']['id'];
                     $order_items = $metadata['order_items'];
-                    $currency = $metadata['currency'];
+                    $currency = Currency::where('code', '=', $metadata['currency'])->first();
                     $res = (new OrderActions())->store(json_decode($metadata['order']), $amount, $subamount, $user_id, $method, $currency, json_decode($metadata['order_items']));
                     $newOrder = (new OrderQueries())->findByRef($res);
                     if ($newOrder) {
