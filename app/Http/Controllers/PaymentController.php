@@ -135,12 +135,7 @@ class PaymentController extends Controller
             return $this->flutterInit($request);
         } else if ($request->payment_method == "stripe") {
             $amount = Helper::currency_converter(\Cart::session(Helper::getSessionID())->getTotal());
-            $metadata = [
-                'order' => $request->session()->get('order'),
-                'cart' => \Cart::session(Helper::getSessionID())->getContent(),
-                'subamount' => \Cart::session(Helper::getSessionID())->getSubTotal(),
-            ];
-            $request->merge(['meta' => $metadata, 'ref' => $ref, 'currency' => $currency, 'amount' => $amount]);
+            $request->merge([ 'currency' => $currency, 'amount' => $amount]);
             return $this->stripeInit($request);
         }
     }
