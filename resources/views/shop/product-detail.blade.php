@@ -68,6 +68,7 @@
         color: #fff !important;
     }
 
+
     .cat input:checked+span {
         color: #121212;
         border: 1px solid #121212;
@@ -91,6 +92,17 @@
         /* border-bottom: 2px solid #121212; */
         font-weight: 600;
     }
+
+    .product_image {
+        background-color: #cccccc;
+        height: 400px;
+        width: auto;
+        background-position: center -50px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+    }
+
 </style>
 @endsection
 
@@ -226,7 +238,7 @@
                 <div class="col-md-3 mb-3">
                     <a class=" text-decoration-none" href="{{ route('shop.product.show',$product->slug) }}">
                         <div class="card rounded-0 border-0">
-                            <div class="product-image" style="background-image: url('{{ $product->images()->first()->url ?? '' }}')"></div>
+                            <div class="product_image" style="background-image: url('{{ $product->images()->first()->url ?? '' }}')"></div>
                             <div class="card-body text-center text-decoration-none">
                                 <h5 class="card-title text-uppercase  text-decoration-none">{{ $product->name }}</h5>
                                 <p class="card-text ">{{ $currency_symbol }}{{

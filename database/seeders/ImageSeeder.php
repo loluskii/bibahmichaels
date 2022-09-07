@@ -17,45 +17,45 @@ class ImageSeeder extends Seeder
     {
         Image::create([
             'product_id' => 1,
-            'thumbnail'=> 'feyi-dress1',
+            'thumbnail'=> 'bukola-bodysuit',
             'url'=>'https://res.cloudinary.com/deumzc82y/image/upload/v1659341534/bibahmichael/1_fdfsmh.jpg',
         ]);
         Image::create([
             'product_id' => 1,
-            'thumbnail'=> 'feyi-dress1',
+            'thumbnail'=> 'bukola-bodysuit',
             'url'=>'https://res.cloudinary.com/deumzc82y/image/upload/v1659341507/bibahmichael/2_vtlf5d.jpg',
         ]);
         Image::create([
             'product_id' => 1,
-            'thumbnail'=> 'feyi-dress1',
+            'thumbnail'=> 'bukola-bodysuit',
             'url'=>'https://res.cloudinary.com/deumzc82y/image/upload/v1659341594/bibahmichael/3_q7cvrv.jpg',
         ]);
         Image::create([
             'product_id' => 1,
-            'thumbnail'=> 'feyi-dress1',
+            'thumbnail'=> 'bukola-bodysuit',
             'url'=>'https://res.cloudinary.com/deumzc82y/image/upload/v1659341561/bibahmichael/4_iswbas.jpg',
         ]);
 
 
         Image::create([
             'product_id' => 2,
-            'thumbnail'=> 'lawunmi_dress1',
-            'url'=>'https://res.cloudinary.com/deumzc82y/image/upload/v1659363057/bibahmichael/Product%202/2_1_n6diwx.jpg',
+            'thumbnail'=> 'lawunmi_bodysuit',
+            'url'=>'https://res.cloudinary.com/hehvaxw20/image/upload/v1662544933/lawunmi-bodysuit/2_1_fohr0k.jpg',
         ]);
         Image::create([
             'product_id' => 2,
-            'thumbnail'=> 'lawunmi_dress2',
-            'url'=>'https://res.cloudinary.com/deumzc82y/image/upload/v1659363057/bibahmichael/Product%202/2_2_kscruo.jpg',
+            'thumbnail'=> 'lawunmi_bodysuit',
+            'url'=>'https://res.cloudinary.com/hehvaxw20/image/upload/v1662544929/lawunmi-bodysuit/2_2_klku6y.jpg',
         ]);
         Image::create([
             'product_id' => 2,
-            'thumbnail'=> 'lawunmi_dress3',
-            'url'=>'https://res.cloudinary.com/deumzc82y/image/upload/v1659363057/bibahmichael/Product%202/2_3_hyk3vm.jpg',
+            'thumbnail'=> 'lawunmi_bodysuit',
+            'url'=>'https://res.cloudinary.com/hehvaxw20/image/upload/v1662544931/lawunmi-bodysuit/2_3_hyofs1.jpg',
         ]);
         Image::create([
             'product_id' => 2,
-            'thumbnail'=> 'lawunmi_dress4',
-            'url'=>'https://res.cloudinary.com/deumzc82y/image/upload/v1659363055/bibahmichael/Product%202/2_4_b462xh.jpg',
+            'thumbnail'=> 'lawunmi_bodysuit',
+            'url'=>'https://res.cloudinary.com/hehvaxw20/image/upload/v1662544927/lawunmi-bodysuit/2_4_x6vybn.jpg',
         ]);
     }
 }

@@ -189,7 +189,7 @@
                                             <div id="stripe" class="collapse"
                                                 data-bs-parent="#accordionWithRadioExample">
                                                 <div class="card-body text-center px-5">
-                                g                    <img src="{{ secure_asset('images/payment/checkout.svg') }}"
+                                                    <img src="{{ secure_asset('images/payment/checkout.svg') }}"
                                                         class="img-fluid mb-3" alt="">
                                                     <p>After clicking “Complete order”, you will be redirected to Stripe
                                                         to complete your purchase securely.</p>
