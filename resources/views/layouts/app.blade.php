@@ -94,7 +94,7 @@
                         }
                         @endphp
                         @foreach ($currencies as $currency)
-                        <option {{ ($currency_code==$currency->code) ? 'selected' : '' }} value="{{ $currency->code
+                        <option class="text-dark" {{ ($currency_code==$currency->code) ? 'selected' : '' }} value="{{ $currency->code
                             }}">{{ $currency->icon }} {{ $currency->name }}</option>
                         @endforeach
                     </select>

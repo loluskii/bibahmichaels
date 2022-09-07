@@ -90,14 +90,14 @@
                                     <div class="contact d-flex justify-content-between align-items-center">
                                         <div class="row">
                                             <div class="col-auto">
-                                                <span class="text-muted">Contact</span> {{ \Cart::session(App\Helpers\Helper::getSessionID())->getTotal(); }}
+                                                <span class="text-muted">Contact</span>
                                             </div>
                                             <div class="col-auto">
                                                 <span class=" text-wrap">{{ $order->shipping_email }}</span>
                                             </div>
                                         </div>
-                                        <a href="" class="text-decoration-none"><small
-                                                style=" font-weight: 500">Change</small></a>
+                                        {{-- <a href="" class="text-decoration-none"><small
+                                                style=" font-weight: 500">Change</small></a> --}}
                                     </div>
                                     <hr style="width: auto">
                                     <div class="shipping d-flex justify-content-between align-items-center">
@@ -109,8 +109,8 @@
                                                 <span class="text-wrap">{{ $order->shipping_address }}</span>
                                             </div>
                                         </div>
-                                        <a href="" class="text-decoration-none"><small
-                                                style=" font-weight: 500">Change</small></a>
+                                        {{-- <a href="" class="text-decoration-none"><small
+                                                style=" font-weight: 500">Change</small></a> --}}
                                     </div>
                                 </div>
                             </div>

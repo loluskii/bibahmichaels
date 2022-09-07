@@ -96,8 +96,8 @@
                                                 <span class=" text-wrap">{{ $order->shipping_email }}</span>
                                             </div>
                                         </div>
-                                        <a href="" class="text-decoration-none"><small
-                                                style=" font-weight: 500">Change</small></a>
+                                        {{-- <a href="" class="text-decoration-none"><small
+                                                style=" font-weight: 500">Change</small></a> --}}
                                     </div>
                                     <hr style="width: auto">
                                     <div class="shipping d-flex justify-content-between align-items-center">
@@ -110,8 +110,8 @@
                                                     $order->shipping_country }}</span>
                                             </div>
                                         </div>
-                                        <a href="" class="text-decoration-none"><small
-                                                style=" font-weight: 500">Change</small></a>
+                                        {{-- <a href="" class="text-decoration-none"><small
+                                                style=" font-weight: 500">Change</small></a> --}}
                                     </div>
                                 </div>
                             </div>
