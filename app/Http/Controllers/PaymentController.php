@@ -283,7 +283,6 @@ class PaymentController extends Controller
     // //Handle Stripe Webhook
     public function stripeWebhook(Request $request)
     {
-        dd($request->all());
         try {
             $data = $request->all();
             $method = "stripe";
