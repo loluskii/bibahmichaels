@@ -263,7 +263,6 @@ class PaymentController extends Controller
                     'metadata' => [
                         'ref' => $ref,
                         'order' => $request->session()->get('order'),
-                        'cart' => \Cart::session(Helper::getSessionID())->getContent(),
                         'subamount' => \Cart::session(Helper::getSessionID())->getSubTotal(),
                         'user_id' => auth()->id() ?? rand(0000, 9999),
                         'order_items' => json_encode($x),
