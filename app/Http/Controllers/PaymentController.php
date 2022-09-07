@@ -249,6 +249,7 @@ class PaymentController extends Controller
             foreach ($cart as $key => $value) {
                 $x[] = array($value['id'], $value['price'], $value['quantity'], $value['attributes']['size'], $value['attributes']['color']);
             }
+            $ref = Str::random(20);
             \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
             $checkout_session = \Stripe\Checkout\Session::create([
                 'line_items' => [
@@ -265,6 +266,7 @@ class PaymentController extends Controller
                 ],
                 'payment_intent_data' => [
                     'metadata' => [
+                        'ref' => $ref,
                         'order' => $request->session()->get('order'),
                         'cart' => \Cart::session(Helper::getSessionID())->getContent(),
                         'subamount' => \Cart::session(Helper::getSessionID())->getSubTotal(),
@@ -274,7 +276,7 @@ class PaymentController extends Controller
                     ],
                 ],
                 'mode' => 'payment',
-                'success_url' => route('checkout.success', $request->ref),
+                'success_url' => route('checkout.success', $ref),
                 'cancel_url' => route('checkout.page-3', session()->get('session')),
             ]);
             return redirect()->away($checkout_session->url);
