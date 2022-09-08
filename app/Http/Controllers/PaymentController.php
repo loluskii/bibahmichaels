@@ -336,7 +336,7 @@ class PaymentController extends Controller
     public function checkoutSuccessful($ref)
     {
         $order = OrderQueries::findByRef(decrypt($ref));
-        // $currency = Currency::where('code', $order->order_currency)->first();
+        $currency = Currency::where('code', $order->order_currency)->first();
         if ($order) {
             return view('shop.order-success', compact('order', 'currency'));
         } else {
