@@ -222,7 +222,7 @@ class PaymentController extends Controller
                 AdminOrderNotification::dispatch($newOrder, $admin);
                 SendOrderInvoice::dispatch($newOrder, $user)->delay(now()->addMinutes(3));
 
-                return redirect()->route('checkout.success', ['reference' => $newOrder->order_reference]);
+                return redirect()->route('checkout.success', ['reference' => encrypt($newOrder->order_reference)]);
             }
         } else {
             abort(500);
