@@ -70,6 +70,7 @@ Route::get('/orders/{reference}', [PaymentController::class, 'checkoutSuccessful
 Route::post('/pay', [PaymentController::class, 'flutterInit'])->name('pay.flutter');
 Route::get('/rave/callback', [PaymentController::class,'flutterwaveCallback'])->name('flutter.callback');
 Route::post('/stripe/webhook', [PaymentController::class, 'stripeWebhook']);
+Route::get('/stripe/redirect/{ref}', [PaymentController::class, 'stripeRedirect'])->name('stripe.redirect');
 
 //User Routes
 Route::middleware(['auth','verified'])->group(function () {

@@ -242,7 +242,7 @@ class PaymentController extends Controller
             $cart = \Cart::session(auth()->check() ? auth()->id() : 'guest')->getContent();
             $x = [];
             foreach ($cart as $key => $value) {
-                $x[] = array($value['id'], $value['price'], $value['quantity'], $value['attributes']['size'], $value['attributes']['color']);
+                $x[] = array($value['id'], $value['price'], $value['quantity'], $value['attributes']['size'], $value['attributes']['color'] ?? null);
             }
             $ref = Str::random(20);
             \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
@@ -270,7 +270,7 @@ class PaymentController extends Controller
                     ],
                 ],
                 'mode' => 'payment',
-                'success_url' => route('checkout.success', $ref),
+                'success_url' => route('stripe.redirect', encrypt($ref)),
                 'cancel_url' => route('checkout.page-3', session()->get('session')),
             ]);
             return redirect()->away($checkout_session->url);
@@ -287,15 +287,18 @@ class PaymentController extends Controller
             $data = $request->all();
             $method = "stripe";
             $metadata = $data['data']['object']['metadata'];
-            $user_id = $metadata['user_id'];
+
             switch ($data['type']) {
                 case 'charge.succeeded':
                     $subamount = $metadata['subamount'];
                     $amount = $data['data']['object']['amount'] / 100;
                     $payment_id = $data['data']['object']['id'];
                     $order_items = $metadata['order_items'];
+                    $user_id = $metadata['user_id'];
                     $currency = Currency::where('code', '=', $metadata['currency'])->first();
-                    $res = (new OrderActions())->store(json_decode($metadata['order']), $amount, $subamount, $user_id, $method, $currency, json_decode($metadata['order_items']));
+                    $ref = $metadata['ref'] ?? '';
+                    $res = OrderActions::store($ref, json_decode($metadata['order']), $amount, $subamount, $user_id, $method, $currency, json_decode($metadata['order_items']));
+
                     $newOrder = (new OrderQueries())->findByRef($res);
                     if ($newOrder) {
                         DB::beginTransaction();
@@ -313,22 +316,27 @@ class PaymentController extends Controller
                     }
                     // $user = $newOrder->shipping_email;
                     // $admin = User::where('is_admin', 1)->get();
-                    // NotifyAdminOrder::dispatch($newOrder, $admin);
-                    // SendOrderInvoice::dispatch($newOrder, $user)->delay(now()->addMinutes(3));
+                    AdminOrderNotification::dispatch($newOrder, $admin)->delay(now()->addMinutes(1));;
+                    SendOrderInvoice::dispatch($newOrder, $user)->delay(now()->addMinutes(3));
                     return 'webhook captured!';
                     break;
                 default:
-                    return 'webhook event not found';
+                    return abort(404);
             }
         } catch (Exception $e) {
             return $e;
         }
     }
 
+    public function stripeRedirect($ref){
+        // return decrypt('eyJpdiI6IlRSNWxNd2I1NE5WN1pwaUpoaTJLdXc9PSIsInZhbHVlIjoiTnJkS3hDNC9NcGVZeEdyRlZhVWtnT2pyZ2NNajBPQ0tLbjM1aERBUVkwOD0iLCJtYWMiOiIzNTI4MDU2MTI2ODE2OTIwNTY0YmU2NGFhNmUxZGEyYTZkZGUxMWMyNGZkM2Y3NGYwOGM2ZDFhZmMwNTkwMWQzIiwidGFnIjoiIn0=');
+        return redirect()->route('checkout.success', $ref);
+    }
+
     public function checkoutSuccessful($ref)
     {
-        $order = OrderQueries::findByRef($ref);
-        $currency = Currency::where('code', $order->order_currency)->first();
+        $order = OrderQueries::findByRef(decrypt($ref));
+        // $currency = Currency::where('code', $order->order_currency)->first();
         if ($order) {
             return view('shop.order-success', compact('order', 'currency'));
         } else {
