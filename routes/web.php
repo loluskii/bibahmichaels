@@ -67,6 +67,9 @@ Route::middleware(['guest'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/email/verify/{id}/{hash}', function (NewRegistrationVerificationEmail $request) {
         $request->fulfill();
+        if(session()->has('session') == false){
+            session()->put('session',session_create_id());
+        }
         return redirect('/');
     })->middleware(['signed'])->name('verification.verify');
 
