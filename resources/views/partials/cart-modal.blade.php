@@ -50,6 +50,11 @@
                         2) }}</p>
 
                 </div>
+                @php
+                    if(session()->has('session') == false){
+                        session()->put('session',session_create_id());
+                    }
+                @endphp
 
                 <a href="{{ route('checkout.page-1',session()->get('session')) }}"
                     class="btn btn-dark btn-block w-100 btn-lg rounded-0 fw-bold py-3  mt-3 {{ $cartItems->count() > 0 ? '' : 'disabled' }}">CHECKOUT</a>
