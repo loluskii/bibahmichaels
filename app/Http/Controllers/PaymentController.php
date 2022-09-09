@@ -318,6 +318,11 @@ class PaymentController extends Controller
                     // $admin = User::where('is_admin', 1)->get();
                     AdminOrderNotification::dispatch($newOrder, $admin)->delay(now()->addMinutes(1));;
                     SendOrderInvoice::dispatch($newOrder, $user)->delay(now()->addMinutes(3));
+
+                    \Cart::session(auth()->check() ? auth()->id() : 'guest')->clear();
+                    request()->session()->forget('order');
+                    request()->session()->forget('session');
+
                     return 'webhook captured!';
                     break;
                 default:

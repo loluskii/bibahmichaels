@@ -87,12 +87,12 @@
                             </div>
                             <div class="card mb-5">
                                 <div class="card-body">
-                                    <div class="contact d-flex justify-content-between align-items-center">
+                                    <div class="contact">
                                         <div class="row">
-                                            <div class="col-auto">
+                                            <div class="col-auto col-md-2">
                                                 <span class="text-muted">Contact</span>
                                             </div>
-                                            <div class="col-auto">
+                                            <div class="col-auto col-md-10">
                                                 <span class=" text-wrap">{{ $order->shipping_email }}</span>
                                             </div>
                                         </div>
@@ -100,13 +100,13 @@
                                                 style=" font-weight: 500">Change</small></a> --}}
                                     </div>
                                     <hr style="width: auto">
-                                    <div class="shipping d-flex justify-content-between align-items-center">
-                                        <div class="row">
-                                            <div class="col-auto">
+                                    <div class="shipping">
+                                        <div class="row h-100">
+                                            <div class="col-auto col-md-2">
                                                 <span class="text-muted">Ships to</span>
                                             </div>
-                                            <div class="col-auto">
-                                                <span class="text-wrap">{{ $order->shipping_address }}</span>
+                                            <div class="col-auto col-md-10 h-100">
+                                                <span class="text-wrap">{{ $order->shipping_address }}, {{ $order->shipping_zipcode }} {{ $order->shipping_state }},{{ $order->shipping_country }}</span>
                                             </div>
                                         </div>
                                         {{-- <a href="" class="text-decoration-none"><small

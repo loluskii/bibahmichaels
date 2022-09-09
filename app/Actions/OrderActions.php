@@ -4,6 +4,7 @@ namespace App\Actions;
 use Exception;
 use App\Models\Order;
 use App\Helpers\Helper;
+use App\Models\Address;
 use App\Models\Product;
 use Illuminate\Support\Str;
 use App\Models\ProductImage;
@@ -31,7 +32,7 @@ class OrderActions
         $newOrder->shipping_city = $order->shipping_city;
         $newOrder->shipping_state = $order->shipping_state;
         $newOrder->shipping_phone = $order->shipping_phone;
-        $newOrder->shipping_postal_code = $order->shipping_postal_code ?? '098809';
+        $newOrder->shipping_postal_code = $order->shipping_zipcode;
         $newOrder->shipping_country = $order->shipping_country;
         $cartItems =  \Cart::session(Helper::getSessionID())->getContent();
         $newOrder->save();
@@ -39,13 +40,24 @@ class OrderActions
             $newOrder->items()->attach($item[0], ['price'=> floatval($item[1])*$currency->exchange_rate, 'quantity'=> $item[2], 'size'=>$item[3], 'color'=>$item[4]]);
         }
 
+        $user_address = Address::where([
+            ['user_id', '=' , $user_id ],
+        ])->first();
 
-
-
-
-
-
-
+        if(!$user_address){
+            $address = new Address();
+            $address->user_id = $user_id;
+            $address->default = true;
+            $address->shipping_fname  = $order->shipping_fname;
+            $address->shipping_lname =  $order->shipping_lname;
+            $address->shipping_address =  $order->shipping_address;
+            $address->shipping_country = $order->shipping_country;
+            $address->shipping_city = $order->shipping_city;
+            $address->shipping_state = $order->shipping_state;
+            $address->shipping_zipcode = $order->shipping_zipcode;
+            $address->shipping_phone = $order->shipping_phone;
+            $address->save();
+        }
 
         return $ref;
     }

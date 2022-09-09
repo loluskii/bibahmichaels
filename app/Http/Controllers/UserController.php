@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,5 +20,10 @@ class UserController extends Controller
         $default = Auth::user()->getDefaultAddress();
 
         return view('user.index', compact('addresses','default','orders'));
+    }
+
+    public function show($ref){
+        $order = Order::firstWhere('order_reference', $ref);
+        return view('user.show', compact('order'));
     }
 }

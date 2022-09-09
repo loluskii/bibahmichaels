@@ -1,44 +1,48 @@
 @extends('layouts.app')
 
+@section('title')
+Login | Bibah Michael
+@endsection
+
+@section('css')
+<style>
+    .card {
+        margin-top: 100px;
+        margin-bottom: 100px;
+    }
+</style>
+@endsection
+
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
-
+    <div class="row">
+        <div class="col-md-5 mx-auto">
+            <div class="card border-0">
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('password.email') }}">
+                    <div class="head text-center">
+                        <h3>FORGOT PASSWORD</h3>
+                        <p>Please enter your email address to receive a reset link</p>
+                    </div>
+                    <form method="POST" action="{{ route('user.reset.password') }}" autocomplete="off">
                         @csrf
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                        @if (session('loginMsg'))
+                        <div class="alert alert-danger alert-dismissible fade show py-2" role="alert">
+                            {{ session('loginMsg') }}
+                        </div>
+                        @endif
+                        <div class="mb-2">
+                            <label for="" class="form-label"></label>
+                            <input type="text" name="email" id=""
+                                class="form-control form-control-lg"
+                                placeholder="Email" aria-describedby="helpId">
                         </div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
-                            </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" name="" id=""
+                                class="rounded-0 btn btn-dark text-uppercase">Submit</button>
                         </div>
                     </form>
+                    <p class="text-muted text-center mt-3">Already have an account? <a href="{{ route('login') }}" class="text-decoration-none">Go Back</a></p>
                 </div>
             </div>
         </div>

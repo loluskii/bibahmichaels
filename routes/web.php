@@ -5,12 +5,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\UserController;
 
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\ForgotPasswordController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest as NewRegistrationVerificationEmail;
 
 /*
@@ -29,24 +31,55 @@ Route::post('currency_load',[CurrencyController::class, 'currencyLoad'])->name('
 
 Auth::routes();
 
-Route::get('/email/verify/{id}/{hash}', function (NewRegistrationVerificationEmail $request) {
-    $request->fulfill();
-    return redirect('/');
-})->middleware(['auth', 'signed'])->name('verification.verify');
 
-Route::get('/email/verify', function () {
-    return view('auth.verify');
-})->name('verification.notice')->middleware('auth');
 
 // Route::get('update/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
 //     $request->fulfillUpdateEmail();
 //     return redirect('/');
 // })->middleware(['auth', 'signed'])->name('verification.verify.update');
 
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-    return back()->with('success', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
+Route::middleware(['guest'])->group(function () {
+
+    Route::get('/login', function () {
+        return view('auth.login');
+    })->name('login');
+
+    Route::get('/register', function () {
+        return view('auth.register');
+    })->name('register');
+
+    Route::post('register', [AuthController::class, 'register'])->name('auth.register');
+    Route::post('login', [AuthController::class, 'login'])->name('auth.login');
+
+    Route::get('/auth/new-password/{token?}', function (Request $request) {
+        return view('auth.passwords.reset', ['token' => $request->token, 'email' => $request->email]);
+    })->name('password.reset');
+
+    Route::get('/reset-password', function () {
+        return view('auth.passwords.email');
+    })->name('password.request');
+
+    Route::post('reset-password', [ForgotPasswordController::class, 'sendEmail'])->name('user.reset.password');
+
+    Route::post('password-update', [ForgotPasswordController::class, 'updatePassword'])->name('user.password.update');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/email/verify/{id}/{hash}', function (NewRegistrationVerificationEmail $request) {
+        $request->fulfill();
+        return redirect('/');
+    })->middleware(['signed'])->name('verification.verify');
+
+    Route::get('/email/verify', function () {
+        return view('auth.verify');
+    })->name('verification.notice');
+
+    Route::post('/email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+        return back()->with('success', 'Verification link sent!');
+    })->middleware(['throttle:6,1'])->name('verification.resend');
+
+});
 
 Route::get('/collections/all',[BaseController::class,'viewShop'])->name('shop');
 Route::get('/collections/{category}',[BaseController::class,'getCategory'])->name('shop.category');
@@ -75,6 +108,7 @@ Route::get('/stripe/redirect/{ref}', [PaymentController::class, 'stripeRedirect'
 //User Routes
 Route::middleware(['auth','verified'])->group(function () {
     Route::get('/user',[UserController::class, 'index'])->name('user');
+    Route::get('/user/order/{ref}',[UserController::class,'show'])->name('user.order.show');
 });
 
 //Custom Orders

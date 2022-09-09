@@ -23,17 +23,13 @@ Login | Bibah Michael
                         <h3>LOGIN</h3>
                         <p>Please enter your credentials to login</p>
                     </div>
-                    <form method="POST" action="{{ route('login') }}" autocomplete="off">
+                    <form method="POST" action="{{ route('auth.login') }}" autocomplete="off">
                         @csrf
-                        @error('email')
-                            <div class="alert alert-danger mb-1 py-2 rounded-0" role="alert">
-                                <p class="mb-0">{{ $message }}</p>
-                            </div>
-                        @enderror
-                        @error('password')
-                            <p class="mb-0">{{ $message }}</p>
-                        @enderror
-
+                        @if (session('loginMsg'))
+                        <div class="alert alert-danger alert-dismissible fade show py-2" role="alert">
+                            {{ session('loginMsg') }}
+                        </div>
+                        @endif
                         <div class="mb-2">
                             <label for="" class="form-label"></label>
                             <input type="text" name="email" id=""
@@ -59,14 +55,9 @@ Login | Bibah Michael
                                 </div>
                             </div>
                             <div class="col text-end">
-                                {{-- <div class="form-check"> --}}
-                                    @if (Route::has('password.request'))
-                                    <a class="text-decoration-none fw-light" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                    @endif
-                                    {{--
-                                </div> --}}
+                                <a class="text-decoration-none fw-light" href="{{ route('password.request') }}">
+                                    {{ __('Forgot Your Password?') }}
+                                </a>
                             </div>
                         </div>
                         <div class="d-grid gap-2">

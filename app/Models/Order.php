@@ -18,7 +18,7 @@ class Order extends Model
         'shipping_country',
         'shipping_phone' ,
         'shipping_landmark' ,
-        'shipping_zipcode',
+        'shipping_postal_code',
     ];
     public function user()
     {

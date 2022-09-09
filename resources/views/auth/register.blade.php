@@ -25,15 +25,15 @@ Register | Bibah Michael
                         <h3>Register</h3>
                         <p>Please enter your credentials to create your account</p>
                     </div>
-                    <form method="POST" action="{{ route('register') }}" autocomplete="off">
+                    <form method="POST" action="{{ route('auth.register') }}" autocomplete="off">
                         @csrf
                         @error('email')
-                            <div class="alert alert-danger mb-1 py-2 rounded-0" role="alert">
+                            <div class="alert alert-danger alert-dismissible mb-1 py-2 rounded-0" role="alert">
                                 <p class="mb-0">{{ $message }}</p>
                             </div>
                         @enderror
                         @error('password')
-                        <div class="alert alert-danger mb-1 py-2 rounded-0" role="alert">
+                        <div class="alert alert-danger alert-dismissible mb-1 py-2 rounded-0" role="alert">
                             <p class="mb-0">{{ $message }}</p>
                         </div>
                         @enderror
