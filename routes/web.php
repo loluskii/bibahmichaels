@@ -69,7 +69,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/email/verify/{id}/{hash}', function (NewRegistrationVerificationEmail $request) {
         $request->fulfill();
         return redirect('/');
-    })->middleware(['signed'])->name('verification.verify');
+    })->name('verification.verify');
 
     Route::get('/email/verify', function () {
         return view('auth.verify');
