@@ -30,7 +30,19 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest as NewRegistrationVerifi
 Route::get('/', [BaseController::class,'index'])->name('home');
 Route::post('currency_load',[CurrencyController::class, 'currencyLoad'])->name('currency.load');
 
-// Auth::routes();
+Route::get('/wipe', function () {
+    Artisan::call('migrate:reset', [
+        '--force' => true,
+    ]);
+    Artisan::call('migrate:fresh', [
+        '--force' => true,
+    ]);
+    Artisan::call('db:seed', [
+        '--force' => true,
+    ]);
+    Artisan::call('optimize:clear');
+    return 'yes';
+});
 
 
 
