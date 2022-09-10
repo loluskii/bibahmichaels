@@ -30,7 +30,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest as NewRegistrationVerifi
 Route::get('/', [BaseController::class,'index'])->name('home');
 Route::post('currency_load',[CurrencyController::class, 'currencyLoad'])->name('currency.load');
 
-Auth::routes();
+// Auth::routes();
 
 
 
@@ -51,6 +51,8 @@ Route::middleware(['guest'])->group(function () {
 
     Route::post('register', [AuthController::class, 'register'])->name('auth.register');
     Route::post('login', [AuthController::class, 'login'])->name('auth.login');
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
 
     Route::get('/auth/new-password/{token?}', function (Request $request) {
         return view('auth.passwords.reset', ['token' => $request->token, 'email' => $request->email]);

@@ -14,7 +14,7 @@ class AuthController extends Controller
     public function __construct()
     {
 
-        $this->middleware('guest');
+        $this->middleware('guest', ['except' => ['logout']]);
 
     }
 
@@ -74,5 +74,15 @@ class AuthController extends Controller
                 $e->getMessage()
             );
         }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        return redirect('/')->with(
+            'success',
+            'Logged Out Successfully',
+        );
     }
 }
