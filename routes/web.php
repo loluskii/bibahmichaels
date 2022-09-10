@@ -12,6 +12,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Requests\EmailVerificationRequest;
 use App\Http\Controllers\ForgotPasswordController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest as NewRegistrationVerificationEmail;
 
@@ -67,9 +68,6 @@ Route::middleware(['guest'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/email/verify/{id}/{hash}', function (NewRegistrationVerificationEmail $request) {
         $request->fulfill();
-        if(session()->has('session') == false){
-            session()->put('session',session_create_id());
-        }
         return redirect('/');
     })->middleware(['signed'])->name('verification.verify');
 

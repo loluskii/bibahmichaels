@@ -28,7 +28,7 @@ class RegisterRequest extends FormRequest
             'fname' => 'required|string|max:255',
             'lname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users|email:rfc,dns',
-            'password' => ['required', Password::min(8)->uncompromised()],
+            'password' => 'required'
         ];
     }
 }

@@ -41,7 +41,7 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             return back()->with(
                 'error',
-                'Please check your inputs'
+                'An Error Occured. Please try again later.'
             );
         }
     }
