@@ -43,29 +43,29 @@ class AttributesSeeder extends Seeder
             'value' => 'black'
         ]);
         ProductAttribute::create([
-            'product_id' => 2,
+            'product_id' => 11,
             'attribute_name' => 'color',
             'value' => 'black'
         ]);
         ProductAttribute::create([
-            'product_id' => 2,
+            'product_id' => 11,
             'attribute_name' => 'size',
             'value' => 'XL'
         ]);
 
         ProductAttribute::create([
-            'product_id' => 2,
+            'product_id' => 11,
             'attribute_name' => 'size',
             'value' => 'L'
         ]);
 
         ProductAttribute::create([
-            'product_id' => 2,
+            'product_id' => 11,
             'attribute_name' => 'size',
             'value' => 'M'
         ]);
         ProductAttribute::create([
-            'product_id' => 2,
+            'product_id' => 11,
             'attribute_name' => 'size',
             'value' => 'S'
         ]);
