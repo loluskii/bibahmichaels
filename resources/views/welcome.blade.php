@@ -147,7 +147,7 @@
             liking.</p>
     </div>
 </div>
-<div class="container py-5 d-none">
+{{-- <div class="container py-5 d-none">
     <div class="row g-5">
         <div class="col-md-4">
             <div class="card position-relative">
@@ -181,5 +181,5 @@
         </div>
 
     </div>
-</div>
+</div> --}}
 @endsection
