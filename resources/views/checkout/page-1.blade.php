@@ -159,7 +159,7 @@
 
                                         <div class="col-4">
                                             <!-- <small class="text-muted">Postal Code</small> -->
-                                            <input type="text" name="shipping_zipcode"
+                                            <input type="text" name="shipping_postal_code"
                                                 class="form-control" required placeholder="Postal Code"
                                                 aria-label="Postal Code">
                                         </div>

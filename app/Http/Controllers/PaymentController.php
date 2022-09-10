@@ -49,7 +49,7 @@ class PaymentController extends Controller
                 $order->fill($request->except('_token'));
                 $request->session()->put('order', $order);
             }
-            // dd(session('order'));
+            dd(session('order'));
             return redirect()->route('checkout.page-2', ['session' => $session]);
         } catch (\Exception$e) {
             return $e->getMessage();

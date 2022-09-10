@@ -32,7 +32,7 @@ class OrderActions
         $newOrder->shipping_city = $order->shipping_city;
         $newOrder->shipping_state = $order->shipping_state;
         $newOrder->shipping_phone = $order->shipping_phone;
-        $newOrder->shipping_postal_code = $order->shipping_zipcode;
+        $newOrder->shipping_postal_code = $order->shipping_postal_code;
         $newOrder->shipping_country = $order->shipping_country;
         $cartItems =  \Cart::session(Helper::getSessionID())->getContent();
         $newOrder->save();
