@@ -165,7 +165,7 @@
                                     @foreach ($item as $value)
                                     <div class="cat action">
                                         <label>
-                                            <input type="radio" name="{{ $key }}" value="{{ $value->value }}"><span
+                                            <input type="radio" name="{{ $key }}" checked value="{{ $value->value }}"><span
                                                 class="text-uppercase">{{
                                                 $value->value }}</span>
                                         </label>

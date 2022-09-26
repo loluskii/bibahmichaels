@@ -70,6 +70,11 @@
             font-size: 25px;
             line-height: normal;
         }
+
+        .product-image {
+            background-position: center 1px;
+            height: 250px;
+        }
     }
 
     @media (min-width: 320px) and (max-width: 576px) {
@@ -117,7 +122,7 @@
             $currency_code = $system_default_currency_info->code;
             }
             @endphp
-            <div class="col-md-3 mb-3">
+            <div class="col-md-3 col-6 mb-3">
                 <a class=" text-decoration-none" href="{{ route('shop.product.show',$product->slug) }}">
                     <div class="card rounded-0 border-0">
                         <div class="product-image" style="background-image: url('{{ $product->images()->first()->url ?? '' }}')"></div>
