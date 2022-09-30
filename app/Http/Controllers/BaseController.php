@@ -13,7 +13,7 @@ class BaseController extends Controller
 {
     public function __construct(){
 
-        $this->middleware('force_admin');
+        $this->middleware('force_maintenance');
         if(session()->has('session') == false){
             session()->put('session',session_create_id());
         }

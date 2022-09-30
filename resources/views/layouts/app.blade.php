@@ -73,7 +73,7 @@
 
 <body>
     <div class="main">
-        @if (Route::is('checkout.*'))
+        @if (Route::is('checkout.*') || Route::is('coming-soon'))
 
         @else
         <header class="header border-bottom">
@@ -196,7 +196,7 @@
         <div class="content">
             @yield('content')
         </div>
-        @if (Route::is('checkout.*'))
+        @if (Route::is('checkout.*') || Route::is('coming-soon'))
 
         @else
         <div class="footer border-top">

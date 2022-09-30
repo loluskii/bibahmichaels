@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => \App\Http\Middleware\isAdmin::class,
         'force_admin' => \App\Http\Middleware\ForceAdminLogout::class,
+        'force_maintenance' => \App\Http\Middleware\WeWillBeRightBack::class,
     ];
 }
