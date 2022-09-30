@@ -62,7 +62,7 @@
 @endsection
 
 @section('content')
-<div class="container container-md container-lg">
+<div class="container p-0 container-md container-lg">
     <div class="main-header">
         {{-- <div class="header-text">
             <h3>get your best wears for your best moments</h3>
