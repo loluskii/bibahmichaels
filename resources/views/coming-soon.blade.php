@@ -3,6 +3,9 @@
 
 @section('css')
 <style>
+    body{
+        background-color: transparent
+    }
     .main-header {
         background-image: url("{{ secure_asset('images/coming-soon-bm.jpeg') }}");
         background-color: #cccccc;

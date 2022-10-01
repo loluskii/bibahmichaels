@@ -93,19 +93,20 @@
                 @endforeach
 
             </div>
-            <div
-                class="d-flex justify-content-between align-items-baseline px-4 {{ ($cartItems->count() < 1) ? 'd-none' : '' }}">
-                <div class="mb-3">
-                    <label for="" class="form-label">Add Order Note</label>
-                    <textarea class="form-control" style="resize: none" name="" id="" rows="3" cols="30"></textarea>
-                </div>
+            <div class="d-flex justify-content-between align-items-baseline px-4 {{ ($cartItems->count() < 1) ? 'd-none' : '' }}">
+                <form id="order_note">
+                    <div class="mb-3">
+                        <label for="" class="form-label">Add Order Note</label>
+                        <textarea class="form-control" style="resize: none" name="order_note" id="" rows="3" cols="30"></textarea>
+                    </div>
+                </form>
                 <div class="text-end">
                     <h3> </h3>
 
                     <h6 class="text-capitalize">total: {{ $currency_symbol }}{{
                         number_format(App\Helpers\Helper::currency_converter(Cart::session(App\Helpers\Helper::getSessionID())->getSubTotal()) , 2) }} </h6>
                     <p>Shipping & taxes calculated at checkout </p>
-                    <a href="{{ route('checkout.page-1',session()->get('session')) }}"
+                    <a id="checkout" href="{{ route('checkout.page-1',session()->get('session')) }}"
                         class="btn btn-dark rounded-0">CHECKOUT</a>
                 </div>
             </div>
@@ -139,6 +140,9 @@
             $input.change();
             return false;
         });
+        $('#checkout').on('click', function(){
+            
+        })
     })
 </script>
 @endsection

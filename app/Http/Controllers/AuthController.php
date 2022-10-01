@@ -78,11 +78,12 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        return redirect()->route('shop.cart');
+        // Auth::logout();
 
-        return redirect('/')->with(
-            'success',
-            'Logged Out Successfully',
-        );
+        // return redirect('/')->with(
+        //     'success',
+        //     'Logged Out Successfully',
+        // );
     }
 }

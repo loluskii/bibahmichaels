@@ -16,7 +16,7 @@ class WeWillBeRightBack
      */
     public function handle(Request $request, Closure $next)
     {
-        if(env('MAINTENANCE')){
+        if(env('MAINTENANCE')==true){
             return redirect()->route('coming-soon');
         }
         return $next($request);

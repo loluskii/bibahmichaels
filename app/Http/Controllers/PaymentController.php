@@ -63,12 +63,41 @@ class PaymentController extends Controller
             // dd($order);
             $session = $request->session()->get('session');
             $cartItems = \Cart::session(Helper::getSessionID())->getContent();
-            $condition = new \Darryldecode\Cart\CartCondition(array(
-                'name' => 'Standard Shipping',
-                'type' => 'shipping',
-                'target' => 'total',
-                'value' => '+10',
-            ));
+            if($cartItems->count() == 1){
+                if($order->shipping_country == "United Kingdom"){
+                    $condition = new \Darryldecode\Cart\CartCondition(array(
+                        'name' => 'Standard Shipping',
+                        'type' => 'shipping',
+                        'target' => 'total',
+                        'value' => '+3.99',
+                    ));
+                }else{
+                    $condition = new \Darryldecode\Cart\CartCondition(array(
+                        'name' => 'Standard Shipping',
+                        'type' => 'shipping',
+                        'target' => 'total',
+                        'value' => '+8.99',
+                    ));
+                }
+            }else{
+                if($order->shipping_country == "United Kingdom"){
+                    $delivery_fee = floatval(5 + floatval($cartItems->count() * 1.5));
+                    $condition = new \Darryldecode\Cart\CartCondition(array(
+                        'name' => 'Standard Shipping',
+                        'type' => 'shipping',
+                        'target' => 'total',
+                        'value' => '+'.$delivery_fee,
+                    ));
+                }else{
+                    $delivery_fee = floatval(15.99 + floatval($cartItems->count() * 1.5));
+                    $condition = new \Darryldecode\Cart\CartCondition(array(
+                        'name' => 'Standard Shipping',
+                        'type' => 'shipping',
+                        'target' => 'total',
+                        'value' => '+'.$delivery_fee,
+                    ));
+                }
+            }
             \Cart::session(Helper::getSessionID())->condition($condition);
             $conditionValue = $condition->getValue();
             // dd($conditionValue);
