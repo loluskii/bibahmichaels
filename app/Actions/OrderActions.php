@@ -54,7 +54,7 @@ class OrderActions
             $address->shipping_country = $order->shipping_country;
             $address->shipping_city = $order->shipping_city;
             $address->shipping_state = $order->shipping_state;
-            $address->shipping_postal_code = $order->shipping_postal_code;
+            $address->shipping_zipcode = $order->shipping_postal_code;
             $address->shipping_phone = $order->shipping_phone;
             $address->save();
         }
