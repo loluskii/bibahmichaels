@@ -267,6 +267,7 @@ class PaymentController extends Controller
     //Redirect to stripe checkout
     public function stripeInit(Request $request)
     {
+        // dd(round($request->amount,2));
         try {
             $cart = \Cart::session(auth()->check() ? auth()->id() : 'guest')->getContent();
             $x = [];
@@ -283,7 +284,7 @@ class PaymentController extends Controller
                             'product_data' => [
                                 'name' => 'Order from Bibah Michael',
                             ],
-                            'unit_amount' => $request->amount * 100,
+                            'unit_amount' => round($request->amount, 2) * 100,
                         ],
                         'quantity' => 1,
                     ],
@@ -369,12 +370,16 @@ class PaymentController extends Controller
 
     public function checkoutSuccessful($ref)
     {
-        $order = OrderQueries::findByRef(decrypt($ref));
-        $currency = Currency::where('code', $order->order_currency)->first();
-        if ($order) {
-            return view('shop.order-success', compact('order', 'currency'));
-        } else {
-            abort(404);
+        try {
+            $order = OrderQueries::findByRef(decrypt($ref));
+            $currency = Currency::where('code', $order->order_currency)->first();
+            if ($order) {
+                return view('shop.order-success', compact('order', 'currency'));
+            } else {
+                abort(404);
+            }
+        } catch (\Exception $th) {
+            return $th->getMessage();
         }
 
     }
