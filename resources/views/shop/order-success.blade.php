@@ -68,11 +68,11 @@
                 <div class="col-md-1"></div>
                 <div class="col-md-11 col-12">
                     <div class="main ps-0 ms-0 ps-md-5 ms-md-5 ps-lg-5">
-                        <div class="header text-start position-relative">
-                            <img src="{{ secure_asset('logo.svg') }}" class="img-fluid position-relative"
+                        <div class="header text-start position-relative ">
+                            <img src="{{ secure_asset('logo.svg') }}" class="d-md-block d-lg-block d-none img-fluid position-relative"
                                 style="right: 5%; height: 6em;" alt="">
                         </div>
-                        <div class="body px-4 ms-3 mt-4 ps-3">
+                        <div class="body px-sm-4 px-0 ms-sm-3 ms-0 mt-4 ps-sm-3 ps-0">
                             <div class="top position-relative">
                                 <i class="fa-regular fa-3x fa-circle-check position-absolute end-100 me-3"
                                     style="top: 12%"></i>

@@ -12,6 +12,18 @@
         position: relative;
     }
 
+    @media only screen and (max-width: 600px){
+        .product-image {
+            background-color: #cccccc;
+            height: 250px;
+            width: auto;
+            background-position: center -10px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+    }
+
     .radio input[type="radio"] {
         display: none;
     }
@@ -105,6 +117,7 @@
                     <div class="mb-3">
                         <label for="" class="form-label">CATEGORY</label>
                         <select class="form-select rounded-0" onchange="this.form.submit()" name="category" id="">
+                            <option value="">All</option>
                           @foreach ($categories as $category)
                               @php
                                   $checked = array();
@@ -133,7 +146,7 @@
                             $currency_code = $system_default_currency_info->code;
                             }
                         @endphp
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-3 mb-3 col-6">
                             <a class=" text-decoration-none" href="{{ route('shop.product.show',$product->slug) }}">
                                 <div class="card rounded-0 border-0">
                                     <div class="product-image"
@@ -206,7 +219,7 @@
                             $currency_code = $system_default_currency_info->code;
                             }
                         @endphp
-                        <div class="col-md-3 mb-3">
+                        <div class="col-6 col-md-3 mb-3">
                             <a class=" text-decoration-none" href="{{ route('shop.product.show',$product->slug) }}">
                                 <div class="card rounded-0 border-0">
                                     <div class="product-image"

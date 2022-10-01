@@ -49,10 +49,15 @@ class BaseController extends Controller
         $categories = Category::all();
         $data = $request->all();
         if ($request->has('category')) {
-            $category = Category::where('slug',$request->category)->first();
-            $checked = $request->category;
-            $collection_title = $category->name;
-            $products = Product::where('category_id', $category->id)->get();
+            if($request->category != ""){
+                $category = Category::where('slug',$request->category)->first();
+                $checked = $request->category;
+                $collection_title = $category->name;
+                $products = Product::where('category_id', $category->id)->get();
+            }else{
+                $products = Product::all();
+                $collection_title = null;
+            }
         } else {
             $products = Product::all();
             $collection_title = null;
