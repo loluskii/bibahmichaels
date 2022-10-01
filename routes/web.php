@@ -65,9 +65,9 @@ Route::middleware(['force_maintenance'])->group(function () {
             return view('auth.register');
         })->name('register');
 
-        Route::post('register', [AuthController::class, 'register'])->name('auth.register');
-        Route::post('login', [AuthController::class, 'login'])->name('auth.login');
-        Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+        Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
+        Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+
 
 
         Route::get('/auth/new-password/{token?}', function (Request $request) {
@@ -84,6 +84,7 @@ Route::middleware(['force_maintenance'])->group(function () {
     });
 
     Route::middleware(['auth'])->group(function () {
+        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
         Route::get('/email/verify/{id}/{hash}', function (NewRegistrationVerificationEmail $request) {
             $request->fulfill();
             return redirect('/');

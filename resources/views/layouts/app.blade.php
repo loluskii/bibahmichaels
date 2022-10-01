@@ -135,7 +135,7 @@
                                     <li><a href="{{ route('shop.cart') }}"
                                             class="text-decoration-none mx-3 text-uppercase"
                                             style="font-weight: 300">Cart ({{
-                                            Cart::session('guest')->getContent()->count() }})</a></li>
+                                            Cart::session(App\Helpers\Helper::getSessionID())->getContent()->count() }})</a></li>
                                 </ul>
                             </div>
                         </div>

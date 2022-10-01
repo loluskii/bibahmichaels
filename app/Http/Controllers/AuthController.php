@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\User;
+use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -60,10 +61,12 @@ class AuthController extends Controller
             ]);
 
             $shouldRemember = $request->remember ? true : false;
-
+            $cartItems = \Cart::session('guest')->getContent();
+            \Cart::session('guest')->clear();
             if (Auth::attempt(array('email' => $input['email'], 'password' => $input['password']),  $shouldRemember)) {
                 $request->session()->regenerate();
-
+                $userId = auth()->user()->id; // or any string represents user identifier
+                \Cart::session($userId)->add($cartItems);
                 return redirect()->intended('/');
             }
             session()->flash('loginMsg', 'The provided credentials do not match our records.');
@@ -78,12 +81,11 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        return redirect()->route('shop.cart');
-        // Auth::logout();
-
-        // return redirect('/')->with(
-        //     'success',
-        //     'Logged Out Successfully',
-        // );
+        Auth::logout();
+        \Cart::session(Helper::getSessionID())->clear();
+        return redirect('/')->with(
+            'success',
+            'Logged Out Successfully',
+        );
     }
 }
