@@ -12,9 +12,9 @@
     <meta property="og:image" content="{{ secure_asset('images/favicon/favicon-16x16.png') }}" />
     <meta property="og:image:secure_url" content="{{ secure_asset('images/favicon/favicon-16x16.png') }}" />
     <meta property="og:image:type" content="image/png" />
-    <meta property="og:description" content="Shop Bibah Michael Today!" />
+    {{-- <meta property="og:description" content="Shop Bibah Michael Today!" /> --}}
     <meta name="google" content="nopagereadaloud" />
-    <meta property="og:title" content="I just purchased this dress on Bibah Michael!" />
+    <meta property="og:title" content="Shop your best wears, both custom made wears and bridals on Bibah Michael and be the standout woman!" />
     <meta property="og:url" content="http://www.bibahmichael.co.uk" />
     <meta property="og:site_name" content="bibahMichael" />
     <meta property="og:type" content="website" />
