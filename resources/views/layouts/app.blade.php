@@ -6,7 +6,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="keywords" content="Sports Betting, Online Sports Betting, Live odds">
+    <meta name="keywords" content="Bridal Wears, Online Shopping, Online Fashion, fashion, fashion stores, bibah michael">
     <meta name="application-name" content="www.bibahmichael.co.uk">
     <meta name="description" content="Come join me. Let's go shopping!">
     <meta property="og:image" content="{{ secure_asset('images/favicon/android-chrome-512x512.png') }}" />
