@@ -27,8 +27,8 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest as NewRegistrationVerifi
 |
 */
 
-Route::get('/', [BaseController::class,'index'])->name('home');
-Route::get('/x', function () {
+// Route::get('/', [BaseController::class,'index'])->name('home');
+Route::get('/', function () {
     return view('coming-soon');
 })->name('coming-soon');
 Route::post('currency_load',[CurrencyController::class, 'currencyLoad'])->name('currency.load');
