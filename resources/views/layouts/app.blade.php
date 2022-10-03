@@ -6,20 +6,29 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords" content="Sports Betting, Online Sports Betting, Live odds">
+    <meta name="application-name" content="www.bibahmichael.co.uk">
+    <meta name="description" content="Shop your best wears, both custom made wears and bridals on Bibah Michael and be the standout woman!">
+    <meta property="og:image" content="{{ secure_asset('images/favicon/favicon-16x16.png') }}" />
+    <meta property="og:image:secure_url" content="{{ secure_asset('images/favicon/favicon-16x16.png') }}" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:description" content="Shop Bibah Michael Today!" />
+    <meta name="google" content="nopagereadaloud" />
+    <meta property="og:title" content="I just purchased this dress on Bibah Michael!" />
+    <meta property="og:url" content="http://www.bibahmichael.co.uk" />
+    <meta property="og:site_name" content="bibahMichael" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
     <link rel="stylesheet" href="{{ secure_asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/bootstrap-side-modals.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/style.css') }}">
-    {{-- <link rel="apple-touch-icon" sizes="180x180" href="{{ secure_asset('images/favicon/apple-touch-icon.png') }}"> --}}
-    {{-- <link rel="icon" type="image/png" sizes="32x32" href="{{ secure_asset('images/favicon/favicon-32x32.png') }}"> --}}
     <link rel="icon" type="image/png" sizes="16x16" href="{{ secure_asset('images/favicon/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ secure_asset('images/favicon/site.webmanifest') }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap"
-        rel="stylesheet">
+    {{-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> --}}
+    <link rel="stylesheet" href="{{ secure_asset('css/font-awesome.min.css') }}"/>
+    <link href="{{ secure_asset('css/fonts.css') }}" rel="stylesheet">
     <style>
         header.header {
             letter-spacing: 4px;
