@@ -14,7 +14,7 @@
     <meta property="og:image:type" content="image/png" />
     {{-- <meta property="og:description" content="Shop Bibah Michael Today!" /> --}}
     <meta name="google" content="nopagereadaloud" />
-    <meta property="og:title" content="Shop your best wears, both custom made wears and bridals on Bibah Michael and be the standout woman!" />
+    <meta property="og:title" content="Shop your best wears, both custom made and bridals wears on Bibah Michael" />
     <meta property="og:url" content="http://www.bibahmichael.co.uk" />
     <meta property="og:site_name" content="bibahMichael" />
     <meta property="og:type" content="website" />
