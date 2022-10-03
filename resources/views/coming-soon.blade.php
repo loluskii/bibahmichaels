@@ -4,17 +4,21 @@
 @section('css')
 <style>
     body{
-        background-color: transparent
+        background-color: #fff
     }
     .main-header {
-        background-image: url("{{ secure_asset('images/coming-soon-bm.jpeg') }}");
+        background-image: url("{{ secure_asset('images/will-be back.svg') }}");
         background-color: #cccccc;
-        height: 100vh;
+        height: 500px;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
         position: relative;
         /* padding: 60px; */
+    }
+
+    .main-heade{
+        height: 100vh;
     }
 
 
@@ -66,7 +70,12 @@
 
 @section('content')
 <div class="container p-0 container-md container-lg">
-    <div class="main-header">
+    <div class="main-heade">
+        <div class="row h-100">
+            <div class="col-6 text-center mx-auto my-auto">
+                <img src="{{ secure_asset('images/will-be-back.png') }}" alt="" srcset="">
+            </div>
+        </div>
         {{-- <div class="header-text">
             <h3>get your best wears for your best moments</h3>
             <button class="btn btn-dark px-3">SHOP NOW</button>
