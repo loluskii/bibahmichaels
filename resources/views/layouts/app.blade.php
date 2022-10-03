@@ -25,10 +25,11 @@
     <link rel="stylesheet" href="{{ secure_asset('css/style.css') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ secure_asset('images/favicon/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ secure_asset('images/favicon/site.webmanifest') }}">
-    {{-- <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="{{ secure_asset('css/font-awesome.min.css') }}"/>
-    <link href="{{ secure_asset('css/fonts.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap"
+    rel="stylesheet">
     <style>
         header.header {
             letter-spacing: 4px;
