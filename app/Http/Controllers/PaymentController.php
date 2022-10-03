@@ -73,7 +73,7 @@ class PaymentController extends Controller
                     ));
                 }else{
                     $condition = new \Darryldecode\Cart\CartCondition(array(
-                        'name' => 'Standard Shipping',
+                        'name' => 'International Shipping',
                         'type' => 'shipping',
                         'target' => 'total',
                         'value' => '+8.99',
@@ -91,7 +91,7 @@ class PaymentController extends Controller
                 }else{
                     $delivery_fee = floatval(15.99 + floatval($cartItems->count() * 1.5));
                     $condition = new \Darryldecode\Cart\CartCondition(array(
-                        'name' => 'Standard Shipping',
+                        'name' => 'International Shipping',
                         'type' => 'shipping',
                         'target' => 'total',
                         'value' => '+'.$delivery_fee,
@@ -100,8 +100,9 @@ class PaymentController extends Controller
             }
             \Cart::session(Helper::getSessionID())->condition($condition);
             $conditionValue = $condition->getValue();
+            $conditionName = $condition->getName();
             // dd($conditionValue);
-            return view('checkout.page-2', compact('order', 'cartItems', 'conditionValue', 'session'));
+            return view('checkout.page-2', compact('order', 'cartItems','conditionName', 'conditionValue', 'session'));
         } catch (\Exception$e) {
             return back()->with('An error occured', 'error');
         }
@@ -127,6 +128,11 @@ class PaymentController extends Controller
             $session = $request->session()->get('session');
             $cartItems = \Cart::session(Helper::getSessionID())->getContent();
             $condition = \Cart::getCondition('Standard Shipping');
+            if($order->shipping_country == "United Kingdom"){
+                $condition = \Cart::getCondition('Standard Shipping');
+            }else{
+                $condition = \Cart::getCondition('International Shipping');
+            }
             $condition_name = $condition->getName(); // the name of the condition
             $condition_value = $condition->getValue(); // the value of the condition
             // dd(session()->get('order'));
@@ -344,12 +350,12 @@ class PaymentController extends Controller
                         $payment->save();
                         DB::commit();
                     }
-                    // $user = $newOrder->shipping_email;
-                    // $admin = User::where('is_admin', 1)->get();
+                    $user = $newOrder->shipping_email;
+                    $admin = User::where('is_admin', 1)->get();
                     AdminOrderNotification::dispatch($newOrder, $admin)->delay(now()->addMinutes(1));;
                     SendOrderInvoice::dispatch($newOrder, $user)->delay(now()->addMinutes(3));
 
-                    \Cart::session(auth()->check() ? auth()->id() : 'guest')->clear();
+                    \Cart::session(Helper::getSessionID())->clear();
                     request()->session()->forget('order');
                     request()->session()->forget('session');
 

@@ -89,7 +89,7 @@
                             <div class="d-flex justify-content-between">
                                 <h5 class="mb-4">Contact Information</h5>
                                 @if (!Auth::check())
-                                <small>Have an account already? <a href="{{ route('login') }}">Log in</a></small>
+                                {{-- <small>Have an account already? <a href="{{ route('login') }}">Log in</a></small> --}}
                                 @endif
                             </div>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

@@ -147,7 +147,7 @@
                                                 <input class="form-check-input me-3" type="radio" name="exampleRadios"
                                                     id="exampleRadios1" value="option1" checked>
                                                 <label class="form-check-label" for="exampleRadios1">
-                                                    <h6 class="mb-0">Standard Shipping</h6>
+                                                    <h6 class="mb-0">{{ $conditionName }}</h6>
                                                     <small class="mb-0 text-muted">
                                                         7 - 21 business days
                                                     </small>
