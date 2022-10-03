@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="keywords" content="Sports Betting, Online Sports Betting, Live odds">
     <meta name="application-name" content="www.bibahmichael.co.uk">
-    <meta name="description" content="Shop your best wears, both custom made wears and bridals on Bibah Michael and be the standout woman!">
-    <meta property="og:image" content="{{ secure_asset('images/favicon/favicon-16x16.png') }}" />
-    <meta property="og:image:secure_url" content="{{ secure_asset('images/favicon/favicon-16x16.png') }}" />
+    <meta name="description" content="Come join me. Let's go shopping!">
+    <meta property="og:image" content="{{ secure_asset('images/favicon/android-chrome-512x512.png') }}" />
+    <meta property="og:image:secure_url" content="{{ secure_asset('images/favicon/android-chrome-512x512.png') }}" />
     <meta property="og:image:type" content="image/png" />
     {{-- <meta property="og:description" content="Shop Bibah Michael Today!" /> --}}
     <meta name="google" content="nopagereadaloud" />
-    <meta property="og:title" content="Shop your best wears, both custom made and bridals wears on Bibah Michael" />
+    <meta property="og:title" content="Shop your best wears on Bibah Michael" />
     <meta property="og:url" content="http://www.bibahmichael.co.uk" />
     <meta property="og:site_name" content="bibahMichael" />
     <meta property="og:type" content="website" />
