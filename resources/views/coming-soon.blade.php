@@ -21,7 +21,6 @@
         height: 100vh;
     }
 
-
     @media (max-width: 576px) {
         .main-header {
             height: calc(100vh - 220px);
@@ -72,8 +71,8 @@
 <div class="container p-0 container-md container-lg">
     <div class="main-heade">
         <div class="row h-100">
-            <div class="col-6 text-center mx-auto my-auto">
-                <img src="{{ secure_asset('images/will-be-back.png') }}" alt="" srcset="">
+            <div class="col-md-6 col-lg-8 col-12 text-center mx-auto my-auto">
+                <img class="img-fluid" src="{{ secure_asset('images/will-be-back.png') }}" alt="" srcset="">
             </div>
         </div>
         {{-- <div class="header-text">
