@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\OrderActions;
-use App\Helpers\Helper;
-use App\Jobs\AdminOrderNotification;
-use App\Jobs\SendOrderInvoice;
-use App\Models\Currency;
-use App\Models\Order;
-use App\Models\Payment;
-use App\Models\User;
-use App\Services\OrderQueries;
-use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use KingFlamez\Rave\Facades\Rave as Flutterwave;
 use Paystack;
+use Exception;
+use App\Models\User;
+use App\Models\Order;
+use App\Helpers\Helper;
+use App\Models\Address;
+use App\Models\Payment;
+use App\Models\Currency;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Actions\OrderActions;
+use App\Jobs\SendOrderInvoice;
+use App\Services\OrderQueries;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use App\Jobs\AdminOrderNotification;
+use Illuminate\Support\Facades\Auth;
+use KingFlamez\Rave\Facades\Rave as Flutterwave;
 
 class PaymentController extends Controller
 {
@@ -27,8 +28,10 @@ class PaymentController extends Controller
         $cartItems = \Cart::session(Helper::getSessionID())->getContent();
         $cartTotalQuantity = \Cart::session(Helper::getSessionID())->getContent()->count();
         $order_details = session('order');
+        $address = Address::where('user_id',auth()->id())->where('default',true)->first();
+
         if ($cartItems->count() > 0) {
-            return view('checkout.page-1', compact('cartItems', 'cartTotalQuantity', 'order_details'));
+            return view('checkout.page-1', compact('cartItems', 'cartTotalQuantity', 'order_details','address'));
         } else {
             return redirect()->route('shop');
         }
@@ -63,49 +66,48 @@ class PaymentController extends Controller
             // dd($order);
             $session = $request->session()->get('session');
             $cartItems = \Cart::session(Helper::getSessionID())->getContent();
-            if($cartItems->count() == 1){
-                if($order->shipping_country == "United Kingdom"){
-                    $condition = new \Darryldecode\Cart\CartCondition(array(
-                        'name' => 'Standard Shipping',
-                        'type' => 'shipping',
-                        'target' => 'total',
-                        'value' => '+3.99',
-                    ));
-                }else{
-                    $condition = new \Darryldecode\Cart\CartCondition(array(
-                        'name' => 'International Shipping',
-                        'type' => 'shipping',
-                        'target' => 'total',
-                        'value' => '+8.99',
-                    ));
-                }
+            if($order->shipping_country == "United Kingdom"){
+                $condition1 = new \Darryldecode\Cart\CartCondition(array(
+                    'name' => 'Standard Shipping',
+                    'type' => 'shipping',
+                    'target' => 'total',
+                    'value' => '+3.99',
+                    'attributes' => array(
+                        'description' => '3 - 7 working days'
+                    )
+                ));
             }else{
-                if($order->shipping_country == "United Kingdom"){
-                    $delivery_fee = floatval(5 + floatval($cartItems->count() * 1.5));
-                    $condition = new \Darryldecode\Cart\CartCondition(array(
-                        'name' => 'Standard Shipping',
-                        'type' => 'shipping',
-                        'target' => 'total',
-                        'value' => '+'.$delivery_fee,
-                    ));
-                }else{
-                    $delivery_fee = floatval(15.99 + floatval($cartItems->count() * 1.5));
-                    $condition = new \Darryldecode\Cart\CartCondition(array(
-                        'name' => 'International Shipping',
-                        'type' => 'shipping',
-                        'target' => 'total',
-                        'value' => '+'.$delivery_fee,
-                    ));
-                }
+                $condition1 = new \Darryldecode\Cart\CartCondition(array(
+                    'name' => 'International Shipping',
+                    'type' => 'shipping',
+                    'target' => 'total',
+                    'value' => '+15',
+                    'attributes' => array(
+                        'description' => '3 - 7 working days'
+                    )
+                ));
             }
-            \Cart::session(Helper::getSessionID())->condition($condition);
-            $conditionValue = $condition->getValue();
-            $conditionName = $condition->getName();
+            $condition2 = new \Darryldecode\Cart\CartCondition(array(
+                'name' => 'Express Shipping',
+                'type' => 'shipping',
+                'target' => 'total',
+                'value' => '+6.99',
+                'attributes' => array(
+                    'description' => '1 - 3 working days'
+                )
+            ));
+            \Cart::session(Helper::getSessionID())->condition($condition1);
+            $conditionValue = $condition1->getValue();
+            $conditionName = $condition1->getName();
             // dd($conditionValue);
             return view('checkout.page-2', compact('order', 'cartItems','conditionName', 'conditionValue', 'session'));
         } catch (\Exception$e) {
             return back()->with('An error occured', 'error');
         }
+    }
+
+    public function setShipping(Request $request){
+
     }
 
     public function postShipping(Request $request)
@@ -176,95 +178,6 @@ class PaymentController extends Controller
     }
 
     /**
-     * Flutterwave Payment functions
-     *
-     * @return void
-     */
-    public function flutterInit(Request $request)
-    {
-        // dd($request->meta);
-        try {
-            $data = [
-                "payment_options" => 'card,banktransfer',
-                "amount" => $request->amount,
-                "email" => Auth::user()->email ?? $request->email,
-                "tx_ref" => Flutterwave::generateReference(),
-                "currency" => $request->currency,
-                "redirect_url" => route('flutter.callback'),
-                "meta" => ['data' => ['data' => 'data']],
-                "customer" => [
-                    "email" => Auth::user()->email ?? $request->email,
-                    "name" => $request->name,
-                ],
-                "customizations" => [
-                    "title" => 'Bibah Michael',
-                    "description" => Carbon::now(),
-                ],
-            ];
-            $payment = Flutterwave::initializePayment($data);
-            // return $payment;
-            if ($payment['status'] !== 'success') {
-                // notify something went wrong
-                return back()->with('error', 'Oops! Something went wrong.');
-            }
-            return redirect($payment['data']['link']);
-        } catch (\Exception$th) {
-            return $th->getMessage();
-        }
-    }
-
-    public function flutterwaveCallback()
-    {
-        $currency = session('currency_code') ?? session('system_default_currency_info')->code;
-        if (request()->status == "cancelled") {
-            return redirect()->route("checkout.page-3", ['session', session()->get('session')])->with("error", "Transaction Cancelled");
-        } else if (request()->status == "successful") {
-            $transactionID = Flutterwave::getTransactionIDFromCallback();
-            $data = Flutterwave::verifyTransaction($transactionID);
-            $txn_ref = $data['data']['flw_ref'];
-            $order = session()->get('order');
-            $amount = $data['data']['amount'];
-            $subamount = \Cart::session(Helper::getSessionID())->getSubTotal();
-            $user_id = auth()->check() ? auth()->id() : rand(0000, 9999);
-            $method = 'flutterwave';
-            $currency = Currency::where('code', '=', $data['data']['currency'])->first();
-            $cart = \Cart::session(Helper::getSessionID())->getContent();
-            // store order
-            $res = OrderActions::store($order, $amount, $subamount, $user_id, $method, $currency, $cart);
-            $newOrder = OrderQueries::findByRef($res);
-
-            DB::beginTransaction();
-            if (Payment::where('payment_ref', $transactionID)->first()) {
-                throw new Exception('Duplicate transaction');
-            } else {
-                $payment = new Payment();
-                $payment->user_id = $newOrder->user_id;
-                $payment->order_id = $newOrder->id;
-                $payment->amount = $amount;
-                $payment->currency = $newOrder->order_currency;
-                $payment->description = 'Payment for Order ' . $newOrder->order_number;
-                $payment->payment_ref = $txn_ref;
-                $payment->save();
-                DB::commit();
-
-                $admin = User::where('is_admin', 1)->get();
-                $user = $newOrder->shipping_email;
-
-                \Cart::session(auth()->check() ? auth()->id() : 'guest')->clear();
-                request()->session()->forget('order');
-                request()->session()->forget('session');
-
-                AdminOrderNotification::dispatch($newOrder, $admin);
-                SendOrderInvoice::dispatch($newOrder, $user)->delay(now()->addMinutes(3));
-
-                return redirect()->route('checkout.success', ['reference' => encrypt($newOrder->order_reference)]);
-            }
-        } else {
-            abort(500);
-        }
-    }
-
-    /**
      * Stripe Payment functions
      *
      * @return void
@@ -306,7 +219,7 @@ class PaymentController extends Controller
                     ],
                 ],
                 'mode' => 'payment',
-                'success_url' => route('stripe.redirect', encrypt($ref)),
+                'success_url' => route('stripe.redirect', $ref),
                 'cancel_url' => route('checkout.page-3', session()->get('session')),
             ]);
             return redirect()->away($checkout_session->url);
@@ -370,15 +283,80 @@ class PaymentController extends Controller
     }
 
     public function stripeRedirect($ref){
-        // return decrypt('eyJpdiI6IlRSNWxNd2I1NE5WN1pwaUpoaTJLdXc9PSIsInZhbHVlIjoiTnJkS3hDNC9NcGVZeEdyRlZhVWtnT2pyZ2NNajBPQ0tLbjM1aERBUVkwOD0iLCJtYWMiOiIzNTI4MDU2MTI2ODE2OTIwNTY0YmU2NGFhNmUxZGEyYTZkZGUxMWMyNGZkM2Y3NGYwOGM2ZDFhZmMwNTkwMWQzIiwidGFnIjoiIn0=');
         return redirect()->route('checkout.success', $ref);
+    }
+
+    /**
+     * Paypal Payment functions
+     *
+     * @return void
+     */
+
+
+    public function paypalCreate(Request $request){
+        try {
+            $cart = \Cart::session(auth()->check() ? auth()->id() : 'guest')->getContent();
+            $x = [];
+            foreach ($cart as $key => $value) {
+                $x[] = array($value['id'], $value['price'], $value['quantity'], $value['attributes']['size'], $value['attributes']['color'] ?? null);
+            }
+
+            $ref = $request->id;
+            $order  = $request->session()->get('order');
+            $amount = $request->amount;
+            $subamount = $request->subamount;
+            $user_id = $request->user_id;
+            $method = "Paypal";
+            $currency = Currency::where('code', '=', $request->currency)->first();
+            $order_items = $x;
+            // dd($order_items);
+            $payment_id = $request->payment_id;
+            $response = OrderActions::store($ref, $order, $amount, $subamount, $user_id, $method, $currency, $order_items);
+            // dd($response);
+
+            if($response){
+                $newOrder = (new OrderQueries())->findByRef($response);
+                if ($newOrder) {
+                    DB::beginTransaction();
+                    if (Payment::where('payment_ref', $payment_id)->first()) {
+                        throw new Exception('Payment Already made!');
+                    }
+                    $payment = new Payment();
+                    $payment->user_id = auth()->id() ?? $newOrder->user_id;
+                    $payment->order_id = $newOrder->id;
+                    $payment->amount = $amount;
+                    $payment->description = 'Payment for Order ' . $newOrder->order_number;
+                    $payment->payment_ref = $payment_id;
+                    $payment->save();
+                    DB::commit();
+                }
+
+                $user = $newOrder->shipping_email;
+                $admin = User::where('is_admin', 1)->get();
+                AdminOrderNotification::dispatch($newOrder, $admin)->delay(now()->addMinutes(1));;
+                SendOrderInvoice::dispatch($newOrder, $user)->delay(now()->addMinutes(3));
+
+                \Cart::session(Helper::getSessionID())->clear();
+                request()->session()->forget('order');
+                request()->session()->forget('session');
+
+                // dd($ref);
+                return response()->json([
+                    'message' => 'Order Stored Successfully',
+                    'ref' => $ref,
+                ], 200);
+            }
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function checkoutSuccessful($ref)
     {
         try {
-            $order = OrderQueries::findByRef(decrypt($ref));
+            $order = OrderQueries::findByRef($ref);
             $currency = Currency::where('code', $order->order_currency)->first();
+            // /
             if ($order) {
                 return view('shop.order-success', compact('order', 'currency'));
             } else {

@@ -98,24 +98,28 @@ class BaseController extends Controller
 
     public function storeCustom(Request $request){
         // dd($request->all());
-        if($request->image != null){
-            $path = $request->file('image')->storeOnCloudinary('custom_orders');
-            $imageUrl =  $path->getSecurePath();
-        }
-        $res = Custom::create([
-            'fname' => $request->fname,
-            'lname' => $request->lname,
-            'email' => $request->email,
-            'occassion' => $request->occassion,
-            'event_date' => $request->event_date,
-            'measurements' => $request->measurements,
-            'order_description' => $request->order_desc,
-            'budget' => $request->budget,
-            'image' => $imageUrl ?? ''
-        ]);
+        try {
+            if($request->image != null){
+                $path = $request->file('image')->storeOnCloudinary('custom_orders');
+                $imageUrl =  $path->getSecurePath();
+            }
+            $res = Custom::create([
+                'fname' => $request->fname,
+                'lname' => $request->lname,
+                'email' => $request->email,
+                'occassion' => $request->occassion,
+                'event_date' => $request->event_date,
+                'measurements' => $request->measurements,
+                'order_description' => $request->order_desc,
+                'budget' => $request->budget,
+                'image' => $imageUrl ?? ''
+            ]);
 
-        if($res){
-            return back()->with('success','Your order has been received. You will recieve a confirmation email soon.');
+            if($res){
+                return back()->with('success','Your order has been received. You will recieve a confirmation email soon.');
+            }
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
         }
     }
 

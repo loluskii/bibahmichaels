@@ -120,8 +120,13 @@ Route::middleware(['force_maintenance'])->group(function () {
 
     //Payment Routes
     //Flutterwave Checkout
-    Route::post('/pay', [PaymentController::class, 'flutterInit'])->name('pay.flutter');
-    Route::get('/rave/callback', [PaymentController::class,'flutterwaveCallback'])->name('flutter.callback');
+    // Route::post('/pay', [PaymentController::class, 'flutterInit'])->name('pay.flutter');
+    // Route::get('/rave/callback', [PaymentController::class,'flutterwaveCallback'])->name('flutter.callback');
+
+    //Paypal
+    Route::post('/paypal/order/store',[PaymentController::class,'paypalCreate'])->name('paypal.store');
+
+    // Stripe
     Route::post('/stripe/webhook', [PaymentController::class, 'stripeWebhook']);
     Route::get('/stripe/redirect/{ref}', [PaymentController::class, 'stripeRedirect'])->name('stripe.redirect');
 
@@ -129,6 +134,7 @@ Route::middleware(['force_maintenance'])->group(function () {
     Route::middleware(['auth','verified'])->group(function () {
         Route::get('/user',[UserController::class, 'index'])->name('user');
         Route::get('/user/order/{ref}',[UserController::class,'show'])->name('user.order.show');
+        Route::post('/user/update',[UserController::class, 'edit'])->name('user.edit.address');
     });
 
     //Custom Orders

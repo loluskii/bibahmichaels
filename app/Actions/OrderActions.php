@@ -34,7 +34,7 @@ class OrderActions
         $newOrder->shipping_phone = $order->shipping_phone;
         $newOrder->shipping_postal_code = $order->shipping_postal_code;
         $newOrder->shipping_country = $order->shipping_country;
-        $cartItems =  \Cart::session(Helper::getSessionID())->getContent();
+        // $cartItems =  \Cart::session(Helper::getSessionID())->getContent();
         $newOrder->save();
         foreach($cart as $item){
             $newOrder->items()->attach($item[0], ['price'=> floatval($item[1])*$currency->exchange_rate, 'quantity'=> $item[2], 'size'=>$item[3], 'color'=>$item[4]]);

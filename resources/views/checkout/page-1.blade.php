@@ -61,12 +61,12 @@
 @endsection
 
 @section('content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-7 border-end">
+<div class="container-fluid ">
+    <div class="row" style="min-height: 100vh">
+        <div class="col-lg-7 border-end">
             <div class="checkout-main">
-                <div class="col-md-1"></div>
-                <div class="col-md-11 col-12">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-11 col-12">
                     <div class="main ps-0 ms-0 ps-md-5 ms-md-5 ps-lg-5">
                         <div class="header text-center">
                             <img src="{{ secure_asset('logo.svg') }}" class="img-fluid" style="height: 4em;" alt="">
@@ -83,7 +83,7 @@
                             </nav>
                         </div>
                         <div class="body py-3">
-                            <div class="mb-4 d-sm-block d-md-none d-lg-none">
+                            <div class="mb-4 d-md-block d-lg-none">
                                 @include('partials.cart-accordion')
                             </div>
                             <div class="d-flex justify-content-between">
@@ -116,10 +116,27 @@
                                 </div>
                                 @endif
                                 <div class="shipping-information">
-                                    <h5 class="mb-4">Shipping Address</h5>
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="mb-4">Shipping Address</h5>
+                                        {{-- @if ($default->count() > 0)
+                                            <a href="" data-bs-toggle="modal" data-bs-target="#editAddress">Edit</a>
+                                            @include('partials.edit-default-address')
+                                        @endif --}}
+                                    </div>
+                                    @if ($address)
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Default Address</h5>
+                                            <p class="card-text mb-1">{{ $address->shipping_address }}, {{ $address->shipping_city }}, {{ $address->shipping_zipcode }} {{ $address->shipping_state }}, {{ $address->shipping_country }}</p>
+                                            <p class="mb-0">{{ $address->shipping_phone }}</p>
+                                        </div>
+                                    </div>
+                                    @else
                                     <div class="mb-3">
                                         <!-- <small class="text-muted">Country/Region</small> -->
                                         <select class="form-select" name="shipping_country" id="country" required>
+                                            <option value="United Kingdom">United Kingdom</option>
+                                            <option value="">----------</option>
                                             <option value="Afghanistan">Afghanistan</option>
                                             <option value="Åland Islands">Åland Islands</option>
                                             <option value="Albania">Albania</option>
@@ -349,7 +366,7 @@
                                             <option value="Uganda">Uganda</option>
                                             <option value="Ukraine">Ukraine</option>
                                             <option value="United Arab Emirates">United Arab Emirates</option>
-                                            <option value="United Kingdom">United Kingdom</option>
+
                                             <option value="United States">United States</option>
                                             <option value="United States Minor Outlying Islands">United States Minor Outlying Islands</option>
                                             <option value="Uruguay">Uruguay</option>
@@ -399,18 +416,18 @@
                                         </div> --}}
                                         <div class="col-4">
                                             <input type="text" name="shipping_city" class="form-control"
-                                                required placeholder="City" aria-label="City">
+                                                required placeholder="City/Town" aria-label="City">
                                         </div>
 
                                         <div class="col-4">
                                             <input type="text" name="shipping_state" class="form-control"
-                                                required placeholder="State" aria-label="State">
+                                                required placeholder="Province/State" aria-label="State">
                                         </div>
 
                                         <div class="col-4">
                                             <!-- <small class="text-muted">Postal Code</small> -->
                                             <input type="text" name="shipping_postal_code"
-                                                class="form-control" required placeholder="Postal Code"
+                                                class="form-control" required placeholder="Postcode"
                                                 aria-label="Postal Code">
                                         </div>
                                     </div>
@@ -420,6 +437,7 @@
                                             class="form-control" id="exampleInputEmail1"
                                             aria-describedby="emailHelp">
                                     </div>
+                                    @endif
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center pt-3">
                                     <a href="{{ route('shop.cart') }}" class="text-decoration-none"><i
@@ -435,15 +453,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-5 bg-light  d-sm-none d-md-block border-start ps-4 pt-5 d-sm-block d-none">
+        <div class="col-lg-5 bg-light  d-sm-none d-md-block border-start ps-4 pt-5 d-sm-block d-none">
             @include('partials.fullpage-cart_details')
         </div>
     </div>
 </div>
 @endsection
 
-@section('scripts')
-<script src="{{ secure_asset('js/countries.js') }}"></script>
-<script language="javascript">print_country("country");</script>
-
-@endsection
