@@ -47,7 +47,7 @@
         }
 
         .navbar-brand img {
-            height: 60px;
+            height: 40px;
         }
 
         @media (max-width: 600px) {
@@ -126,7 +126,7 @@
                         </div>
                         <div class="col-8 col-md-8 text-center">
                             <a class="navbar-brand me-0" href="/">
-                                <img src="{{ secure_asset('logo.svg') }}" class="d-inline-block align-text-top" alt=""
+                                <img src="{{ secure_asset('2.png') }}" class="d-inline-block align-text-top" alt=""
                                     srcset="">
                             </a>
                         </div>

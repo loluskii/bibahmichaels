@@ -66,7 +66,7 @@
                 <div class="col-md-11 col-12">
                     <div class="main ps-0 ms-0 ps-md-5 ms-md-5 ps-lg-5">
                         <div class="header text-center">
-                            <img src="{{ secure_asset('logo.svg') }}" class="img-fluid" style="height: 4em;" alt="">
+                            <img src="{{ secure_asset('2.png') }}" class="img-fluid" style="height: 40px;" alt="">
                             <nav aria-label="breadcrumb" class="pb-4 text-center">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item " aria-current="page"><a

@@ -69,7 +69,7 @@
                 <div class="col-md-11 col-12">
                     <div class="main ps-0 ms-0 ps-md-5 ms-md-5 ps-lg-5">
                         <div class="header text-start position-relative ">
-                            <img src="{{ secure_asset('logo.svg') }}" class="d-md-block d-lg-block d-none img-fluid position-relative"
+                            <img src="{{ secure_asset('2.png') }}" class="d-md-block d-lg-block d-none img-fluid position-relative"
                                 style="right: 5%; height: 6em;" alt="">
                         </div>
                         <div class="body px-sm-4 px-0 ms-sm-3 ms-0 mt-4 ps-sm-3 ps-0">
